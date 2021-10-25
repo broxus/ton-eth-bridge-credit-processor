@@ -1,0 +1,756 @@
+.version sol 0.49.0
+
+.macro constructor
+DROP
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7_with_init_storage$
+}
+GETGLOB 6
+THROWIF 51
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+LDREF
+ENDS
+.loc ../contracts/test/TestEthereumEvent.sol, 23
+PUSHINT 0
+SETGLOB 11
+.loc ../contracts/test/TestEthereumEvent.sol, 24
+SWAP
+SETGLOB 12
+.loc ../contracts/test/TestEthereumEvent.sol, 25
+SETGLOB 13
+.loc ../contracts/test/TestEthereumEvent.sol, 26
+CALLREF {
+	CALL $onInit_internal_macro$
+}
+.loc ../contracts/test/TestEthereumEvent.sol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+TRUE
+SETGLOB 7
+
+.globl	onInit_internal
+.type	onInit_internal, @function
+CALL $onInit_internal_macro$
+
+.macro onInit_internal_macro
+.loc ../contracts/test/TestEthereumEvent.sol, 30
+CALLREF {
+	CALL $notifyEventStatusChanged_internal_macro$
+}
+.loc ../contracts/test/TestEthereumEvent.sol, 0
+
+.macro testConfirm
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/test/TestEthereumEvent.sol, 33
+ENDS
+.loc ../contracts/test/TestEthereumEvent.sol, 34
+ACCEPT
+.loc ../contracts/test/TestEthereumEvent.sol, 35
+PUSHINT 2
+SETGLOB 11
+.loc ../contracts/test/TestEthereumEvent.sol, 36
+CALLREF {
+	CALL $onConfirm_internal_macro$
+}
+.loc ../contracts/test/TestEthereumEvent.sol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+TRUE
+SETGLOB 7
+
+.macro testReject
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/test/TestEthereumEvent.sol, 39
+ENDS
+.loc ../contracts/test/TestEthereumEvent.sol, 40
+ACCEPT
+.loc ../contracts/test/TestEthereumEvent.sol, 41
+PUSHINT 3
+SETGLOB 11
+.loc ../contracts/test/TestEthereumEvent.sol, 42
+CALLREF {
+	CALL $onReject_internal_macro$
+}
+.loc ../contracts/test/TestEthereumEvent.sol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+TRUE
+SETGLOB 7
+
+.globl	onConfirm_internal
+.type	onConfirm_internal, @function
+CALL $onConfirm_internal_macro$
+
+.macro onConfirm_internal_macro
+.loc ../contracts/test/TestEthereumEvent.sol, 46
+CALLREF {
+	CALL $notifyEventStatusChanged_internal_macro$
+}
+.loc ../contracts/test/TestEthereumEvent.sol, 48
+GETGLOB 12
+GETGLOB 10
+GETGLOB 10
+INDEX 1
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHSLICE x3989680000000000000000000000000003_
+STSLICER
+ROTREV
+NEWC
+STSLICECONST x66c6a653
+SWAP
+UNTUPLE 4
+REVERSE 5, 0
+SWAP
+UNTUPLE 5
+REVERSE 6, 0
+STU 256
+STU 32
+STREF
+STU 32
+STU 256
+ROLLREV 4
+NEWC
+STSLICE
+ROLLREV 3
+NEWC
+STSLICE
+STU 32
+SWAP
+NEWC
+STSLICE
+STBREFR
+STBREFR
+STBREFR
+STBREFR
+ENDC
+PUSHINT 128
+SENDRAWMSG
+.loc ../contracts/test/TestEthereumEvent.sol, 0
+
+.globl	onReject_internal
+.type	onReject_internal, @function
+CALL $onReject_internal_macro$
+
+.macro onReject_internal_macro
+.loc ../contracts/test/TestEthereumEvent.sol, 54
+CALLREF {
+	CALL $notifyEventStatusChanged_internal_macro$
+}
+.loc ../contracts/test/TestEthereumEvent.sol, 55
+GETGLOB 12
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 129
+SENDRAWMSG
+.loc ../contracts/test/TestEthereumEvent.sol, 0
+
+.globl	notifyEventStatusChanged_internal
+.type	notifyEventStatusChanged_internal, @function
+CALL $notifyEventStatusChanged_internal_macro$
+
+.macro notifyEventStatusChanged_internal_macro
+.loc ../contracts/test/TestEthereumEvent.sol, 59
+GETGLOB 10
+INDEX2 0, 2
+CTOS
+LDU 128
+LDI 8
+LDU 256
+DROP
+BLKDROP2 1, 2
+.loc ../contracts/test/TestEthereumEvent.sol, 61
+DUP
+PUSHCONT {
+	.loc ../contracts/test/TestEthereumEvent.sol, 62
+	GETGLOB 11
+	PUSH2 S1, S2
+	NEWC
+	STSLICECONST x9_
+	STI 8
+	STU 256
+	ENDC
+	CTOS
+	FALSE
+	NEWC
+	STSLICECONST x6_
+	STI 1
+	PUSHINT 3
+	STZEROES
+	STSLICE
+	PUSHSLICE x3989680000000000000000000000000000a0d79911_
+	STSLICER
+	STU 8
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+	.loc ../contracts/test/TestEthereumEvent.sol, 0
+}
+IF
+.loc ../contracts/test/TestEthereumEvent.sol, 65
+GETGLOB 12
+PARSEMSGADDR
+INDEX 3
+PLDU 256
+PUSHCONT {
+	.loc ../contracts/test/TestEthereumEvent.sol, 66
+	GETGLOB 11
+	GETGLOB 12
+	FALSE
+	NEWC
+	STSLICECONST x6_
+	STI 1
+	PUSHINT 3
+	STZEROES
+	STSLICE
+	PUSHSLICE x3989680000000000000000000000000000a0d79911_
+	STSLICER
+	STU 8
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+	.loc ../contracts/test/TestEthereumEvent.sol, 0
+}
+IF
+.loc ../contracts/test/TestEthereumEvent.sol, 0
+DROP2
+
+.macro getDetails
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/test/TestEthereumEvent.sol, 70
+LDU 32
+GETGLOB 4
+ROT
+SETINDEXQ 5
+SETGLOB 4
+ENDS
+.loc ../contracts/test/TestEthereumEvent.sol, 0
+CALLREF {
+	CALL $getDetails_internal_macro$
+}
+PUSH S9
+PUSHCONT {
+	PUSH S11
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 1
+	STUR 98
+	REVERSE 10, 0
+	NEWC
+	STSLICECONST xd675a0e2
+	SWAP
+	UNTUPLE 4
+	REVERSE 5, 0
+	SWAP
+	UNTUPLE 5
+	REVERSE 6, 0
+	STU 256
+	STU 32
+	STREF
+	STU 32
+	STU 256
+	ROLLREV 11
+	NEWC
+	STSLICE
+	ROLLREV 10
+	NEWC
+	STSLICE
+	STU 32
+	STU 8
+	SWAP
+	UNPAIR
+	XCHG S2
+	STU 32
+	STDICT
+	SWAP
+	UNPAIR
+	XCHG S2
+	STU 32
+	STDICT
+	SWAP
+	UNPAIR
+	XCHG S2
+	STU 32
+	STDICT
+	STU 128
+	ROLLREV 3
+	NEWC
+	STSLICE
+	STREF
+	STU 32
+	STBREFR
+	STBREFR
+	STBREFR
+	STBREFR
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	GETGLOB 4
+	DUP
+	INDEX 3
+	OVER
+	INDEX 2
+	GETGLOB 9
+	ROLL 3
+	INDEX 1
+	NEWC
+	PUSHINT 2
+	STZEROES
+	STI 1
+	PUSHINT 3
+	STZEROES
+	STSLICE
+	SWAP
+	STGRAMS
+	STDICT
+	PUSHINT 1
+	STUR 106
+	REVERSE 10, 0
+	NEWC
+	GETGLOB 4
+	INDEX 5
+	STUR 32
+	SWAP
+	UNTUPLE 4
+	REVERSE 5, 0
+	SWAP
+	UNTUPLE 5
+	REVERSE 6, 0
+	STU 256
+	STU 32
+	STREF
+	STU 32
+	STU 256
+	ROLLREV 11
+	NEWC
+	STSLICE
+	ROLLREV 10
+	NEWC
+	STSLICE
+	STU 32
+	STU 8
+	SWAP
+	UNPAIR
+	XCHG S2
+	STU 32
+	STDICT
+	SWAP
+	UNPAIR
+	XCHG S2
+	STU 32
+	STDICT
+	SWAP
+	UNPAIR
+	XCHG S2
+	STU 32
+	STDICT
+	STU 128
+	ROLLREV 3
+	NEWC
+	STSLICE
+	STREF
+	STU 32
+	STBREFR
+	STBREFR
+	STBREFR
+	STBREFR
+	ENDC
+	GETGLOB 4
+	INDEX 4
+	SENDRAWMSG
+}
+IFELSE
+IFREF {
+	CALL $c7_to_c4$
+}
+TRUE
+SETGLOB 7
+
+.globl	getDetails_internal
+.type	getDetails_internal, @function
+CALL $getDetails_internal_macro$
+
+.macro getDetails_internal_macro
+.loc ../contracts/test/TestEthereumEvent.sol, 70
+PUSHINT 0
+DUP
+PUSHREF {
+}
+PUSHINT 0
+DUP
+TUPLE 5
+PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+PUSHINT 0
+TUPLE 4
+.loc ../contracts/test/TestEthereumEvent.sol, 81
+PUSHINT 0
+NEWDICT
+PAIR
+.loc ../contracts/test/TestEthereumEvent.sol, 83
+GETGLOB 4
+PUSHINT 0
+SETINDEXQ 2
+PUSHINT 64
+SETINDEXQ 4
+SETGLOB 4
+GETGLOB 10
+GETGLOB 11
+PUSH2 S2, S2
+ROLL 4
+GETPARAM 7
+INDEX 0
+BLKDROP2 1, 6
+GETGLOB 12
+GETGLOB 13
+PUSHINT 0
+.loc ../contracts/test/TestEthereumEvent.sol, 0
+
+.macro c7_to_c4
+GETGLOB 13
+GETGLOB 12
+GETGLOB 11
+GETGLOB 10
+GETGLOB 3
+GETGLOB 2
+NEWC
+STU 256
+STU 64
+STONE
+SWAP
+UNTUPLE 4
+REVERSE 5, 0
+SWAP
+UNTUPLE 5
+REVERSE 6, 0
+STU 256
+STU 32
+STREF
+STU 32
+STU 256
+ROLLREV 6
+NEWC
+STSLICE
+ROLLREV 5
+NEWC
+STSLICE
+STU 32
+STU 8
+ROTREV
+NEWC
+STSLICE
+STREF
+STBREFR
+STBREFR
+STBREFR
+ENDC
+POPROOT
+
+.macro c4_to_c7
+PUSHROOT
+CTOS
+LDU 256 ; pubkey c4
+LDU 64 ; pubkey timestamp c4
+LDU 1 ; ctor flag
+NIP
+LDU 256
+LDU 32
+LDREF
+LDU 32
+LDU 256
+ROLLREV 5
+TUPLE 5
+SWAP
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDU 32
+ROLLREV 4
+TUPLE 4
+SWAP
+LDU 8
+OVER
+GTINT 3
+THROWIF 73
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+SETGLOB 13
+SETGLOB 12
+SETGLOB 11
+SETGLOB 10
+SETGLOB 3
+SETGLOB 2
+
+.macro c4_to_c7_with_init_storage
+PUSHROOT
+CTOS
+SBITS
+GTINT 1
+PUSHREFCONT {
+	CALL $c4_to_c7$
+}
+PUSHCONT {
+	PUSHINT 0
+	PUSHROOT
+	CTOS
+	PLDDICT ; D
+	PUSHINT 1
+	OVER
+	PUSHINT 64
+	DICTUGETREF
+	PUSHCONT {
+		CTOS
+		CALLREF {
+			LDU 256
+			LDU 32
+			LDREF
+			LDU 32
+			LDU 256
+			ROLLREV 5
+			TUPLE 5
+			SWAP
+			LDMSGADDRQ
+			PUSHCONT {
+				LDREF
+				ENDS
+				CTOS
+				LDMSGADDR
+			}
+			IFNOT
+			LDMSGADDRQ
+			PUSHCONT {
+				LDREF
+				ENDS
+				CTOS
+				LDMSGADDR
+			}
+			IFNOT
+			LDUQ 32
+			PUSHCONT {
+				LDREF
+				ENDS
+				CTOS
+				LDU 32
+			}
+			IFNOT
+			ENDS
+			TUPLE 4
+		}
+	}
+	PUSHCONT {
+		PUSHINT 0
+		DUP
+		PUSHREF {
+		}
+		PUSHINT 0
+		DUP
+		TUPLE 5
+		PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+		PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+		PUSHINT 0
+		TUPLE 4
+	}
+	IFELSE
+	SETGLOB 10
+	PUSHINT 0
+	SETGLOB 11
+	PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+	SETGLOB 12
+	PUSHREF {
+	}
+	SETGLOB 13
+	PUSHINT 64
+	DICTUGET
+	THROWIFNOT 61
+	PLDU 256
+	SETGLOB 2
+	PUSHINT 0 ; timestamp
+	SETGLOB 3
+}
+IFELSE
+
+.internal-alias :main_internal, 0
+.internal :main_internal
+PUSHROOT
+CTOS
+SBITS
+NEQINT 1
+SETGLOB 6
+PUSH S2
+CTOS
+LDU 4 ; bounced tail
+LDMSGADDR ; bounced src tail
+DROP
+SETGLOB 9
+MODPOW2 1
+GETGLOB 4
+TRUE
+SETINDEXQ 1
+PUSHINT 10000000
+SETINDEXQ 2
+NULL
+SETINDEXQ 3
+PUSHINT 0
+SETINDEXQ 4
+SETGLOB 4
+IFRET
+OVER
+SEMPTY ; isEmpty
+IFJMPREF {
+	GETGLOB 6
+	THROWIFNOT 76
+}
+OVER
+LDUQ 32  ; [funcId] body' ok
+THROWIFNOT 60 ; funcId body'
+OVER
+IFNOTJMPREF {
+	GETGLOB 6
+	THROWIFNOT 76
+}
+SWAP
+CALLREF {
+	CALL $public_function_selector$
+}
+GETGLOB 7
+ISNULL
+THROWIF 60
+
+.internal-alias :main_external, -1
+.internal :main_external
+PUSHROOT
+CTOS
+SBITS
+NEQINT 1
+SETGLOB 6
+OVER
+CALLREF {
+	CALL $c4_to_c7_with_init_storage$
+}
+LDU 1 ; haveSign msgSlice
+SWAP
+PUSHCONT {
+	PUSHINT 512
+	LDSLICEX ; signatureSlice msgSlice
+	DUP
+	HASHSU ; signatureSlice msgSlice hashMsgSlice
+	SWAP
+	LDU 1 ; signatureSlice hashMsgSlice havePubkey msgSlice
+	SWAP
+	PUSHCONT {
+		LDU 256 ; signatureSlice hashMsgSlice pubkey msgSlice
+		XCHG S3
+		SWAP
+	}
+	PUSHCONT {
+		XCHG S2
+		GETGLOB 2
+	}
+	IFELSE
+	CHKSIGNU ; msgSlice isSigned
+	THROWIFNOT 40 ; msgSlice
+}
+PUSHCONT {
+	LDU 1 ; havePubkey msgSlice
+	SWAP
+	THROWIF 58 ; msgSlice
+}
+IFELSE
+LDU 64 ; timestamp msgSlice
+SWAP
+CALL $replay_protection_macro$
+LDU 32 ; expireAt msgSlice
+SWAP
+NOW ; msgSlice expireAt now
+GREATER ; msgSlice expireAt>now
+THROWIFNOT 57
+LDU 32 ; funcId body
+SWAP
+CALLREF {
+	CALL $public_function_selector$
+}
+GETGLOB 7
+ISNULL
+THROWIF 60
+
+.macro public_function_selector
+DUP
+PUSHINT 225869278
+EQUAL
+IFJMPREF {
+	CALL $testConfirm$
+}
+DUP
+PUSHINT 666029341
+EQUAL
+IFJMPREF {
+	CALL $constructor$
+}
+DUP
+PUSHINT 1450549474
+EQUAL
+IFJMPREF {
+	CALL $getDetails$
+}
+DUP
+PUSHINT 1669044825
+EQUAL
+IFJMPREF {
+	CALL $testReject$
+}
+

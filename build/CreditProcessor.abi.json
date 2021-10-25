@@ -1,0 +1,466 @@
+{
+	"ABI version": 2,
+	"version": "2.1",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"fee","type":"uint128"},
+				{"name":"deployer_","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getDetails",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"components":[{"components":[{"name":"eventTransaction","type":"uint256"},{"name":"eventIndex","type":"uint32"},{"name":"eventData","type":"cell"},{"name":"eventBlockNumber","type":"uint32"},{"name":"eventBlock","type":"uint256"}],"name":"eventVoteData","type":"tuple"},{"name":"configuration","type":"address"},{"name":"amount","type":"uint128"},{"components":[{"name":"numerator","type":"uint128"},{"name":"denominator","type":"uint128"}],"name":"slippage","type":"tuple"},{"name":"dexRoot","type":"address"},{"name":"wtonVault","type":"address"},{"name":"wtonRoot","type":"address"},{"name":"state","type":"uint8"},{"name":"eventState","type":"uint8"},{"name":"deployer","type":"address"},{"name":"debt","type":"uint128"},{"name":"fee","type":"uint128"},{"name":"eventAddress","type":"address"},{"name":"tokenRoot","type":"address"},{"name":"tokenWallet","type":"address"},{"name":"wtonWallet","type":"address"},{"name":"dexPair","type":"address"},{"name":"dexVault","type":"address"},{"name":"swapAttempt","type":"uint64"},{"name":"swapAmount","type":"uint128"},{"name":"unwrapAmount","type":"uint128"}],"name":"value0","type":"tuple"}
+			]
+		},
+		{
+			"name": "getCreditEventData",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"components":[{"name":"amount","type":"uint128"},{"name":"user","type":"address"},{"name":"creditor","type":"address"},{"name":"recipient","type":"address"},{"name":"tokenAmount","type":"uint128"},{"name":"tonAmount","type":"uint128"},{"name":"swapType","type":"uint8"},{"components":[{"name":"numerator","type":"uint128"},{"name":"denominator","type":"uint128"}],"name":"slippage","type":"tuple"},{"name":"layer3","type":"cell"}],"name":"value0","type":"tuple"}
+			]
+		},
+		{
+			"name": "deriveEventAddress",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onEventAddress",
+			"inputs": [
+				{"name":"value","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "deployEvent",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "requestEventConfigDetails",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onEventConfigDetails",
+			"inputs": [
+				{"components":[{"name":"eventABI","type":"bytes"},{"name":"staking","type":"address"},{"name":"eventInitialBalance","type":"uint64"},{"name":"eventCode","type":"cell"}],"name":"_basicConfiguration","type":"tuple"},
+				{"components":[{"name":"chainId","type":"uint32"},{"name":"eventEmitter","type":"uint160"},{"name":"eventBlocksToConfirm","type":"uint16"},{"name":"proxy","type":"address"},{"name":"startBlockNumber","type":"uint32"},{"name":"endBlockNumber","type":"uint32"}],"name":"_networkConfiguration","type":"tuple"},
+				{"name":"value2","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "requestTokenEventProxyConfig",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "requestDexVault",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "requestDexPairAddress",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onTokenEventProxyConfig",
+			"inputs": [
+				{"components":[{"name":"tonConfiguration","type":"address"},{"name":"ethereumConfigurations","type":"address[]"},{"name":"outdatedTokenRoots","type":"address[]"},{"name":"tokenRoot","type":"address"},{"name":"settingsDeployWalletGrams","type":"uint128"}],"name":"value","type":"tuple"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onWtonWallet",
+			"inputs": [
+				{"name":"value","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onTokenWallet",
+			"inputs": [
+				{"name":"value","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onDexVault",
+			"inputs": [
+				{"name":"value","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onPairAddress",
+			"inputs": [
+				{"name":"value","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "notifyEventStatusChanged",
+			"inputs": [
+				{"name":"eventState_","type":"uint8"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "checkEventStatus",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onEthereumEventDetails",
+			"inputs": [
+				{"components":[{"components":[{"name":"eventTransaction","type":"uint256"},{"name":"eventIndex","type":"uint32"},{"name":"eventData","type":"cell"},{"name":"eventBlockNumber","type":"uint32"},{"name":"eventBlock","type":"uint256"}],"name":"voteData","type":"tuple"},{"name":"configuration","type":"address"},{"name":"staking","type":"address"},{"name":"chainId","type":"uint32"}],"name":"value0","type":"tuple"},
+				{"name":"_status","type":"uint8"},
+				{"name":"value2","type":"uint256[]"},
+				{"name":"value3","type":"uint256[]"},
+				{"name":"value4","type":"uint256[]"},
+				{"name":"value5","type":"uint128"},
+				{"name":"value6","type":"address"},
+				{"name":"value7","type":"cell"},
+				{"name":"value8","type":"uint32"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "broxusBridgeCallback",
+			"inputs": [
+				{"components":[{"components":[{"name":"eventTransaction","type":"uint256"},{"name":"eventIndex","type":"uint32"},{"name":"eventData","type":"cell"},{"name":"eventBlockNumber","type":"uint32"},{"name":"eventBlock","type":"uint256"}],"name":"voteData","type":"tuple"},{"name":"configuration","type":"address"},{"name":"staking","type":"address"},{"name":"chainId","type":"uint32"}],"name":"eventInitData_","type":"tuple"},
+				{"name":"value1","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "process",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "cancel",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "proxyTransferToRecipient",
+			"inputs": [
+				{"name":"tokenWallet_","type":"address"},
+				{"name":"gasValue","type":"uint128"},
+				{"name":"amount_","type":"uint128"},
+				{"name":"recipient","type":"address"},
+				{"name":"deployGrams","type":"uint128"},
+				{"name":"gasBackAddress","type":"address"},
+				{"name":"notifyReceiver","type":"bool"},
+				{"name":"payload","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "sendGas",
+			"inputs": [
+				{"name":"to","type":"address"},
+				{"name":"value_","type":"uint128"},
+				{"name":"flag_","type":"uint16"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "revertRemainderGas",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onTokenWalletBalance",
+			"inputs": [
+				{"name":"balance","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "retryUnwrap",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setSlippage",
+			"inputs": [
+				{"components":[{"name":"numerator","type":"uint128"},{"name":"denominator","type":"uint128"}],"name":"slippage","type":"tuple"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "retrySwap",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onExpectedSpentAmount",
+			"inputs": [
+				{"name":"expectedSpentAmount","type":"uint128"},
+				{"name":"value1","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "tokensReceivedCallback",
+			"inputs": [
+				{"name":"value0","type":"address"},
+				{"name":"value1","type":"address"},
+				{"name":"receivedAmount","type":"uint128"},
+				{"name":"value3","type":"uint256"},
+				{"name":"senderAddress","type":"address"},
+				{"name":"value5","type":"address"},
+				{"name":"value6","type":"address"},
+				{"name":"value7","type":"uint128"},
+				{"name":"payload","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "tokensBouncedCallback",
+			"inputs": [
+				{"name":"wallet_","type":"address"},
+				{"name":"value1","type":"address"},
+				{"name":"value2","type":"uint128"},
+				{"name":"value3","type":"address"},
+				{"name":"value4","type":"uint128"}
+			],
+			"outputs": [
+			]
+		}
+	],
+	"data": [
+		{"components":[{"name":"eventTransaction","type":"uint256"},{"name":"eventIndex","type":"uint32"},{"name":"eventData","type":"cell"},{"name":"eventBlockNumber","type":"uint32"},{"name":"eventBlock","type":"uint256"}],"key":1,"name":"eventVoteData","type":"tuple"},
+		{"key":2,"name":"configuration","type":"address"}
+	],
+	"events": [
+		{
+			"name": "CreditProcessorDeployed",
+			"inputs": [
+				{"components":[{"components":[{"name":"eventTransaction","type":"uint256"},{"name":"eventIndex","type":"uint32"},{"name":"eventData","type":"cell"},{"name":"eventBlockNumber","type":"uint32"},{"name":"eventBlock","type":"uint256"}],"name":"eventVoteData","type":"tuple"},{"name":"configuration","type":"address"},{"name":"amount","type":"uint128"},{"components":[{"name":"numerator","type":"uint128"},{"name":"denominator","type":"uint128"}],"name":"slippage","type":"tuple"},{"name":"dexRoot","type":"address"},{"name":"wtonVault","type":"address"},{"name":"wtonRoot","type":"address"},{"name":"state","type":"uint8"},{"name":"eventState","type":"uint8"},{"name":"deployer","type":"address"},{"name":"debt","type":"uint128"},{"name":"fee","type":"uint128"},{"name":"eventAddress","type":"address"},{"name":"tokenRoot","type":"address"},{"name":"tokenWallet","type":"address"},{"name":"wtonWallet","type":"address"},{"name":"dexPair","type":"address"},{"name":"dexVault","type":"address"},{"name":"swapAttempt","type":"uint64"},{"name":"swapAmount","type":"uint128"},{"name":"unwrapAmount","type":"uint128"}],"name":"details","type":"tuple"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "CreditProcessorStateChanged",
+			"inputs": [
+				{"name":"from","type":"uint8"},
+				{"name":"to","type":"uint8"},
+				{"components":[{"components":[{"name":"eventTransaction","type":"uint256"},{"name":"eventIndex","type":"uint32"},{"name":"eventData","type":"cell"},{"name":"eventBlockNumber","type":"uint32"},{"name":"eventBlock","type":"uint256"}],"name":"eventVoteData","type":"tuple"},{"name":"configuration","type":"address"},{"name":"amount","type":"uint128"},{"components":[{"name":"numerator","type":"uint128"},{"name":"denominator","type":"uint128"}],"name":"slippage","type":"tuple"},{"name":"dexRoot","type":"address"},{"name":"wtonVault","type":"address"},{"name":"wtonRoot","type":"address"},{"name":"state","type":"uint8"},{"name":"eventState","type":"uint8"},{"name":"deployer","type":"address"},{"name":"debt","type":"uint128"},{"name":"fee","type":"uint128"},{"name":"eventAddress","type":"address"},{"name":"tokenRoot","type":"address"},{"name":"tokenWallet","type":"address"},{"name":"wtonWallet","type":"address"},{"name":"dexPair","type":"address"},{"name":"dexVault","type":"address"},{"name":"swapAttempt","type":"uint64"},{"name":"swapAmount","type":"uint128"},{"name":"unwrapAmount","type":"uint128"}],"name":"details","type":"tuple"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "DeriveEventAddressCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "RequestTokenEventProxyConfigCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "RequestDexPairAddressCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "RequestDexVaultCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "RequestEventConfigDetailsCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "CheckEventStatusCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "GasDonation",
+			"inputs": [
+				{"name":"sender","type":"address"},
+				{"name":"value","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "DeployEventCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "RetryUnwrapCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "RetrySwapCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "SetSlippageCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "ProcessCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "CancelCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "RevertRemainderGasCalled",
+			"inputs": [
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "Reject",
+			"inputs": [
+				{"name":"relay","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "Closed",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		}
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"components":[{"name":"eventTransaction","type":"uint256"},{"name":"eventIndex","type":"uint32"},{"name":"eventData","type":"cell"},{"name":"eventBlockNumber","type":"uint32"},{"name":"eventBlock","type":"uint256"}],"name":"eventVoteData","type":"tuple"},
+		{"name":"configuration","type":"address"},
+		{"components":[{"name":"amount","type":"uint128"},{"name":"user","type":"address"},{"name":"creditor","type":"address"},{"name":"recipient","type":"address"},{"name":"tokenAmount","type":"uint128"},{"name":"tonAmount","type":"uint128"},{"name":"swapType","type":"uint8"},{"components":[{"name":"numerator","type":"uint128"},{"name":"denominator","type":"uint128"}],"name":"slippage","type":"tuple"},{"name":"layer3","type":"cell"}],"name":"eventData","type":"tuple"},
+		{"name":"amount","type":"uint128"},
+		{"components":[{"name":"numerator","type":"uint128"},{"name":"denominator","type":"uint128"}],"name":"slippage_","type":"tuple"},
+		{"name":"state","type":"uint8"},
+		{"name":"prevState","type":"uint8"},
+		{"name":"eventState","type":"uint8"},
+		{"name":"deployer","type":"address"},
+		{"name":"debt","type":"uint128"},
+		{"name":"fee_","type":"uint128"},
+		{"name":"eventAddress","type":"address"},
+		{"name":"eventProxy","type":"address"},
+		{"name":"eventInitialBalance","type":"uint128"},
+		{"name":"tokenRoot","type":"address"},
+		{"name":"tokenWallet","type":"address"},
+		{"name":"wtonWallet","type":"address"},
+		{"name":"dexPair","type":"address"},
+		{"name":"dexVault","type":"address"},
+		{"name":"swapAttempt","type":"uint64"},
+		{"name":"swapAmount","type":"uint128"},
+		{"name":"unwrapAmount","type":"uint128"}
+	]
+}
