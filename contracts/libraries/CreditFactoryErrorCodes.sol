@@ -13,6 +13,7 @@ library CreditFactoryErrorCodes {
     uint16 constant INVALID_EVENT_DATA              = 1150;
     uint16 constant WRONG_WID                       = 1160;
     uint16 constant WRONG_AMOUNT                    = 1170;
+    uint16 constant WRONG_ADMIN                     = 1180;
 
     uint16 constant LOW_GAS                         = 2000;
 }

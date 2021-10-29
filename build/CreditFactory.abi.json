@@ -6,6 +6,7 @@
 		{
 			"name": "constructor",
 			"inputs": [
+				{"name":"admin_","type":"address"},
 				{"name":"owners_","type":"uint256[]"},
 				{"name":"fee","type":"uint128"}
 			],
@@ -202,11 +203,26 @@
 			]
 		},
 		{
+			"name": "resetOwners",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "_randomNonce",
 			"inputs": [
 			],
 			"outputs": [
 				{"name":"_randomNonce","type":"uint256"}
+			]
+		},
+		{
+			"name": "admin",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"admin","type":"address"}
 			]
 		},
 		{
@@ -236,6 +252,7 @@
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"_randomNonce","type":"uint256"},
+		{"name":"admin","type":"address"},
 		{"name":"owners","type":"uint256[]"},
 		{"name":"creditProcessorCode","type":"cell"},
 		{"name":"fee_","type":"uint128"}

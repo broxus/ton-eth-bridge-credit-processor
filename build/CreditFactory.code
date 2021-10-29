@@ -9,6 +9,22 @@ IFREF {
 }
 GETGLOB 6
 THROWIF 51
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+DUP
+SDEMPTY
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
 LDU 32
 LDDICT
 ROTREV
@@ -27,10 +43,16 @@ ENDS
 DUP
 PUSHINT 5000000000
 LESS
-THROWIFNOT 2000
+THROWIFNOT 1070
 .loc ../contracts/CreditFactory.sol, 32
-ACCEPT
+PUSH S2
+PARSEMSGADDR
+INDEX 3
+PLDU 256
+THROWIFNOT 1180
 .loc ../contracts/CreditFactory.sol, 33
+ACCEPT
+.loc ../contracts/CreditFactory.sol, 34
 PUSHINT 0
 PUSHCONT {
 	PUSH2 S0, S2
@@ -38,7 +60,7 @@ PUSHCONT {
 	LESS
 }
 PUSHCONT {
-	.loc ../contracts/CreditFactory.sol, 34
+	.loc ../contracts/CreditFactory.sol, 35
 	PUSH2 S0, S2
 	INDEX 1
 	PUSHINT 32
@@ -46,8 +68,8 @@ PUSHCONT {
 	THROWIFNOT 50
 	PLDU 256
 	PUSHCONT {
-		.loc ../contracts/CreditFactory.sol, 35
-		GETGLOB 11
+		.loc ../contracts/CreditFactory.sol, 36
+		GETGLOB 12
 		PUSH2 S1, S3
 		INDEX 1
 		PUSHINT 32
@@ -64,18 +86,21 @@ PUSHCONT {
 		PUSHINT 32
 		DICTUSETB
 		PAIR
-		SETGLOB 11
+		SETGLOB 12
 		.loc ../contracts/CreditFactory.sol, 0
 	}
 	IF
-	.loc ../contracts/CreditFactory.sol, 33
+	.loc ../contracts/CreditFactory.sol, 34
 	INC
 	.loc ../contracts/CreditFactory.sol, 0
 }
 WHILE
 DROP
-.loc ../contracts/CreditFactory.sol, 38
-SETGLOB 13
+.loc ../contracts/CreditFactory.sol, 39
+ROT
+SETGLOB 11
+.loc ../contracts/CreditFactory.sol, 40
+SETGLOB 14
 .loc ../contracts/CreditFactory.sol, 0
 DROP
 CALLREF {
@@ -93,18 +118,18 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 41
+.loc ../contracts/CreditFactory.sol, 43
 LDREF
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 42
+.loc ../contracts/CreditFactory.sol, 44
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 43
-SETGLOB 12
+.loc ../contracts/CreditFactory.sol, 45
+SETGLOB 13
 .loc ../contracts/access/MultiOwner.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
@@ -121,14 +146,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 46
+.loc ../contracts/CreditFactory.sol, 48
 LDU 32
 GETGLOB 4
 ROT
 SETINDEXQ 5
 SETGLOB 4
 ENDS
-.loc ../contracts/CreditFactory.sol, 47
+.loc ../contracts/CreditFactory.sol, 49
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -137,7 +162,7 @@ SETINDEXQ 1
 PUSHINT 64
 SETINDEXQ 4
 SETGLOB 4
-GETGLOB 12
+GETGLOB 13
 .loc ../contracts/CreditFactory.sol, 0
 OVER
 PUSHCONT {
@@ -203,7 +228,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 50
+.loc ../contracts/CreditFactory.sol, 52
 LDUQ 128
 PUSHCONT {
 	LDREF
@@ -213,20 +238,20 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 51
+.loc ../contracts/CreditFactory.sol, 53
 DUP
 PUSHINT 5000000000
 LESS
 THROWIFNOT 1070
-.loc ../contracts/CreditFactory.sol, 52
+.loc ../contracts/CreditFactory.sol, 54
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 53
-SETGLOB 13
+.loc ../contracts/CreditFactory.sol, 55
+SETGLOB 14
 .loc ../contracts/access/MultiOwner.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
@@ -243,14 +268,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 56
+.loc ../contracts/CreditFactory.sol, 58
 LDU 32
 GETGLOB 4
 ROT
 SETINDEXQ 5
 SETGLOB 4
 ENDS
-.loc ../contracts/CreditFactory.sol, 57
+.loc ../contracts/CreditFactory.sol, 59
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -259,8 +284,8 @@ SETINDEXQ 1
 PUSHINT 64
 SETINDEXQ 4
 SETGLOB 4
-GETGLOB 11
-GETGLOB 13
+GETGLOB 12
+GETGLOB 14
 PAIR
 .loc ../contracts/CreditFactory.sol, 0
 OVER
@@ -341,7 +366,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 63
+.loc ../contracts/CreditFactory.sol, 65
 LDUQ 256
 PUSHCONT {
 	LDREF
@@ -399,7 +424,7 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/CreditFactory.sol, 67
+.loc ../contracts/CreditFactory.sol, 69
 DEPTH
 ADDCONST -2
 PICK
@@ -412,26 +437,26 @@ ADD
 UFITS 128
 GEQ
 THROWIFNOT 2000
-.loc ../contracts/CreditFactory.sol, 68
+.loc ../contracts/CreditFactory.sol, 70
 OVER
 INDEX 2
 CALLREF {
 	CALL $EventDataDecoder_no_obj_isValid_macro$
 }
 THROWIFNOT 1150
-.loc ../contracts/CreditFactory.sol, 69
+.loc ../contracts/CreditFactory.sol, 71
 OVER
 INDEX 2
 CALLREF {
 	CALL $EventDataDecoder_no_obj_decode_macro$
 }
-.loc ../contracts/CreditFactory.sol, 70
+.loc ../contracts/CreditFactory.sol, 72
 DUP
 INDEX 2
 MYADDR
 SDEQ
 THROWIFNOT 1080
-.loc ../contracts/CreditFactory.sol, 71
+.loc ../contracts/CreditFactory.sol, 73
 DUP
 INDEX 4
 OVER
@@ -456,26 +481,26 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1120
-.loc ../contracts/CreditFactory.sol, 74
+.loc ../contracts/CreditFactory.sol, 76
 DUP
 INDEX 6
 LESSINT 2
 THROWIFNOT 1130
-.loc ../contracts/CreditFactory.sol, 75
+.loc ../contracts/CreditFactory.sol, 77
 DUP
 INDEX 1
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIFNOT 1090
-.loc ../contracts/CreditFactory.sol, 76
+.loc ../contracts/CreditFactory.sol, 78
 DUP
 INDEX 3
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIFNOT 1100
-.loc ../contracts/CreditFactory.sol, 77
+.loc ../contracts/CreditFactory.sol, 79
 DUP
 INDEX 7
 INDEX 1
@@ -484,7 +509,7 @@ INDEX 7
 INDEX 0
 GREATER
 THROWIFNOT 1140
-.loc ../contracts/CreditFactory.sol, 79
+.loc ../contracts/CreditFactory.sol, 81
 INDEX 1
 PUSHINT 0
 NEWDICT
@@ -518,7 +543,7 @@ DICTUSET
 NEWC
 STDICT
 ENDC
-GETGLOB 12
+GETGLOB 13
 NEWC
 STSLICECONST x2_
 STOPTREF
@@ -562,7 +587,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 91
+.loc ../contracts/CreditFactory.sol, 93
 LDUQ 256
 PUSHCONT {
 	LDREF
@@ -628,27 +653,27 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 96
+.loc ../contracts/CreditFactory.sol, 98
 PUSH S2
 INDEX 2
 CALLREF {
 	CALL $EventDataDecoder_no_obj_isValid_macro$
 }
 THROWIFNOT 1150
-.loc ../contracts/CreditFactory.sol, 97
-ACCEPT
 .loc ../contracts/CreditFactory.sol, 99
+ACCEPT
+.loc ../contracts/CreditFactory.sol, 101
 PUSH S2
 INDEX 2
 CALLREF {
 	CALL $EventDataDecoder_no_obj_decode_macro$
 }
-.loc ../contracts/CreditFactory.sol, 101
+.loc ../contracts/CreditFactory.sol, 103
 DUP
 INDEX 2
 MYADDR
@@ -726,9 +751,9 @@ PUSHCONT {
 }
 IF
 PUSHCONT {
-	.loc ../contracts/CreditFactory.sol, 110
+	.loc ../contracts/CreditFactory.sol, 112
 	MYADDR
-	GETGLOB 13
+	GETGLOB 14
 	NEWDICT
 	PUSHINT 0
 	NEWC
@@ -760,7 +785,7 @@ PUSHCONT {
 	NEWC
 	STDICT
 	ENDC
-	GETGLOB 12
+	GETGLOB 13
 	NEWC
 	STSLICECONST x2_
 	STOPTREF
@@ -814,7 +839,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 123
+.loc ../contracts/CreditFactory.sol, 125
 LDU 32
 GETGLOB 4
 ROT
@@ -877,7 +902,7 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/CreditFactory.sol, 127
+.loc ../contracts/CreditFactory.sol, 129
 NEWDICT
 PUSHINT 0
 NEWC
@@ -909,14 +934,14 @@ DICTUSET
 NEWC
 STDICT
 ENDC
-GETGLOB 12
+GETGLOB 13
 NEWC
 STSLICECONST x2_
 STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/CreditFactory.sol, 137
+.loc ../contracts/CreditFactory.sol, 139
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -1001,7 +1026,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 140
+.loc ../contracts/CreditFactory.sol, 142
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1027,14 +1052,14 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 145
+.loc ../contracts/CreditFactory.sol, 147
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 146
+.loc ../contracts/CreditFactory.sol, 148
 XCHG S2
 NEWC
 STSLICECONST x42_
@@ -1062,7 +1087,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 149
+.loc ../contracts/CreditFactory.sol, 151
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1072,14 +1097,14 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 150
+.loc ../contracts/CreditFactory.sol, 152
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 151
+.loc ../contracts/CreditFactory.sol, 153
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -1104,7 +1129,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 154
+.loc ../contracts/CreditFactory.sol, 156
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1114,14 +1139,14 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 155
+.loc ../contracts/CreditFactory.sol, 157
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 156
+.loc ../contracts/CreditFactory.sol, 158
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -1146,7 +1171,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 159
+.loc ../contracts/CreditFactory.sol, 161
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1164,14 +1189,14 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 160
+.loc ../contracts/CreditFactory.sol, 162
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 161
+.loc ../contracts/CreditFactory.sol, 163
 SWAP
 NEWC
 STSLICECONST x62_
@@ -1199,7 +1224,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 164
+.loc ../contracts/CreditFactory.sol, 166
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1217,14 +1242,14 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 165
+.loc ../contracts/CreditFactory.sol, 167
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 166
+.loc ../contracts/CreditFactory.sol, 168
 SWAP
 NEWC
 STSLICECONST x62_
@@ -1252,7 +1277,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 169
+.loc ../contracts/CreditFactory.sol, 171
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1270,14 +1295,14 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 170
+.loc ../contracts/CreditFactory.sol, 172
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 171
+.loc ../contracts/CreditFactory.sol, 173
 SWAP
 NEWC
 STSLICECONST x62_
@@ -1305,7 +1330,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 174
+.loc ../contracts/CreditFactory.sol, 176
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1323,14 +1348,14 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 175
+.loc ../contracts/CreditFactory.sol, 177
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 176
+.loc ../contracts/CreditFactory.sol, 178
 SWAP
 NEWC
 STSLICECONST x62_
@@ -1358,7 +1383,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 179
+.loc ../contracts/CreditFactory.sol, 181
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1376,14 +1401,14 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 180
+.loc ../contracts/CreditFactory.sol, 182
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 181
+.loc ../contracts/CreditFactory.sol, 183
 SWAP
 NEWC
 STSLICECONST x62_
@@ -1411,7 +1436,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 184
+.loc ../contracts/CreditFactory.sol, 186
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1429,14 +1454,14 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 185
+.loc ../contracts/CreditFactory.sol, 187
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 186
+.loc ../contracts/CreditFactory.sol, 188
 SWAP
 NEWC
 STSLICECONST x62_
@@ -1464,7 +1489,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 189
+.loc ../contracts/CreditFactory.sol, 191
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1482,14 +1507,14 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 190
+.loc ../contracts/CreditFactory.sol, 192
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 191
+.loc ../contracts/CreditFactory.sol, 193
 SWAP
 NEWC
 STSLICECONST x62_
@@ -1517,7 +1542,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 194
+.loc ../contracts/CreditFactory.sol, 196
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1535,14 +1560,14 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 195
+.loc ../contracts/CreditFactory.sol, 197
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 196
+.loc ../contracts/CreditFactory.sol, 198
 SWAP
 NEWC
 STSLICECONST x62_
@@ -1570,7 +1595,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 199
+.loc ../contracts/CreditFactory.sol, 201
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1588,14 +1613,14 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 200
+.loc ../contracts/CreditFactory.sol, 202
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 201
+.loc ../contracts/CreditFactory.sol, 203
 SWAP
 NEWC
 STSLICECONST x62_
@@ -1623,7 +1648,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditFactory.sol, 204
+.loc ../contracts/CreditFactory.sol, 206
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1660,14 +1685,14 @@ ROTREV
 PAIR
 SWAP
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/CreditFactory.sol, 205
+.loc ../contracts/CreditFactory.sol, 207
 ACCEPT
-.loc ../contracts/CreditFactory.sol, 206
+.loc ../contracts/CreditFactory.sol, 208
 XCHG S2
 NEWC
 STSLICECONST x62_
@@ -1717,7 +1742,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/access/MultiOwner.sol, 17
+.loc ../contracts/access/MultiOwner.sol, 23
 LDUQ 256
 PUSHCONT {
 	LDREF
@@ -1727,18 +1752,18 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/access/MultiOwner.sol, 13
+.loc ../contracts/access/MultiOwner.sol, 14
 CALLREF {
 	CALL $isOwner_internal_macro$
 }
 THROWIFNOT 1101
-.loc ../contracts/access/MultiOwner.sol, 18
+.loc ../contracts/access/MultiOwner.sol, 24
 DUP
 THROWIFNOT 1102
-.loc ../contracts/access/MultiOwner.sol, 19
+.loc ../contracts/access/MultiOwner.sol, 25
 ACCEPT
-.loc ../contracts/access/MultiOwner.sol, 21
-GETGLOB 11
+.loc ../contracts/access/MultiOwner.sol, 27
+GETGLOB 12
 OVER
 NEWC
 STU 256
@@ -1750,8 +1775,8 @@ ROLLREV 3
 PUSHINT 32
 DICTUSETB
 PAIR
-SETGLOB 11
-.loc ../contracts/access/MultiOwner.sol, 22
+SETGLOB 12
+.loc ../contracts/access/MultiOwner.sol, 28
 PUSHSLICE xc00000000000000000000000000743b0b2
 NEWC
 STSLICE
@@ -1766,15 +1791,59 @@ CALLREF {
 TRUE
 SETGLOB 7
 
+.macro resetOwners
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/access/MultiOwner.sol, 31
+ENDS
+.loc ../contracts/access/MultiOwner.sol, 19
+GETGLOB 9
+GETGLOB 11
+SDEQ
+THROWIFNOT 1101
+.loc ../contracts/access/MultiOwner.sol, 32
+ACCEPT
+.loc ../contracts/access/MultiOwner.sol, 34
+NEWDICT
+PUSHINT 0
+BLKPUSH 2, 0
+PUSHCONT {
+	DEC
+	PUSHINT 0
+	NEWC
+	STU 256
+	PUSH2 S1, S3
+	PUSHINT 32
+	DICTUSETB
+	POP S3
+}
+REPEAT
+DROP
+SWAP
+PAIR
+SETGLOB 12
+.loc ../contracts/access/MultiOwner.sol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+TRUE
+SETGLOB 7
+
 .globl	isOwner_internal
 .type	isOwner_internal, @function
 CALL $isOwner_internal_macro$
 
 .macro isOwner_internal_macro
-.loc ../contracts/access/MultiOwner.sol, 25
+.loc ../contracts/access/MultiOwner.sol, 37
 PUSHINT 0
 PUSHCONT {
-	.loc ../contracts/access/MultiOwner.sol, 26
+	.loc ../contracts/access/MultiOwner.sol, 38
 	PUSHINT 0
 	FALSE ; decl return flag
 	PUSHCONT {
@@ -1784,7 +1853,7 @@ PUSHCONT {
 		PUSHCONT {
 			DROP
 			OVER
-			GETGLOB 11
+			GETGLOB 12
 			INDEX 0
 			LESS
 		}
@@ -1792,9 +1861,9 @@ PUSHCONT {
 	}
 	PUSHCONT {
 		PUSHCONT {
-			.loc ../contracts/access/MultiOwner.sol, 27
+			.loc ../contracts/access/MultiOwner.sol, 39
 			OVER
-			GETGLOB 11
+			GETGLOB 12
 			INDEX 1
 			PUSHINT 32
 			DICTUGET
@@ -1809,25 +1878,8 @@ PUSHCONT {
 			}
 			IF
 			EQUAL
-			DUP
 			PUSHCONT {
-				DROP
-				OVER
-				GETGLOB 11
-				INDEX 1
-				PUSHINT 32
-				DICTUGET
-				THROWIFNOT 50
-				PLDU 256
-				GETGLOB 9
-				PARSEMSGADDR
-				INDEX 3
-				PLDU 256
-				EQUAL
-			}
-			IFNOT
-			PUSHCONT {
-				.loc ../contracts/access/MultiOwner.sol, 29
+				.loc ../contracts/access/MultiOwner.sol, 41
 				BLKDROP 3
 				TRUE
 				PUSHINT 4
@@ -1840,7 +1892,85 @@ PUSHCONT {
 		DUP
 		GTINT 1
 		IFRET
-		.loc ../contracts/access/MultiOwner.sol, 26
+		.loc ../contracts/access/MultiOwner.sol, 38
+		OVER
+		INC
+		POP S2
+		.loc ../contracts/access/MultiOwner.sol, 0
+	}
+	WHILE
+	EQINT 4
+	IFRET
+	DROP
+	.loc ../contracts/access/MultiOwner.sol, 44
+	GETGLOB 9
+	GETGLOB 11
+	SDEQ
+	PUSHCONT {
+		.loc ../contracts/access/MultiOwner.sol, 45
+		DROP
+		TRUE
+		.loc ../contracts/access/MultiOwner.sol, 0
+	}
+	IFJMP
+	.loc ../contracts/access/MultiOwner.sol, 47
+	PUSHINT 0
+	FALSE ; decl return flag
+	PUSHCONT {
+		DUP
+		LESSINT 2
+		DUP
+		PUSHCONT {
+			DROP
+			OVER
+			GETGLOB 12
+			INDEX 0
+			LESS
+		}
+		IF
+	}
+	PUSHCONT {
+		PUSHCONT {
+			.loc ../contracts/access/MultiOwner.sol, 48
+			OVER
+			GETGLOB 12
+			INDEX 1
+			PUSHINT 32
+			DICTUGET
+			THROWIFNOT 50
+			PLDU 256
+			GETGLOB 9
+			PARSEMSGADDR
+			INDEX 3
+			PLDU 256
+			EQUAL
+			DUP
+			PUSHCONT {
+				DROP
+				GETGLOB 9
+				PARSEMSGADDR
+				INDEX 2
+				MYADDR
+				PARSEMSGADDR
+				INDEX 2
+				EQUAL
+			}
+			IF
+			PUSHCONT {
+				.loc ../contracts/access/MultiOwner.sol, 50
+				BLKDROP 3
+				TRUE
+				PUSHINT 4
+				.loc ../contracts/access/MultiOwner.sol, 0
+			}
+			IFJMP
+			.loc ../contracts/access/MultiOwner.sol, 0
+		}
+		CALLX
+		DUP
+		GTINT 1
+		IFRET
+		.loc ../contracts/access/MultiOwner.sol, 47
 		OVER
 		INC
 		POP S2
@@ -1850,14 +1980,15 @@ PUSHCONT {
 	EQINT 4
 	IFRET
 	DROP2
-	.loc ../contracts/access/MultiOwner.sol, 32
+	.loc ../contracts/access/MultiOwner.sol, 53
 	FALSE
-	.loc ../contracts/access/MultiOwner.sol, 25
+	.loc ../contracts/access/MultiOwner.sol, 37
 }
 CALLX
 .loc ../contracts/access/MultiOwner.sol, 0
 
 .macro c7_to_c4
+GETGLOB 14
 GETGLOB 13
 GETGLOB 12
 GETGLOB 11
@@ -1869,6 +2000,9 @@ STU 256
 STU 64
 STONE
 STU 256
+ROLLREV 4
+NEWC
+STSLICE
 SWAP
 UNPAIR
 XCHG S2
@@ -1876,6 +2010,7 @@ STU 32
 STDICT
 STREF
 STU 128
+STBREFR
 ENDC
 POPROOT
 
@@ -1887,6 +2022,10 @@ LDU 64 ; pubkey timestamp c4
 LDU 1 ; ctor flag
 NIP
 LDU 256
+LDREF
+ENDS
+CTOS
+LDMSGADDR
 LDU 32
 LDDICT
 ROTREV
@@ -1895,6 +2034,7 @@ SWAP
 LDREF
 LDU 128
 ENDS
+SETGLOB 14
 SETGLOB 13
 SETGLOB 12
 SETGLOB 11
@@ -1927,15 +2067,17 @@ PUSHCONT {
 	}
 	IFELSE
 	SETGLOB 10
+	PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+	SETGLOB 11
 	PUSHINT 0
 	NEWDICT
 	PAIR
-	SETGLOB 11
+	SETGLOB 12
 	PUSHREF {
 	}
-	SETGLOB 12
-	PUSHINT 0
 	SETGLOB 13
+	PUSHINT 0
+	SETGLOB 14
 	PUSHINT 64
 	DICTUGET
 	THROWIFNOT 61
@@ -2075,13 +2217,34 @@ IF
 TRUE
 SETGLOB 7
 
-.macro owners
+.macro admin
 DROP
 ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
 GETGLOB 11
+OVER
+PUSHCONT {
+	PUSHSLICE xc000000000000000000000000086b0bd64
+	NEWC
+	STSLICE
+	STSLICE
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+IF
+TRUE
+SETGLOB 7
+
+.macro owners
+DROP
+ENDS
+CALLREF {
+	CALL $c4_to_c7$
+}
+GETGLOB 12
 OVER
 PUSHCONT {
 	PUSHSLICE xc0000000000000000000000000ef20a3ed
@@ -2296,11 +2459,11 @@ TUPLE 9
 
 .macro public_function_selector
 DUP
-PUSHINT 1295979228
+PUSHINT 995308319
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 244425730
+	PUSHINT 231016145
 	LEQ
 	IFJMPREF {
 		DUP
@@ -2308,6 +2471,12 @@ IFJMPREF {
 		EQUAL
 		IFJMPREF {
 			CALL $addOwner$
+		}
+		DUP
+		PUSHINT 112246116
+		EQUAL
+		IFJMPREF {
+			CALL $admin$
 		}
 		DUP
 		PUSHINT 131723816
@@ -2321,17 +2490,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $runProcess$
 		}
+	}
+	DUP
+	PUSHINT 494343517
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 244425730
 		EQUAL
 		IFJMPREF {
 			CALL $getCreditProcessorAddress$
 		}
-	}
-	DUP
-	PUSHINT 498301913
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 259830910
 		EQUAL
@@ -2350,22 +2519,16 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $runRetryUnwrap$
 		}
-		DUP
-		PUSHINT 498301913
-		EQUAL
-		IFJMPREF {
-			CALL $runRevertRemainderGas$
-		}
 	}
 	DUP
 	PUSHINT 778904229
 	LEQ
 	IFJMPREF {
 		DUP
-		PUSHINT 587314365
+		PUSHINT 498301913
 		EQUAL
 		IFJMPREF {
-			CALL $constructor$
+			CALL $runRevertRemainderGas$
 		}
 		DUP
 		PUSHINT 739445888
@@ -2387,9 +2550,15 @@ IFJMPREF {
 		}
 	}
 	DUP
-	PUSHINT 1295979228
+	PUSHINT 995308319
 	LEQ
 	IFJMPREF {
+		DUP
+		PUSHINT 820966086
+		EQUAL
+		IFJMPREF {
+			CALL $constructor$
+		}
 		DUP
 		PUSHINT 949932495
 		EQUAL
@@ -2408,12 +2577,6 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_randomNonce$
 		}
-		DUP
-		PUSHINT 1295979228
-		EQUAL
-		IFJMPREF {
-			CALL $runRequestEventConfigDetails$
-		}
 	}
 }
 DUP
@@ -2421,9 +2584,15 @@ PUSHINT 2088746220
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 1575239746
+	PUSHINT 1520058455
 	LEQ
 	IFJMPREF {
+		DUP
+		PUSHINT 1295979228
+		EQUAL
+		IFJMPREF {
+			CALL $runRequestEventConfigDetails$
+		}
 		DUP
 		PUSHINT 1447201015
 		EQUAL
@@ -2442,17 +2611,23 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $runRequestDexPairAddress$
 		}
+	}
+	DUP
+	PUSHINT 1889931595
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1575239746
 		EQUAL
 		IFJMPREF {
 			CALL $runRetrySwap$
 		}
-	}
-	DUP
-	PUSHINT 2088746220
-	LEQ
-	IFJMPREF {
+		DUP
+		PUSHINT 1773179900
+		EQUAL
+		IFJMPREF {
+			CALL $resetOwners$
+		}
 		DUP
 		PUSHINT 1864410093
 		EQUAL
@@ -2465,6 +2640,11 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $runSetSlippage$
 		}
+	}
+	DUP
+	PUSHINT 2088746220
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 2012139222
 		EQUAL

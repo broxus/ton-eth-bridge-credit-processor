@@ -16,6 +16,7 @@ async function main() {
     const creditFactory = await locklift.giver.deployContract({
         contract: CreditFactory,
         constructorParams: {
+            admin_: Account1.address,
             owners_: [new BigNumber(keyPairs[4].public, 16).toString(10)],
             fee: locklift.utils.convertCrystal('0.1', 'nano')
         },

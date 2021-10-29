@@ -27,14 +27,16 @@ contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
 
     // recommended value of fee >= Gas.MAX_FWD_FEE,
     //                      fee <= Gas.CREDIT_BODY
-    constructor(uint[] owners_, uint128 fee) public {
-        require(fee < Gas.CREDIT_BODY, CreditFactoryErrorCodes.LOW_GAS);
+    constructor(address admin_, uint[] owners_, uint128 fee) public {
+        require(fee < Gas.CREDIT_BODY, CreditFactoryErrorCodes.TOO_HIGH_FEE);
+        require(admin_.value != 0, CreditFactoryErrorCodes.WRONG_ADMIN);
         tvm.accept();
         for (uint i = 0; i < owners_.length; i++) {
             if (owners_[i] != 0) {
                 owners.push(owners_[i]);
             }
         }
+        admin = admin_;
         fee_ = fee;
     }
 

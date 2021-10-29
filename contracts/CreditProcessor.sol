@@ -491,6 +491,16 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         tvm.accept();
 
         eventState = eventState_;
+
+        if(state == CreditProcessorStatus.EventDeployInProgress ||
+           state == CreditProcessorStatus.EventNotDeployed)
+        {
+            if (eventState == IBasicEvent.Status.Confirmed) {
+                _changeState(CreditProcessorStatus.EventConfirmed);
+            } else if(eventState == IBasicEvent.Status.Rejected) {
+                _changeState(CreditProcessorStatus.EventRejected);
+            }
+        }
     }
 
     function checkEventStatus()
@@ -741,7 +751,9 @@ contract CreditProcessor is ICreditProcessor, Addresses {
             CreditProcessorErrorCodes.WRONG_UNWRAP_PARAMS);
         require(address(this).balance > Gas.UNWRAP_MIN_VALUE + Gas.MIN_BALANCE,
             CreditProcessorErrorCodes.LOW_GAS);
-        require(msg.sender != eventData.recipient || msg.value >= Gas.UNWRAP_MIN_VALUE,
+        require(msg.sender != eventData.recipient ||
+                eventData.user == eventData.recipient ||
+                msg.value >= Gas.UNWRAP_MIN_VALUE,
             CreditProcessorErrorCodes.LOW_GAS);
 
         tvm.accept();
@@ -770,7 +782,9 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         onlyState(CreditProcessorStatus.SwapFailed)
     {
         require(address(this).balance > Gas.RETRY_SWAP_MIN_BALANCE, CreditProcessorErrorCodes.LOW_GAS);
-        require(msg.sender != eventData.recipient || msg.value >= Gas.RETRY_SWAP_MIN_VALUE, CreditProcessorErrorCodes.LOW_GAS);
+        require(msg.sender != eventData.recipient ||
+                eventData.recipient == eventData.user ||
+                msg.value >= Gas.RETRY_SWAP_MIN_VALUE, CreditProcessorErrorCodes.LOW_GAS);
         tvm.accept();
 
         emit RetrySwapCalled(msg.sender);
@@ -900,11 +914,15 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         } else if (state == CreditProcessorStatus.UnwrapInProgress && msg.sender == wtonWallet && wallet_ == wtonWallet) {
             tvm.accept();
             _changeState(CreditProcessorStatus.UnwrapFailed);
+        } else if (state == CreditProcessorStatus.Processed && msg.sender == tokenWallet && wallet_ == tokenWallet) {
+            tvm.accept();
+            _changeState(CreditProcessorStatus.Cancelled);
         }
     }
 
     function _unwrapWTON() private {
-        if (unwrapAmount >= eventData.tonAmount + debt && address(this).balance > Gas.UNWRAP_MIN_VALUE + Gas.MIN_BALANCE) {
+        if (unwrapAmount >= eventData.tonAmount + debt &&
+            address(this).balance > Gas.UNWRAP_MIN_VALUE + Gas.MIN_BALANCE) {
             TvmCell empty;
 
             ITONTokenWallet(wtonWallet).transferToRecipient{
@@ -951,7 +969,8 @@ contract CreditProcessor is ICreditProcessor, Addresses {
                     0,                              // recipient_public_key
                     eventData.recipient,            // recipient_address
                     currentAmount,                  // amount
-                    Gas.DEPLOY_EMPTY_WALLET_GRAMS,  // deploy_grams
+                    (eventData.user == eventData.recipient ?
+                        Gas.DEPLOY_EMPTY_WALLET_GRAMS : uint128(0)),  // deploy_grams
                     0,                              // transfer_grams
                     eventData.user,                 // gas_back_address
                     true,                           // notify_receiver
@@ -961,7 +980,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
                 IReceiveTONsFromBridgeCallback(eventData.recipient).onReceiveTONsFromBridgeCallback{
                     value: 0,
                     flag: MessageFlags.ALL_NOT_RESERVED,
-                    bounce: false
+                    bounce: eventData.user != eventData.recipient
                 }(eventData);
             }
         } else if(state != CreditProcessorStatus.ProcessRequiresGas) {
@@ -979,6 +998,14 @@ contract CreditProcessor is ICreditProcessor, Addresses {
             emit GasDonation(msg.sender, msg.value);
 
             _payDebtThenTransfer();
+        } else if (state == CreditProcessorStatus.UnwrapFailed &&
+                   msg.value >= Gas.UNWRAP_MIN_VALUE + Gas.MIN_BALANCE &&
+                   (tokenWallet != wtonWallet || (amount - eventData.tokenAmount >= unwrapAmount)) &&
+                   unwrapAmount >= (eventData.tonAmount + debt))
+        {
+                tvm.accept();
+
+                _unwrapWTON();
         }
     }
 
@@ -995,6 +1022,11 @@ contract CreditProcessor is ICreditProcessor, Addresses {
             state == CreditProcessorStatus.CheckingAmount)
         {
             _changeState(prevState);
+        } else if (functionId == tvm.functionId(IReceiveTONsFromBridgeCallback.onReceiveTONsFromBridgeCallback) &&
+            state == CreditProcessorStatus.Processed &&
+            msg.sender == eventData.recipient)
+        {
+            _changeState(CreditProcessorStatus.Cancelled);
         }
     }
 

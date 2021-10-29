@@ -24,14 +24,14 @@ library Gas {
     uint128 constant GET_TOKEN_WALLET_DETAILS       = 0.2 ton;
 
     // WTON
-    uint128 constant UNWRAP_VALUE                   = 1 ton;
+    uint128 constant UNWRAP_VALUE                   = 0.5 ton;
 
     // DEX
     uint128 constant GET_EXPECTED_SPENT_AMOUNT      = 0.1 ton;
     uint128 constant GET_DEX_VAULT                  = 0.1 ton;
     uint128 constant GET_DEX_PAIR_ADDRESS           = 0.1 ton;
 
-    uint128 constant UNWRAP_MIN_VALUE                       = 1.1 ton; //UNWRAP_VALUE + MAX_FWD_FEE;
+    uint128 constant UNWRAP_MIN_VALUE                       = 0.6 ton; //UNWRAP_VALUE + MAX_FWD_FEE;
     uint128 constant SWAP_VALUE                             = 2.5 ton; // 2 ton + TRANSFER_TO_RECIPIENT_VALUE;
     uint128 constant SWAP_MIN_BALANCE                       = 2.7 ton; //SWAP_VALUE + MAX_FWD_FEE + MIN_BALANCE;
     uint128 constant GET_EXPECTED_SPENT_AMOUNT_MIN_BALANCE  = 2.9 ton; //GET_EXPECTED_SPENT_AMOUNT + MAX_FWD_FEE + SWAP_MIN_BALANCE;
