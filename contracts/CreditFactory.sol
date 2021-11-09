@@ -3,7 +3,6 @@ pragma ton-solidity >= 0.39.0;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "../node_modules/@broxus/contracts/contracts/access/ExternalOwner.sol";
 import "../node_modules/@broxus/contracts/contracts/utils/RandomNonce.sol";
 import '../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
 
@@ -21,9 +20,11 @@ import './libraries/Gas.sol';
 
 contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
 
-    TvmCell creditProcessorCode;
+    uint32 public version = 1;
 
     uint128 fee_;
+
+    TvmCell creditProcessorCode;
 
     // recommended value of fee >= Gas.MAX_FWD_FEE,
     //                      fee <= Gas.CREDIT_BODY
@@ -210,4 +211,23 @@ contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
 
     receive() external view {
     }
+
+    function upgrade(TvmCell code) override external onlyAdmin {
+        require(address(this).balance > Gas.UPGRADE_FACTORY_MIN_BALANCE, CreditFactoryErrorCodes.LOW_GAS);
+
+        tvm.accept();
+
+        TvmBuilder builder;
+
+        builder.store(version);
+        builder.store(fee_);
+        builder.store(creditProcessorCode);
+
+        tvm.setcode(code);
+        tvm.setCurrentCode(code);
+
+        onCodeUpgrade(builder.toCell());
+    }
+
+    function onCodeUpgrade(TvmCell data) private {}
 }

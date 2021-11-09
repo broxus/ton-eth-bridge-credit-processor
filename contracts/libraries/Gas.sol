@@ -39,4 +39,6 @@ library Gas {
     uint128 constant RETRY_SWAP_MIN_VALUE                   = 3 ton; //RETRY_SWAP_MIN_BALANCE - MIN_BALANCE;
 
     uint128 constant END_PROCESS_MIN_VALUE                  = 1 ton;
+
+    uint128 constant UPGRADE_FACTORY_MIN_BALANCE            = 10 ton;
 }

@@ -106,7 +106,8 @@ contract CreditProcessor is ICreditProcessor, Addresses {
 
         if (msg.value >= (Gas.CREDIT_BODY - Gas.DEPLOY_PROCESSOR - Gas.MAX_FWD_FEE) &&
             msg.sender.value != 0 && tvm.pubkey() == 0 &&
-            EventDataDecoder.isValid(eventVoteData.eventData))
+            EventDataDecoder.isValid(eventVoteData.eventData) &&
+            configuration.value != 0)
         {
             eventData = EventDataDecoder.decode(eventVoteData.eventData);
 
@@ -260,16 +261,16 @@ contract CreditProcessor is ICreditProcessor, Addresses {
             tokenRoot.value != 0 && tokenWallet.value != 0 && wtonWallet.value != 0 &&
             ((dexPair.value != 0 && dexVault.value != 0) || tokenWallet == wtonWallet))
         {
-                if (address(this).balance >= eventInitialBalance + Gas.MAX_FWD_FEE) {
-                    IEthereumEventConfiguration(configuration).deployEvent{
-                        value: eventInitialBalance,
-                        flag: MessageFlags.SENDER_PAYS_FEES
-                    }(eventVoteData);
+            if (address(this).balance >= eventInitialBalance + Gas.MAX_FWD_FEE) {
+                IEthereumEventConfiguration(configuration).deployEvent{
+                    value: eventInitialBalance,
+                    flag: MessageFlags.SENDER_PAYS_FEES
+                }(eventVoteData);
 
-                    _changeState(CreditProcessorStatus.EventDeployInProgress);
-                } else {
-                    _changeState(CreditProcessorStatus.EventNotDeployed);
-                }
+                _changeState(CreditProcessorStatus.EventDeployInProgress);
+            } else {
+                _changeState(CreditProcessorStatus.EventNotDeployed);
+            }
         }
     }
 
@@ -561,15 +562,19 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         address /* gasBackAddress */
     ) override external {
         require(state == CreditProcessorStatus.EventDeployInProgress ||
-                state == CreditProcessorStatus.EventNotDeployed,
+                state == CreditProcessorStatus.EventNotDeployed ||
+                state == CreditProcessorStatus.EventConfirmed,
                 CreditProcessorErrorCodes.WRONG_STATE);
+        require(configuration == msg.sender && msg.sender.value != 0, CreditProcessorErrorCodes.NOT_PERMITTED);
         require(eventInitData_.configuration == msg.sender, CreditProcessorErrorCodes.NOT_PERMITTED);
-        require(configuration == msg.sender, CreditProcessorErrorCodes.NOT_PERMITTED);
 
         tvm.accept();
 
         eventState = IBasicEvent.Status.Confirmed;
-        _changeState(CreditProcessorStatus.EventConfirmed);
+
+        if (state != CreditProcessorStatus.EventConfirmed) {
+            _changeState(CreditProcessorStatus.EventConfirmed);
+        }
     }
 
     function process() override external onlyDeployerOrCreditor onlyState(CreditProcessorStatus.EventConfirmed) {
@@ -614,7 +619,10 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         address gasBackAddress,
         bool    notifyReceiver,
         TvmCell payload
-    ) override external view onlyUser onlyState(CreditProcessorStatus.Cancelled) {
+    ) override external view onlyUser {
+        require(CreditProcessorStatus.Cancelled == state ||
+                CreditProcessorStatus.Processed == state,
+            CreditProcessorErrorCodes.WRONG_STATE);
         require(
             address(this).balance >=
                 Gas.TRANSFER_TO_RECIPIENT_VALUE + Gas.MAX_FWD_FEE + Gas.MIN_BALANCE,
@@ -646,7 +654,10 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         address to,
         uint128 value_,
         uint16  flag_
-    ) override external view onlyUser onlyState(CreditProcessorStatus.Cancelled) {
+    ) override external view onlyUser {
+        require(CreditProcessorStatus.Cancelled == state ||
+                CreditProcessorStatus.Processed == state,
+                CreditProcessorErrorCodes.WRONG_STATE);
         tvm.accept();
         to.transfer({value: value_, flag: flag_, bounce: false});
     }
@@ -670,7 +681,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
     }
 
     function onTokenWalletBalance(uint128 balance) external onlyState(CreditProcessorStatus.CheckingAmount) {
-        require(tokenWallet == msg.sender, CreditProcessorErrorCodes.NOT_PERMITTED);
+        require(msg.sender.value != 0 && tokenWallet == msg.sender, CreditProcessorErrorCodes.NOT_PERMITTED);
         tvm.accept();
         if (balance >= amount) {
             // кто-то мог докинуть токенов на счет CreditProcessor
