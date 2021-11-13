@@ -141,7 +141,11 @@ async function getUserBalances() {
         result[options.token_id] = new BigNumber(n).shiftedBy(-token.decimals).toString();
     }).catch(e => {/*ignored*/});
 
-    result.ton = (await locklift.ton.getBalance(User.address)).shiftedBy(-9).toString();
+    try {
+        result.ton = (await locklift.ton.getBalance(User.address)).shiftedBy(-9).toString();
+    } catch(e) {
+        /*ignored*/
+    }
 
     return result;
 
@@ -151,8 +155,10 @@ async function logCreditProcessorBalance() {
     const balances = await getCreditProcessorBalances();
 
     logger.log(`CreditProcessor balance: ` +
-        `${balances[options.token_id] !== undefined ? balances[options.token_id] + ' ' + token.symbol : '0 (not deployed)'}, ` +
-        `${balances.ton} TON`);
+        `${balances[options.token_id] !== undefined ? 
+            balances[options.token_id] + ' ' + token.symbol : 
+            '0 ' + token.symbol + ' (not deployed)'}, ` +
+        `${balances.ton !== undefined ? balances.ton + ' TON' : '0 TON (not deployed)'}`);
 
     return balances;
 }
@@ -161,8 +167,10 @@ async function logUserBalance() {
     const balances = await getUserBalances();
 
     logger.log(`Account${options.account_number} balance: ` +
-        `${balances[options.token_id] !== undefined ? balances[options.token_id] + ' ' + token.symbol : '0 (not deployed)'}, ` +
-        `${balances.ton} TON`);
+        `${balances[options.token_id] !== undefined ? 
+            balances[options.token_id] + ' ' + token.symbol :
+            '0 ' + token.symbol + ' (not deployed)'}, ` +
+        `${balances.ton !== undefined ? balances.ton + ' TON' : '0 TON (not deployed)'}`);
 
     return balances;
 }
@@ -305,7 +313,8 @@ describe('Credit ETH-TON', async function () {
             UserTokenWallet.setAddress(expectedUserTokenWallet);
             const alias = token.symbol + 'Wallet' + options.account_number;
             migration.store(UserTokenWallet, alias);
-            logger.log(`${alias}: ${CreditProcessorTokenWallet.address}`);
+            logger.log(`${alias}: ${UserTokenWallet.address}`);
+            await logUserBalance();
         });
 
         it(`Call RootTokenContract.getWalletAddress for CreditProcessor`, async function () {

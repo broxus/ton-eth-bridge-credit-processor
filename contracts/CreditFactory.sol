@@ -44,6 +44,7 @@ contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
     function setCreditProcessorCode(TvmCell value) external anyOwner {
         tvm.accept();
         creditProcessorCode = value;
+        emit CreditProcessorCodeChanged(tvm.hash(value));
     }
 
     function getCreditProcessorCode() override external view responsible returns(TvmCell) {
@@ -54,6 +55,7 @@ contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
         require(value < Gas.CREDIT_BODY, CreditFactoryErrorCodes.TOO_HIGH_FEE);
         tvm.accept();
         fee_ = value;
+        emit FeeChanged(fee_);
     }
 
     function getDetails() override external view responsible returns(CreditFactoryDetails) {
@@ -74,10 +76,12 @@ contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
         require(eventData.tokenAmount < eventData.amount ||
                 (eventData.tokenAmount == eventData.amount && eventData.tonAmount == 0),
             CreditFactoryErrorCodes.WRONG_TOKEN_AMOUNT);
-        require(eventData.swapType < 2, CreditFactoryErrorCodes.WRONG_SWAP_TYPE);
+        require(eventData.swapType < 4, CreditFactoryErrorCodes.WRONG_SWAP_TYPE);
         require(eventData.user.value != 0, CreditFactoryErrorCodes.WRONG_USER);
         require(eventData.recipient.value != 0, CreditFactoryErrorCodes.WRONG_RECIPIENT);
         require(eventData.slippage.denominator > eventData.slippage.numerator, CreditFactoryErrorCodes.WRONG_SLIPPAGE);
+
+        emit DeployProcessorForUserCalled(eventVoteData, configuration, msg.sender);
 
         new CreditProcessor{
             value: 0,
@@ -105,7 +109,7 @@ contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
             address(this).balance > grams + Gas.MAX_FWD_FEE &&
             grams >= Gas.CREDIT_BODY &&
             eventData.tokenAmount < eventData.amount &&
-            eventData.swapType < 2 &&
+            eventData.swapType < 4 &&
             eventData.user.value != 0 &&
             eventData.recipient.value != 0 &&
             eventData.slippage.denominator > eventData.slippage.numerator)
@@ -138,6 +142,43 @@ contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
         });
 
         return {value: 0, flag: MessageFlags.REMAINING_GAS} address(tvm.hash(stateInit));
+    }
+
+    function proxyTransferToRecipient(
+        address tokenWallet_,
+        uint128 gasValue,
+        uint128 amount_,
+        address recipient,
+        uint128 deployGrams,
+        address gasBackAddress,
+        bool    notifyReceiver,
+        TvmCell payload
+    ) external view onlyAdmin {
+        require(
+            address(this).balance >=
+                Gas.TRANSFER_TO_RECIPIENT_VALUE + Gas.MAX_FWD_FEE + Gas.MIN_BALANCE,
+            CreditFactoryErrorCodes.LOW_GAS
+        );
+        require(
+            gasValue >= Gas.TRANSFER_TO_RECIPIENT_VALUE + deployGrams,
+            CreditFactoryErrorCodes.LOW_GAS
+        );
+
+        tvm.accept();
+
+        ITONTokenWallet(tokenWallet_).transferToRecipient{
+            value: gasValue,
+            flag: MessageFlags.SENDER_PAYS_FEES
+        }(
+            0,                          // recipient_public_key
+            recipient,                  // recipient_address
+            amount_,                    // amount
+            deployGrams,                // deploy_grams
+            0,                          // transfer_grams
+            gasBackAddress,             // gas_back_address
+            notifyReceiver,             // notify_receiver
+            payload                     // payload
+        );
     }
 
     function sendGas(
@@ -212,7 +253,7 @@ contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
     receive() external view {
     }
 
-    function upgrade(TvmCell code) override external onlyAdmin {
+    function upgrade(TvmCell code) external onlyAdmin {
         require(address(this).balance > Gas.UPGRADE_FACTORY_MIN_BALANCE, CreditFactoryErrorCodes.LOW_GAS);
 
         tvm.accept();

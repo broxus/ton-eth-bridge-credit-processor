@@ -7,6 +7,7 @@ library Gas {
 
     uint128 constant CREDIT_BODY                    = 5 ton;
     uint128 constant DEPLOY_PROCESSOR               = 0.2 ton;
+    uint128 constant MIN_CALLBACK_VALUE             = 0.1 ton;
 
     // EVENT
     uint128 constant DERIVE_EVENT_ADDRESS           = 0.2 ton;

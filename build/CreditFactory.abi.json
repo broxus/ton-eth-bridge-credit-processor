@@ -78,6 +78,21 @@
 			]
 		},
 		{
+			"name": "proxyTransferToRecipient",
+			"inputs": [
+				{"name":"tokenWallet_","type":"address"},
+				{"name":"gasValue","type":"uint128"},
+				{"name":"amount_","type":"uint128"},
+				{"name":"recipient","type":"address"},
+				{"name":"deployGrams","type":"uint128"},
+				{"name":"gasBackAddress","type":"address"},
+				{"name":"notifyReceiver","type":"bool"},
+				{"name":"payload","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "sendGas",
 			"inputs": [
 				{"name":"to","type":"address"},
@@ -195,6 +210,14 @@
 			]
 		},
 		{
+			"name": "upgrade",
+			"inputs": [
+				{"name":"code","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "addOwner",
 			"inputs": [
 				{"name":"newOwner","type":"uint256"}
@@ -232,6 +255,14 @@
 			"outputs": [
 				{"name":"owners","type":"uint256[]"}
 			]
+		},
+		{
+			"name": "version",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"version","type":"uint32"}
+			]
 		}
 	],
 	"data": [
@@ -245,6 +276,32 @@
 			],
 			"outputs": [
 			]
+		},
+		{
+			"name": "FeeChanged",
+			"inputs": [
+				{"name":"value","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "CreditProcessorCodeChanged",
+			"inputs": [
+				{"name":"hash","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "DeployProcessorForUserCalled",
+			"inputs": [
+				{"components":[{"name":"eventTransaction","type":"uint256"},{"name":"eventIndex","type":"uint32"},{"name":"eventData","type":"cell"},{"name":"eventBlockNumber","type":"uint32"},{"name":"eventBlock","type":"uint256"}],"name":"eventVoteData","type":"tuple"},
+				{"name":"configuration","type":"address"},
+				{"name":"sender","type":"address"}
+			],
+			"outputs": [
+			]
 		}
 	],
 	"fields": [
@@ -254,7 +311,8 @@
 		{"name":"_randomNonce","type":"uint256"},
 		{"name":"admin","type":"address"},
 		{"name":"owners","type":"uint256[]"},
-		{"name":"creditProcessorCode","type":"cell"},
-		{"name":"fee_","type":"uint128"}
+		{"name":"version","type":"uint32"},
+		{"name":"fee_","type":"uint128"},
+		{"name":"creditProcessorCode","type":"cell"}
 	]
 }

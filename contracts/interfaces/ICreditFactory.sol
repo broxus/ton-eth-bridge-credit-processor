@@ -10,6 +10,14 @@ interface ICreditFactory is ICreditEventDataStructure {
         uint128 fee;
     }
 
+    event FeeChanged(uint128 value);
+    event CreditProcessorCodeChanged(uint256 hash);
+    event DeployProcessorForUserCalled(
+        IEthereumEvent.EthereumEventVoteData eventVoteData,
+        address configuration,
+        address sender
+    );
+
     function getDetails() external view responsible returns(CreditFactoryDetails);
 
     function getCreditProcessorCode() external view responsible returns(TvmCell);

@@ -178,6 +178,13 @@
 			]
 		},
 		{
+			"name": "payDebtForUser",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "cancel",
 			"inputs": [
 			],
