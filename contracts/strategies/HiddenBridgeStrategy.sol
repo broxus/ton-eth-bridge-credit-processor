@@ -68,7 +68,7 @@ contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, ITokensReceived
 
     function onTokenWallet(address wallet) external {
         require(msg.sender.value != 0 && msg.sender == tokenRoot, HiddenBridgeStrategyErrorCodes.NOT_PERMITTED);
-        require(tokenWallet.value != 0, HiddenBridgeStrategyErrorCodes.NON_EMPTY_TOKEN_WALLET);
+        require(tokenWallet.value == 0, HiddenBridgeStrategyErrorCodes.NON_EMPTY_TOKEN_WALLET);
         _reserve();
 
         tokenWallet = wallet;
@@ -160,6 +160,16 @@ contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, ITokensReceived
                 empty
             );
         }
+    }
+
+    function buildLevel3(address proxy, uint160 evmAddress, uint32 chainId) external pure returns(TvmCell) {
+
+        TvmBuilder b;
+        b.store(proxy);
+        b.store(evmAddress);
+        b.store(chainId);
+
+        return b.toCell();
     }
 
     function onReceiveTONsFromBridgeCallback(CreditEventData decodedEventData) override external {

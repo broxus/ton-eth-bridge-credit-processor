@@ -47,6 +47,17 @@
 			]
 		},
 		{
+			"name": "buildLevel3",
+			"inputs": [
+				{"name":"proxy","type":"address"},
+				{"name":"evmAddress","type":"uint160"},
+				{"name":"chainId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
 			"name": "onReceiveTONsFromBridgeCallback",
 			"inputs": [
 				{"components":[{"name":"amount","type":"uint128"},{"name":"user","type":"address"},{"name":"creditor","type":"address"},{"name":"recipient","type":"address"},{"name":"tokenAmount","type":"uint128"},{"name":"tonAmount","type":"uint128"},{"name":"swapType","type":"uint8"},{"components":[{"name":"numerator","type":"uint128"},{"name":"denominator","type":"uint128"}],"name":"slippage","type":"tuple"},{"name":"layer3","type":"cell"}],"name":"decodedEventData","type":"tuple"}
