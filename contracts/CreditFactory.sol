@@ -76,7 +76,7 @@ contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
         require(eventData.tokenAmount < eventData.amount ||
                 (eventData.tokenAmount == eventData.amount && eventData.tonAmount == 0),
             CreditFactoryErrorCodes.WRONG_TOKEN_AMOUNT);
-        require(eventData.swapType < 4, CreditFactoryErrorCodes.WRONG_SWAP_TYPE);
+        require(eventData.swapType < 2, CreditFactoryErrorCodes.WRONG_SWAP_TYPE);
         require(eventData.user.value != 0, CreditFactoryErrorCodes.WRONG_USER);
         require(eventData.recipient.value != 0, CreditFactoryErrorCodes.WRONG_RECIPIENT);
         require(eventData.slippage.denominator > eventData.slippage.numerator, CreditFactoryErrorCodes.WRONG_SLIPPAGE);
@@ -109,7 +109,7 @@ contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
             address(this).balance > grams + Gas.MAX_FWD_FEE &&
             grams >= Gas.CREDIT_BODY &&
             eventData.tokenAmount < eventData.amount &&
-            eventData.swapType < 4 &&
+            eventData.swapType < 2 &&
             eventData.user.value != 0 &&
             eventData.recipient.value != 0 &&
             eventData.slippage.denominator > eventData.slippage.numerator)
@@ -127,10 +127,25 @@ contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
         }
     }
 
+    function onReadyToProcess(
+        IEthereumEvent.EthereumEventVoteData eventVoteData,
+        address configuration
+    ) override external {
+        require(msg.sender == _getCreditProcessorAddress(eventVoteData, configuration));
+        ICreditProcessor(msg.sender).process{ value: 0, flag: MessageFlags.REMAINING_GAS }();
+    }
+
     function getCreditProcessorAddress(
         IEthereumEvent.EthereumEventVoteData eventVoteData,
         address configuration
     ) override external view responsible returns(address) {
+        return {value: 0, flag: MessageFlags.REMAINING_GAS} _getCreditProcessorAddress(eventVoteData, configuration);
+    }
+
+    function _getCreditProcessorAddress(
+        IEthereumEvent.EthereumEventVoteData eventVoteData,
+        address configuration
+    ) private view returns(address) {
         TvmCell stateInit = tvm.buildStateInit({
             contr: CreditProcessor,
             varInit: {
@@ -141,7 +156,7 @@ contract CreditFactory is ICreditFactory, RandomNonce, MultiOwner {
             code: creditProcessorCode
         });
 
-        return {value: 0, flag: MessageFlags.REMAINING_GAS} address(tvm.hash(stateInit));
+        return address(tvm.hash(stateInit));
     }
 
     function proxyTransferToRecipient(

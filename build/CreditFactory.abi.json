@@ -67,6 +67,15 @@
 			]
 		},
 		{
+			"name": "onReadyToProcess",
+			"inputs": [
+				{"components":[{"name":"eventTransaction","type":"uint256"},{"name":"eventIndex","type":"uint32"},{"name":"eventData","type":"cell"},{"name":"eventBlockNumber","type":"uint32"},{"name":"eventBlock","type":"uint256"}],"name":"eventVoteData","type":"tuple"},
+				{"name":"configuration","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "getCreditProcessorAddress",
 			"inputs": [
 				{"name":"answerId","type":"uint32"},

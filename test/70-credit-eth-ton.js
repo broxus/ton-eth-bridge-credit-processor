@@ -396,38 +396,51 @@ describe('Credit ETH-TON', async function () {
             if(!LOG_FULL_GAS) { await logGas(); }
 
             const details = await CreditProcessor.call({
-                method: 'getDetails',
-                params: {}
+               method: 'getDetails',
+               params: {}
             });
-            showCreditProcessorDetails(details);
-            const balances = await logCreditProcessorBalance();
 
-            expect(balances[options.token_id]).to.equal(new BigNumber(options.amount).toString(), `Wrong CreditProcessor ${token.symbol} balance`);
-            expect(states[details.state.toNumber()]).to.equal('EventConfirmed', `Wrong state: ${states[details.state.toNumber()]}`);
+            if (states[details.state.toNumber()] === 'EventConfirmed') {
+                logger.log(`(!) Not processed automatically  - state is EventConfirmed`);
+                showCreditProcessorDetails(details);
+                const balances = await logCreditProcessorBalance();
+                expect(balances[options.token_id]).to.equal(new BigNumber(options.amount).toString(), `Wrong CreditProcessor ${token.symbol} balance`);
+                expect(states[details.state.toNumber()]).to.equal('EventConfirmed', `Wrong state: ${states[details.state.toNumber()]}`);
+
+                if(!LOG_FULL_GAS) { await migration.balancesCheckpoint(); }
+
+                logger.log(``);
+                logger.log(`CreditFactory(${CreditFactory.address})`);
+                logger.log(`.runProcess(${CreditProcessor.address})`);
+                logger.log(``);
+
+                const tx = await CreditFactory.run({
+                    method: 'runProcess',
+                    params: {
+                        creditProcessor: CreditProcessor.address
+                    },
+                    keyPair: keyPairs[4]
+                });
+
+                logTx(tx);
+                if(!LOG_FULL_GAS) { await logGas(); }
+
+                await afterRun();
+            }
+
         });
 
-        it(`Check confirmed then CreditFactory.runProcess`, async function () {
+        it(`Check Processed`, async function () {
 
-            logger.log('#################################################');
+            logger.log('#################################################')
 
-            if(!LOG_FULL_GAS) { await migration.balancesCheckpoint(); }
+            logger.log(`Account${options.account_number} balance START: ` +
+                `${userBalancesStart[options.token_id] !== undefined ?
+                    userBalancesStart[options.token_id] + ' ' + token.symbol :
+                    '0 ' + token.symbol + ' (not deployed)'}, ` +
+                `${userBalancesStart.ton !== undefined ? userBalancesStart.ton + ' TON' : '0 TON (not deployed)'}`);
 
-            logger.log(``);
-            logger.log(`CreditFactory(${CreditFactory.address})`);
-            logger.log(`.runProcess(${CreditProcessor.address})`);
-            logger.log(``);
-
-            const tx = await CreditFactory.run({
-                method: 'runProcess',
-                params: {
-                    creditProcessor: CreditProcessor.address
-                },
-                keyPair: keyPairs[4]
-            });
-            logTx(tx);
-            if(!LOG_FULL_GAS) { await logGas(); }
-
-            await afterRun();
+            logger.log('#################################################')
 
             const details = await CreditProcessor.call({
                 method: 'getDetails',

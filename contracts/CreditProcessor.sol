@@ -20,6 +20,7 @@ import "../node_modules/dex/contracts/libraries/OperationTypes.sol";
 import './interfaces/IEthereumEventWithDetails.sol';
 import "./interfaces/ICreditFactory.sol";
 import "./interfaces/ICreditProcessor.sol";
+import "./interfaces/ICreditProcessorReadyToProcessCallback.sol";
 import "./interfaces/IReceiveTONsFromBridgeCallback.sol";
 
 import './Addresses.sol';
@@ -487,8 +488,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
     }
 
     function notifyEventStatusChanged(IBasicEvent.Status eventState_) override external {
-        require(eventAddress.value != 0, CreditProcessorErrorCodes.EMPTY_EVENT_ADDRESS);
-        require(msg.sender == eventAddress, CreditProcessorErrorCodes.NOT_PERMITTED);
+        require(msg.sender.value != 0 && msg.sender == eventAddress, CreditProcessorErrorCodes.NOT_PERMITTED);
         tvm.accept();
 
         eventState = eventState_;
@@ -575,6 +575,12 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         if (state != CreditProcessorStatus.EventConfirmed) {
             _changeState(CreditProcessorStatus.EventConfirmed);
         }
+
+        ICreditProcessorReadyToProcessCallback(deployer).onReadyToProcess{
+            value: Gas.READY_TO_PROCESS_CALLBACK_VALUE,
+            flag: MessageFlags.SENDER_PAYS_FEES,
+            bounce: false
+        }(eventVoteData, configuration);
     }
 
     function process() override external onlyState(CreditProcessorStatus.EventConfirmed) {
