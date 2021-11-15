@@ -1,0 +1,1380 @@
+.version sol 0.49.0
+
+.macro constructor
+DROP
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7_with_init_storage$
+}
+GETGLOB 6
+THROWIF 51
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+ENDS
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 29
+GETGLOB 9
+GETGLOB 10
+SDEQ
+DUP
+PUSHCONT {
+	DROP
+	DEPTH
+	ADDCONST -2
+	PICK
+	PUSHINT 2000000000
+	GEQ
+	DUP
+	PUSHCONT {
+		DROP
+		GETGLOB 2
+		EQINT 0
+		DUP
+		PUSHCONT {
+			DROP
+			GETGLOB 11
+			PARSEMSGADDR
+			INDEX 3
+			PLDU 256
+			NEQINT 0
+			DUP
+			PUSHCONT {
+				DROP
+				GETGLOB 10
+				PARSEMSGADDR
+				INDEX 3
+				PLDU 256
+				NEQINT 0
+			}
+			IF
+		}
+		IF
+	}
+	IF
+}
+IF
+PUSHCONT {
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 197
+	PUSHINT 1000000000
+	PUSHINT 0
+	RAWRESERVE
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 36
+	BLKPUSH 2, 0
+	SETGLOB 13
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 38
+	MYADDR
+	PUSHINT 0
+	PUSHINT 100000000
+	GETGLOB 11
+	NEWC
+	STSLICECONST x62_
+	STSLICE
+	PUSHSLICE x41dcd6500000000000000000000000000003_
+	STSLICER
+	ROLLREV 4
+	NEWC
+	STSLICECONST x542b1672
+	STU 128
+	STU 256
+	STSLICE
+	SWAP
+	NEWC
+	STSLICE
+	STBREFR
+	STBREFR
+	ENDC
+	PUSHINT 1
+	SENDRAWMSG
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 48
+	MYADDR
+	PUSHINT 0
+	GETGLOB 11
+	NEWC
+	STSLICECONST x62_
+	STSLICE
+	PUSHINT 1
+	STUR 111
+	ROTREV
+	NEWC
+	STSLICECONST x069a08f8
+	STSLICECONST x49b2f6d7
+	STU 256
+	STSLICE
+	STBREFR
+	ENDC
+	PUSHINT 128
+	SENDRAWMSG
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+}
+PUSHCONT {
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 57
+	GETGLOB 10
+	NEWC
+	STSLICECONST x42_
+	STSLICE
+	PUSHINT 111
+	STZEROES
+	ENDC
+	PUSHINT 128
+	ADDCONST 32
+	UFITS 8
+	SENDRAWMSG
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+}
+IFELSE
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+TRUE
+SETGLOB 7
+
+.macro getDetails
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 61
+LDU 32
+GETGLOB 4
+ROT
+SETINDEXQ 5
+SETGLOB 4
+ENDS
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 66
+GETGLOB 4
+PUSHINT 0
+SETINDEXQ 2
+FALSE
+SETINDEXQ 1
+PUSHINT 64
+SETINDEXQ 4
+SETGLOB 4
+GETGLOB 10
+GETGLOB 11
+GETGLOB 12
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+PUSH S3
+PUSHCONT {
+	PUSH S5
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 1
+	STUR 98
+	REVERSE 4, 0
+	NEWC
+	STSLICECONST x8a43f86a
+	STSLICE
+	ROTREV
+	NEWC
+	STSLICE
+	SWAP
+	NEWC
+	STSLICE
+	STBREFR
+	STBREFR
+	STBREFR
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	GETGLOB 4
+	DUP
+	INDEX 3
+	OVER
+	INDEX 2
+	GETGLOB 9
+	ROLL 3
+	INDEX 1
+	NEWC
+	PUSHINT 2
+	STZEROES
+	STI 1
+	PUSHINT 3
+	STZEROES
+	STSLICE
+	SWAP
+	STGRAMS
+	STDICT
+	PUSHINT 1
+	STUR 106
+	REVERSE 4, 0
+	NEWC
+	GETGLOB 4
+	INDEX 5
+	STUR 32
+	STSLICE
+	ROTREV
+	NEWC
+	STSLICE
+	SWAP
+	NEWC
+	STSLICE
+	STBREFR
+	STBREFR
+	STBREFR
+	ENDC
+	GETGLOB 4
+	INDEX 4
+	SENDRAWMSG
+}
+IFELSE
+IFREF {
+	CALL $c7_to_c4$
+}
+TRUE
+SETGLOB 7
+
+.macro onTokenWallet
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 69
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+ENDS
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 70
+GETGLOB 9
+PARSEMSGADDR
+INDEX 3
+PLDU 256
+NEQINT 0
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 9
+	GETGLOB 11
+	SDEQ
+}
+IF
+THROWIFNOT 1000
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 71
+GETGLOB 12
+PARSEMSGADDR
+INDEX 3
+PLDU 256
+THROWIF 1500
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 197
+PUSHINT 1000000000
+PUSHINT 0
+RAWRESERVE
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 74
+SETGLOB 12
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 76
+FALSE
+MYADDR
+GETGLOB 12
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHSLICE x3989680000000000000000000000000003_
+STSLICER
+ROTREV
+NEWC
+STSLICECONST x71eee875
+STSLICE
+STI 1
+STBREFR
+ENDC
+PUSHINT 1
+SENDRAWMSG
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 81
+GETGLOB 13
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 82
+PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+SETGLOB 13
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 83
+NEWC
+STSLICECONST x42_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 128
+ADDCONST 2
+UFITS 8
+SENDRAWMSG
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+TRUE
+SETGLOB 7
+
+.macro tokensReceivedCallback
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 86
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+LDUQ 128
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDU 128
+}
+IFNOT
+LDUQ 256
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDU 256
+}
+IFNOT
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+LDUQ 128
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDU 128
+}
+IFNOT
+LDREF
+ENDS
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 97
+GETGLOB 9
+PARSEMSGADDR
+INDEX 3
+PLDU 256
+NEQINT 0
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 9
+	GETGLOB 12
+	SDEQ
+}
+IF
+THROWIFNOT 1000
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 197
+PUSHINT 1000000000
+PUSHINT 0
+RAWRESERVE
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 99
+PUSHREF {
+}
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 101
+ROLL 9
+GETGLOB 12
+SDEQ
+DUP
+PUSHCONT {
+	DROP
+	PUSH S8
+	GETGLOB 11
+	SDEQ
+	DUP
+	PUSHCONT {
+		DROP
+		OVER
+		CALLREF {
+			CALL $EventDataDecoder_no_obj_isValid_macro$
+		}
+		DUP
+		PUSHCONT {
+			DROP
+			DEPTH
+			ADDCONST -2
+			PICK
+			PUSHINT 3000000000
+			GEQ
+		}
+		IF
+	}
+	IF
+}
+IF
+PUSHCONT {
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 108
+	OVER
+	CALLREF {
+		CALL $EventDataDecoder_no_obj_decode_macro$
+	}
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 109
+	DUP
+	INDEX 8
+	CTOS
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 111
+	DUP
+	SBITS
+	PUSHINT 459
+	EQUAL
+	PUSHCONT {
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 112
+		DUP
+		LDMSGADDR
+		LDU 160
+		LDU 32
+		POP S4
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 118
+		SWAP
+		NEWC
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 119
+		STU 160
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 120
+		STU 32
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 122
+		ENDC
+		SWAP
+		PUSH S3
+		INDEX 1
+		PUSHINT 0
+		PUSH S13
+		GETGLOB 9
+		NEWC
+		STSLICECONST x62_
+		STSLICE
+		PUSHINT 1
+		STUR 111
+		ROLLREV 5
+		NEWC
+		STSLICECONST x1047c904
+		STU 128
+		STU 128
+		STSLICE
+		ROTREV
+		NEWC
+		STSLICE
+		STREF
+		STBREFR
+		STBREFR
+		ENDC
+		PUSHINT 128
+		SENDRAWMSG
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+	}
+	PUSHCONT {
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 133
+		PUSH S2
+		TRUE
+		PUSH S3
+		INDEX 1
+		PUSHINT 0
+		PUSHINT 100000000
+		PUSH2 S14, S6
+		INDEX 1
+		PUSHINT 0
+		GETGLOB 9
+		NEWC
+		STSLICECONST x62_
+		STSLICE
+		PUSHSLICE x41dcd6500000000000000000000000000003_
+		STSLICER
+		ROLLREV 8
+		NEWC
+		STSLICECONST x3f10d1ab
+		STU 256
+		STSLICE
+		STU 128
+		ROLLREV 5
+		NEWC
+		STU 128
+		STU 128
+		STSLICE
+		STI 1
+		STREF
+		STBREFR
+		STBREFR
+		ENDC
+		PUSHINT 1
+		SENDRAWMSG
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 147
+		OVER
+		INDEX 1
+		NEWC
+		STSLICECONST x42_
+		STSLICE
+		PUSHINT 111
+		STZEROES
+		ENDC
+		PUSHINT 128
+		ADDCONST 2
+		UFITS 8
+		SENDRAWMSG
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+	}
+	IFELSE
+	DROP2
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+}
+PUSHCONT {
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 154
+	DUP
+	FALSE
+	PUSH S5
+	PUSHINT 0
+	PUSH2 S11, S8
+	GETGLOB 9
+	NEWC
+	STSLICECONST x62_
+	STSLICE
+	PUSHINT 1
+	STUR 111
+	ROLLREV 6
+	NEWC
+	STSLICECONST x4bf160e2
+	STSLICE
+	STU 128
+	STU 128
+	ROLLREV 3
+	NEWC
+	STSLICE
+	STI 1
+	STREF
+	STBREFR
+	STBREFR
+	ENDC
+	PUSHINT 128
+	SENDRAWMSG
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+}
+IFELSE
+BLKDROP 9
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+TRUE
+SETGLOB 7
+
+.macro buildLevel3
+DROP
+GETGLOB 6
+THROWIFNOT 76
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 165
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+LDUQ 160
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDU 160
+}
+IFNOT
+LDUQ 32
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDU 32
+}
+IFNOT
+ENDS
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 167
+NEWC
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 168
+ROLL 3
+SWAP
+STSLICE
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 169
+XCHG S1, S2
+STU 160
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 170
+STU 32
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 172
+ENDC
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHSLICE x000000000000000000000000318a45936_
+	STSLICER
+	STREF
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	DROP
+}
+IFELSE
+IFREF {
+	CALL $c7_to_c4$
+}
+TRUE
+SETGLOB 7
+
+.macro onReceiveTONsFromBridgeCallback
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 175
+LDUQ 128
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDU 128
+}
+IFNOT
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+LDMSGADDRQ
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDMSGADDR
+}
+IFNOT
+LDUQ 128
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDU 128
+}
+IFNOT
+LDUQ 128
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDU 128
+}
+IFNOT
+LDUQ 8
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDU 8
+}
+IFNOT
+LDUQ 128
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDU 128
+}
+IFNOT
+LDUQ 128
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+	LDU 128
+}
+IFNOT
+ROTREV
+PAIR
+SWAP
+LDREF
+ROLLREV 9
+TUPLE 9
+SWAP
+ENDS
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 197
+PUSHINT 1000000000
+PUSHINT 0
+RAWRESERVE
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 177
+INDEX 1
+NEWC
+STSLICECONST x42_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 128
+ADDCONST 2
+UFITS 8
+SENDRAWMSG
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+TRUE
+SETGLOB 7
+
+.macro on_bounce_macro
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 185
+ACCEPT
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 187
+LDU 32
+DROP
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 189
+DUP
+PUSHINT 110758136
+EQUAL
+DUP
+PUSHCONT {
+	DROP
+	DUP
+	PUSHINT 1911482485
+	EQUAL
+}
+IFNOT
+PUSHCONT {
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 192
+	GETGLOB 10
+	NEWC
+	STSLICECONST x42_
+	STSLICE
+	PUSHINT 111
+	STZEROES
+	ENDC
+	PUSHINT 128
+	ADDCONST 32
+	UFITS 8
+	SENDRAWMSG
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+}
+IF
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+
+.macro c7_to_c4
+GETGLOB 13
+GETGLOB 12
+GETGLOB 11
+GETGLOB 10
+GETGLOB 3
+GETGLOB 2
+NEWC
+STU 256
+STU 64
+STONE
+STSLICE
+ROLLREV 3
+NEWC
+STSLICE
+ROTREV
+NEWC
+STSLICE
+SWAP
+NEWC
+STSLICE
+STBREFR
+STBREFR
+STBREFR
+ENDC
+POPROOT
+
+.macro c4_to_c7
+PUSHROOT
+CTOS
+LDU 256 ; pubkey c4
+LDU 64 ; pubkey timestamp c4
+LDU 1 ; ctor flag
+NIP
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+ENDS
+SETGLOB 13
+SETGLOB 12
+SETGLOB 11
+SETGLOB 10
+SETGLOB 3
+SETGLOB 2
+
+.macro c4_to_c7_with_init_storage
+PUSHROOT
+CTOS
+SBITS
+GTINT 1
+PUSHREFCONT {
+	CALL $c4_to_c7$
+}
+PUSHCONT {
+	PUSHINT 0
+	PUSHROOT
+	CTOS
+	PLDDICT ; D
+	PUSHINT 1
+	OVER
+	PUSHINT 64
+	DICTUGET
+	PUSHCONT {
+		PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+	}
+	IFNOT
+	SETGLOB 10
+	PUSHINT 2
+	OVER
+	PUSHINT 64
+	DICTUGET
+	PUSHCONT {
+		PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+	}
+	IFNOT
+	SETGLOB 11
+	PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+	SETGLOB 12
+	PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+	SETGLOB 13
+	PUSHINT 64
+	DICTUGET
+	THROWIFNOT 61
+	PLDU 256
+	SETGLOB 2
+	PUSHINT 0 ; timestamp
+	SETGLOB 3
+}
+IFELSE
+
+.internal-alias :main_internal, 0
+.internal :main_internal
+PUSHROOT
+CTOS
+SBITS
+NEQINT 1
+SETGLOB 6
+PUSH S2
+CTOS
+LDU 4 ; bounced tail
+LDMSGADDR ; bounced src tail
+DROP
+SETGLOB 9
+MODPOW2 1
+GETGLOB 4
+TRUE
+SETINDEXQ 1
+PUSHINT 10000000
+SETINDEXQ 2
+NULL
+SETINDEXQ 3
+PUSHINT 0
+SETINDEXQ 4
+SETGLOB 4
+IFJMPREF {
+	OVER
+	LDSLICE 32
+	NIP
+	CALL $on_bounce_macro$
+}
+OVER
+SEMPTY ; isEmpty
+IFJMPREF {
+	GETGLOB 6
+	THROWIFNOT 76
+}
+OVER
+LDUQ 32  ; [funcId] body' ok
+THROWIFNOT 60 ; funcId body'
+OVER
+IFNOTJMPREF {
+	GETGLOB 6
+	THROWIFNOT 76
+}
+SWAP
+CALLREF {
+	CALL $public_function_selector$
+}
+GETGLOB 7
+ISNULL
+THROWIF 60
+
+.internal-alias :main_external, -1
+.internal :main_external
+PUSHROOT
+CTOS
+SBITS
+NEQINT 1
+SETGLOB 6
+PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+SETGLOB 9
+OVER
+CALLREF {
+	CALL $c4_to_c7_with_init_storage$
+}
+LDU 1 ; haveSign msgSlice
+SWAP
+PUSHCONT {
+	PUSHINT 512
+	LDSLICEX ; signatureSlice msgSlice
+	DUP
+	HASHSU ; signatureSlice msgSlice hashMsgSlice
+	SWAP
+	LDU 1 ; signatureSlice hashMsgSlice havePubkey msgSlice
+	SWAP
+	PUSHCONT {
+		LDU 256 ; signatureSlice hashMsgSlice pubkey msgSlice
+		XCHG S3
+		SWAP
+	}
+	PUSHCONT {
+		XCHG S2
+		GETGLOB 2
+	}
+	IFELSE
+	CHKSIGNU ; msgSlice isSigned
+	THROWIFNOT 40 ; msgSlice
+}
+PUSHCONT {
+	LDU 1 ; havePubkey msgSlice
+	SWAP
+	THROWIF 58 ; msgSlice
+}
+IFELSE
+LDU 64 ; timestamp msgSlice
+SWAP
+CALL $replay_protection_macro$
+LDU 32 ; expireAt msgSlice
+SWAP
+NOW ; msgSlice expireAt now
+GREATER ; msgSlice expireAt>now
+THROWIFNOT 57
+LDU 32 ; funcId body
+SWAP
+CALLREF {
+	CALL $public_function_selector$
+}
+GETGLOB 7
+ISNULL
+THROWIF 60
+
+.macro factory
+DROP
+ENDS
+CALLREF {
+	CALL $c4_to_c7$
+}
+GETGLOB 10
+OVER
+PUSHCONT {
+	PUSHSLICE xc0000000000000000000000000b9769fb2
+	NEWC
+	STSLICE
+	STSLICE
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+IF
+TRUE
+SETGLOB 7
+
+.macro tokenRoot
+DROP
+ENDS
+CALLREF {
+	CALL $c4_to_c7$
+}
+GETGLOB 11
+OVER
+PUSHCONT {
+	PUSHSLICE xc0000000000000000000000000fcbfaaf2
+	NEWC
+	STSLICE
+	STSLICE
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+IF
+TRUE
+SETGLOB 7
+
+.macro tokenWallet
+DROP
+ENDS
+CALLREF {
+	CALL $c4_to_c7$
+}
+GETGLOB 12
+OVER
+PUSHCONT {
+	PUSHSLICE xc0000000000000000000000000f1030b6b
+	NEWC
+	STSLICE
+	STSLICE
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+IF
+TRUE
+SETGLOB 7
+
+.globl	EventDataDecoder_with_obj_isValid
+.type	EventDataDecoder_with_obj_isValid, @function
+CALL $EventDataDecoder_with_obj_isValid_macro$
+
+.macro EventDataDecoder_with_obj_isValid_macro
+.loc ../contracts/libraries/EventDataDecoder.sol, 29
+DUP
+CTOS
+.loc ../contracts/libraries/EventDataDecoder.sol, 30
+DUP
+PUSHINT 904
+PUSHINT 1
+SCHKBITREFSQ
+DUP
+PUSHCONT {
+	DROP
+	DUP
+	LDREFRTOS
+	BLKDROP2 1, 2
+	PUSHINT 520
+	PUSHINT 1
+	SCHKBITREFSQ
+}
+IF
+NIP
+.loc ../contracts/libraries/EventDataDecoder.sol, 0
+
+.globl	EventDataDecoder_no_obj_isValid
+.type	EventDataDecoder_no_obj_isValid, @function
+CALL $EventDataDecoder_no_obj_isValid_macro$
+
+.macro EventDataDecoder_no_obj_isValid_macro
+.loc ../contracts/libraries/EventDataDecoder.sol, 29
+CTOS
+.loc ../contracts/libraries/EventDataDecoder.sol, 30
+DUP
+PUSHINT 904
+PUSHINT 1
+SCHKBITREFSQ
+DUP
+PUSHCONT {
+	DROP
+	DUP
+	LDREFRTOS
+	BLKDROP2 1, 2
+	PUSHINT 520
+	PUSHINT 1
+	SCHKBITREFSQ
+}
+IF
+NIP
+.loc ../contracts/libraries/EventDataDecoder.sol, 0
+
+.globl	EventDataDecoder_with_obj_decode
+.type	EventDataDecoder_with_obj_decode, @function
+CALL $EventDataDecoder_with_obj_decode_macro$
+
+.macro EventDataDecoder_with_obj_decode_macro
+.loc ../contracts/libraries/EventDataDecoder.sol, 34
+DUP
+CTOS
+.loc ../contracts/libraries/EventDataDecoder.sol, 35
+DUP
+LDREFRTOS
+BLKDROP2 1, 2
+.loc ../contracts/libraries/EventDataDecoder.sol, 37
+OVER
+LDU 128
+LDI 8
+POP S4
+.loc ../contracts/libraries/EventDataDecoder.sol, 39
+SWAP
+PUSH S3
+LDU 256
+POP S5
+PUSH S2
+NEWC
+STSLICECONST x9_
+STI 8
+STU 256
+ENDC
+CTOS
+PUSH S4
+LDU 256
+POP S6
+PUSH S3
+NEWC
+STSLICECONST x9_
+STI 8
+STU 256
+ENDC
+CTOS
+ROLL 5
+LDU 256
+DROP
+ROLL 4
+NEWC
+STSLICECONST x9_
+STI 8
+STU 256
+ENDC
+CTOS
+PUSH S4
+LDU 128
+POP S6
+PUSH S5
+LDU 128
+POP S7
+PUSH S6
+LDU 8
+POP S8
+PUSH S7
+LDU 128
+POP S9
+PUSH S8
+LDU 128
+POP S10
+PAIR
+ROLL 8
+LDREF
+DROP
+TUPLE 9
+.loc ../contracts/libraries/EventDataDecoder.sol, 0
+
+.globl	EventDataDecoder_no_obj_decode
+.type	EventDataDecoder_no_obj_decode, @function
+CALL $EventDataDecoder_no_obj_decode_macro$
+
+.macro EventDataDecoder_no_obj_decode_macro
+.loc ../contracts/libraries/EventDataDecoder.sol, 34
+CTOS
+.loc ../contracts/libraries/EventDataDecoder.sol, 35
+DUP
+LDREFRTOS
+BLKDROP2 1, 2
+.loc ../contracts/libraries/EventDataDecoder.sol, 37
+OVER
+LDU 128
+LDI 8
+POP S4
+.loc ../contracts/libraries/EventDataDecoder.sol, 39
+SWAP
+PUSH S3
+LDU 256
+POP S5
+PUSH S2
+NEWC
+STSLICECONST x9_
+STI 8
+STU 256
+ENDC
+CTOS
+PUSH S4
+LDU 256
+POP S6
+PUSH S3
+NEWC
+STSLICECONST x9_
+STI 8
+STU 256
+ENDC
+CTOS
+ROLL 5
+LDU 256
+DROP
+ROLL 4
+NEWC
+STSLICECONST x9_
+STI 8
+STU 256
+ENDC
+CTOS
+PUSH S4
+LDU 128
+POP S6
+PUSH S5
+LDU 128
+POP S7
+PUSH S6
+LDU 8
+POP S8
+PUSH S7
+LDU 128
+POP S9
+PUSH S8
+LDU 128
+POP S10
+PAIR
+ROLL 8
+LDREF
+DROP
+TUPLE 9
+.loc ../contracts/libraries/EventDataDecoder.sol, 0
+
+.macro public_function_selector
+DUP
+PUSHINT 1177097805
+LEQ
+IFJMPREF {
+	DUP
+	PUSHINT 172226666
+	EQUAL
+	IFJMPREF {
+		CALL $getDetails$
+	}
+	DUP
+	PUSHINT 795482752
+	EQUAL
+	IFJMPREF {
+		CALL $onReceiveTONsFromBridgeCallback$
+	}
+	DUP
+	PUSHINT 964075442
+	EQUAL
+	IFJMPREF {
+		CALL $factory$
+	}
+	DUP
+	PUSHINT 1177097805
+	EQUAL
+	IFJMPREF {
+		CALL $buildLevel3$
+	}
+}
+DUP
+PUSHINT 1896024939
+LEQ
+IFJMPREF {
+	DUP
+	PUSHINT 1196840156
+	EQUAL
+	IFJMPREF {
+		CALL $constructor$
+	}
+	DUP
+	PUSHINT 1236465367
+	EQUAL
+	IFJMPREF {
+		CALL $onTokenWallet$
+	}
+	DUP
+	PUSHINT 1497440185
+	EQUAL
+	IFJMPREF {
+		CALL $tokensReceivedCallback$
+	}
+	DUP
+	PUSHINT 1896024939
+	EQUAL
+	IFJMPREF {
+		CALL $tokenWallet$
+	}
+}
+DUP
+PUSHINT 2092935922
+EQUAL
+IFJMPREF {
+	CALL $tokenRoot$
+}
+

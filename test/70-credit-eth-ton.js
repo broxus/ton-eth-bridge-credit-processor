@@ -141,7 +141,11 @@ async function getUserBalances() {
         result[options.token_id] = new BigNumber(n).shiftedBy(-token.decimals).toString();
     }).catch(e => {/*ignored*/});
 
-    result.ton = (await locklift.ton.getBalance(User.address)).shiftedBy(-9).toString();
+    try {
+        result.ton = (await locklift.ton.getBalance(User.address)).shiftedBy(-9).toString();
+    } catch(e) {
+        /*ignored*/
+    }
 
     return result;
 
@@ -151,8 +155,10 @@ async function logCreditProcessorBalance() {
     const balances = await getCreditProcessorBalances();
 
     logger.log(`CreditProcessor balance: ` +
-        `${balances[options.token_id] !== undefined ? balances[options.token_id] + ' ' + token.symbol : '0 (not deployed)'}, ` +
-        `${balances.ton} TON`);
+        `${balances[options.token_id] !== undefined ? 
+            balances[options.token_id] + ' ' + token.symbol : 
+            '0 ' + token.symbol + ' (not deployed)'}, ` +
+        `${balances.ton !== undefined ? balances.ton + ' TON' : '0 TON (not deployed)'}`);
 
     return balances;
 }
@@ -161,8 +167,10 @@ async function logUserBalance() {
     const balances = await getUserBalances();
 
     logger.log(`Account${options.account_number} balance: ` +
-        `${balances[options.token_id] !== undefined ? balances[options.token_id] + ' ' + token.symbol : '0 (not deployed)'}, ` +
-        `${balances.ton} TON`);
+        `${balances[options.token_id] !== undefined ? 
+            balances[options.token_id] + ' ' + token.symbol :
+            '0 ' + token.symbol + ' (not deployed)'}, ` +
+        `${balances.ton !== undefined ? balances.ton + ' TON' : '0 TON (not deployed)'}`);
 
     return balances;
 }
@@ -305,7 +313,8 @@ describe('Credit ETH-TON', async function () {
             UserTokenWallet.setAddress(expectedUserTokenWallet);
             const alias = token.symbol + 'Wallet' + options.account_number;
             migration.store(UserTokenWallet, alias);
-            logger.log(`${alias}: ${CreditProcessorTokenWallet.address}`);
+            logger.log(`${alias}: ${UserTokenWallet.address}`);
+            await logUserBalance();
         });
 
         it(`Call RootTokenContract.getWalletAddress for CreditProcessor`, async function () {
@@ -387,38 +396,51 @@ describe('Credit ETH-TON', async function () {
             if(!LOG_FULL_GAS) { await logGas(); }
 
             const details = await CreditProcessor.call({
-                method: 'getDetails',
-                params: {}
+               method: 'getDetails',
+               params: {}
             });
-            showCreditProcessorDetails(details);
-            const balances = await logCreditProcessorBalance();
 
-            expect(balances[options.token_id]).to.equal(new BigNumber(options.amount).toString(), `Wrong CreditProcessor ${token.symbol} balance`);
-            expect(states[details.state.toNumber()]).to.equal('EventConfirmed', `Wrong state: ${states[details.state.toNumber()]}`);
+            if (states[details.state.toNumber()] === 'EventConfirmed') {
+                logger.log(`(!) Not processed automatically  - state is EventConfirmed`);
+                showCreditProcessorDetails(details);
+                const balances = await logCreditProcessorBalance();
+                expect(balances[options.token_id]).to.equal(new BigNumber(options.amount).toString(), `Wrong CreditProcessor ${token.symbol} balance`);
+                expect(states[details.state.toNumber()]).to.equal('EventConfirmed', `Wrong state: ${states[details.state.toNumber()]}`);
+
+                if(!LOG_FULL_GAS) { await migration.balancesCheckpoint(); }
+
+                logger.log(``);
+                logger.log(`CreditFactory(${CreditFactory.address})`);
+                logger.log(`.runProcess(${CreditProcessor.address})`);
+                logger.log(``);
+
+                const tx = await CreditFactory.run({
+                    method: 'runProcess',
+                    params: {
+                        creditProcessor: CreditProcessor.address
+                    },
+                    keyPair: keyPairs[4]
+                });
+
+                logTx(tx);
+                if(!LOG_FULL_GAS) { await logGas(); }
+
+                await afterRun();
+            }
+
         });
 
-        it(`Check confirmed then CreditFactory.runProcess`, async function () {
+        it(`Check Processed`, async function () {
 
-            logger.log('#################################################');
+            logger.log('#################################################')
 
-            if(!LOG_FULL_GAS) { await migration.balancesCheckpoint(); }
+            logger.log(`Account${options.account_number} balance START: ` +
+                `${userBalancesStart[options.token_id] !== undefined ?
+                    userBalancesStart[options.token_id] + ' ' + token.symbol :
+                    '0 ' + token.symbol + ' (not deployed)'}, ` +
+                `${userBalancesStart.ton !== undefined ? userBalancesStart.ton + ' TON' : '0 TON (not deployed)'}`);
 
-            logger.log(``);
-            logger.log(`CreditFactory(${CreditFactory.address})`);
-            logger.log(`.runProcess(${CreditProcessor.address})`);
-            logger.log(``);
-
-            const tx = await CreditFactory.run({
-                method: 'runProcess',
-                params: {
-                    creditProcessor: CreditProcessor.address
-                },
-                keyPair: keyPairs[4]
-            });
-            logTx(tx);
-            if(!LOG_FULL_GAS) { await logGas(); }
-
-            await afterRun();
+            logger.log('#################################################')
 
             const details = await CreditProcessor.call({
                 method: 'getDetails',

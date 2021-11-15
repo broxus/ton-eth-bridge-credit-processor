@@ -102,6 +102,10 @@ interface ICreditProcessor is ITokensReceivedCallback, ITokensBouncedCallback, I
     event ProcessCalled(address sender);
 
     ///////////////////////////////////////////////////////////////////////////////
+    // Public method allows to pay debt for user
+    function payDebtForUser() external;
+
+    ///////////////////////////////////////////////////////////////////////////////
     // Method for user allows change state to Cancelled
     // EventConfirmed -> Cancelled
     // SwapFailed -> Cancelled

@@ -4,3 +4,6 @@ locklift run --disable-build --config locklift.config.js --network local --scrip
 
 # деплой и настройка CreditFactory
 locklift run --disable-build --config locklift.config.js --network local --script scripts/65-deploy-credit-factory.js
+
+locklift run --disable-build --config locklift.config.js --network local --script scripts/75-deploy-strategy-factory.js
+locklift run --disable-build --config locklift.config.js --network local --script scripts/76-deploy-strategy.js

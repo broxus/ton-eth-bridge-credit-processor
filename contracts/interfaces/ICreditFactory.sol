@@ -2,13 +2,22 @@ pragma ton-solidity >= 0.39.0;
 
 import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
 import "./structures/ICreditEventDataStructure.sol";
+import "./ICreditProcessorReadyToProcessCallback.sol";
 
-interface ICreditFactory is ICreditEventDataStructure {
+interface ICreditFactory is ICreditEventDataStructure, ICreditProcessorReadyToProcessCallback {
 
     struct CreditFactoryDetails {
         uint256[] owners;
         uint128 fee;
     }
+
+    event FeeChanged(uint128 value);
+    event CreditProcessorCodeChanged(uint256 hash);
+    event DeployProcessorForUserCalled(
+        IEthereumEvent.EthereumEventVoteData eventVoteData,
+        address configuration,
+        address sender
+    );
 
     function getDetails() external view responsible returns(CreditFactoryDetails);
 

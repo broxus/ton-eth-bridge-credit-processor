@@ -26,7 +26,7 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/CreditProcessor.sol, 107
+.loc ../contracts/CreditProcessor.sol, 108
 DEPTH
 ADDCONST -2
 PICK
@@ -59,6 +59,16 @@ PUSHCONT {
 			CALLREF {
 				CALL $EventDataDecoder_no_obj_isValid_macro$
 			}
+			DUP
+			PUSHCONT {
+				DROP
+				GETGLOB 11
+				PARSEMSGADDR
+				INDEX 3
+				PLDU 256
+				NEQINT 0
+			}
+			IF
 		}
 		IF
 	}
@@ -66,14 +76,14 @@ PUSHCONT {
 }
 IF
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 111
+	.loc ../contracts/CreditProcessor.sol, 113
 	GETGLOB 10
 	INDEX 2
 	CALLREF {
 		CALL $EventDataDecoder_no_obj_decode_macro$
 	}
 	SETGLOB 12
-	.loc ../contracts/CreditProcessor.sol, 113
+	.loc ../contracts/CreditProcessor.sol, 115
 	GETGLOB 9
 	GETGLOB 12
 	INDEX 2
@@ -87,15 +97,15 @@ PUSHCONT {
 	IFELSE
 	DUP
 	SETGLOB 18
-	.loc ../contracts/CreditProcessor.sol, 115
+	.loc ../contracts/CreditProcessor.sol, 117
 	GETGLOB 12
 	INDEX 2
 	SDEQ
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 116
+		.loc ../contracts/CreditProcessor.sol, 118
 		OVER
 		SETGLOB 20
-		.loc ../contracts/CreditProcessor.sol, 117
+		.loc ../contracts/CreditProcessor.sol, 119
 		PUSHINT 5000000000
 		DEPTH
 		ADDCONST -2
@@ -108,15 +118,15 @@ PUSHCONT {
 		.loc ../contracts/CreditProcessor.sol, 0
 	}
 	IF
-	.loc ../contracts/CreditProcessor.sol, 120
+	.loc ../contracts/CreditProcessor.sol, 122
 	GETGLOB 12
 	INDEX 0
 	SETGLOB 13
-	.loc ../contracts/CreditProcessor.sol, 121
+	.loc ../contracts/CreditProcessor.sol, 123
 	GETGLOB 12
 	INDEX 7
 	SETGLOB 14
-	.loc ../contracts/CreditProcessor.sol, 123
+	.loc ../contracts/CreditProcessor.sol, 125
 	GETGLOB 18
 	GETGLOB 12
 	INDEX 2
@@ -215,10 +225,10 @@ PUSHCONT {
 	}
 	IF
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 134
+		.loc ../contracts/CreditProcessor.sol, 136
 		PUSHINT 0
 		SETGLOB 15
-		.loc ../contracts/CreditProcessor.sol, 136
+		.loc ../contracts/CreditProcessor.sol, 138
 		GETGLOB 10
 		GETGLOB 11
 		NEWC
@@ -242,7 +252,7 @@ PUSHCONT {
 		ENDC
 		PUSHINT 1
 		SENDRAWMSG
-		.loc ../contracts/CreditProcessor.sol, 142
+		.loc ../contracts/CreditProcessor.sol, 144
 		GETGLOB 11
 		NEWC
 		STSLICECONST x62_
@@ -252,12 +262,12 @@ PUSHCONT {
 		ENDC
 		PUSHINT 1
 		SENDRAWMSG
-		.loc ../contracts/CreditProcessor.sol, 148
+		.loc ../contracts/CreditProcessor.sol, 150
 		MYADDR
 		MYADDR
 		PUSHINT 0
 		PUSHINT 100000000
-		PUSHSLICE x62002056a14e28593e045e890b6939f1d4d730725a9651d037b8412b7a6e233f70a620ee6b280000000000000000000000000001
+		PUSHSLICE x62002f8b316e134d2f8c0f0472d78613a2c7cccdfe2247c99f0c78fff0e06e4d8f6fa0ee6b280000000000000000000000000001
 		NEWC
 		STSLICE
 		ROLLREV 4
@@ -274,10 +284,10 @@ PUSHCONT {
 		ENDC
 		PUSHINT 1
 		SENDRAWMSG
-		.loc ../contracts/CreditProcessor.sol, 159
+		.loc ../contracts/CreditProcessor.sol, 161
 		MYADDR
 		PUSHINT 0
-		PUSHSLICE x62002056a14e28593e045e890b6939f1d4d730725a9651d037b8412b7a6e233f70a6202faf080000000000000000000000000001
+		PUSHSLICE x62002f8b316e134d2f8c0f0472d78613a2c7cccdfe2247c99f0c78fff0e06e4d8f6fa02faf080000000000000000000000000001
 		NEWC
 		STSLICE
 		ROTREV
@@ -290,7 +300,7 @@ PUSHCONT {
 		ENDC
 		PUSHINT 1
 		SENDRAWMSG
-		.loc ../contracts/CreditProcessor.sol, 169
+		.loc ../contracts/CreditProcessor.sol, 171
 		CALLREF {
 			CALL $_buildDetails_internal_macro$
 		}
@@ -382,7 +392,7 @@ PUSHCONT {
 		.loc ../contracts/CreditProcessor.sol, 0
 	}
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 172
+		.loc ../contracts/CreditProcessor.sol, 174
 		GETGLOB 9
 		NEWC
 		STSLICECONST x42_
@@ -400,7 +410,7 @@ PUSHCONT {
 	.loc ../contracts/CreditProcessor.sol, 0
 }
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 175
+	.loc ../contracts/CreditProcessor.sol, 177
 	GETGLOB 9
 	NEWC
 	STSLICECONST x42_
@@ -428,13 +438,13 @@ SETGLOB 7
 CALL $_changeState_internal_macro$
 
 .macro _changeState_internal_macro
-.loc ../contracts/CreditProcessor.sol, 180
+.loc ../contracts/CreditProcessor.sol, 182
 GETGLOB 15
 SETGLOB 16
-.loc ../contracts/CreditProcessor.sol, 181
+.loc ../contracts/CreditProcessor.sol, 183
 DUP
 SETGLOB 15
-.loc ../contracts/CreditProcessor.sol, 182
+.loc ../contracts/CreditProcessor.sol, 184
 CALLREF {
 	CALL $_buildDetails_internal_macro$
 }
@@ -534,14 +544,14 @@ SENDRAWMSG
 CALL $_buildDetails_internal_macro$
 
 .macro _buildDetails_internal_macro
-.loc ../contracts/CreditProcessor.sol, 186
+.loc ../contracts/CreditProcessor.sol, 188
 GETGLOB 10
 GETGLOB 11
 GETGLOB 13
 GETGLOB 14
-PUSHSLICE x801195a0ae683ee9ea05da7c80a1ddc8ccb3251ad5ef4abb8a2738fc6ea7245d5ed_
-PUSHSLICE x800f10c704127f533c232850d594598e96dc83f480c23eff41d9c4d17d043573795_
-PUSHSLICE x800815a8538a164f8117a242da4e7c7535cc1c96a594740dee104ade9b88cfdc299_
+PUSHSLICE x80134c35a0570c144e0877e944e542c2dc83fb89626e422c685393f889a2c5bf1ed_
+PUSHSLICE x801ebcaf080c5be6ae9c8ae33bd27dbf4b4195f2bcac9c1b70afda9b7b6b8e918a9_
+PUSHSLICE x800be2cc5b84d34be303c11cb5e184e8b1f3337f8891f267c31e3ffc381b9363dbf_
 GETGLOB 15
 GETGLOB 17
 GETGLOB 18
@@ -569,14 +579,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 217
+.loc ../contracts/CreditProcessor.sol, 219
 LDU 32
 GETGLOB 4
 ROT
 SETINDEXQ 5
 SETGLOB 4
 ENDS
-.loc ../contracts/CreditProcessor.sol, 218
+.loc ../contracts/CreditProcessor.sol, 220
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -808,14 +818,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 221
+.loc ../contracts/CreditProcessor.sol, 223
 LDU 32
 GETGLOB 4
 ROT
 SETINDEXQ 5
 SETGLOB 4
 ENDS
-.loc ../contracts/CreditProcessor.sol, 222
+.loc ../contracts/CreditProcessor.sol, 224
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -945,9 +955,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 225
+.loc ../contracts/CreditProcessor.sol, 227
 ENDS
-.loc ../contracts/CreditProcessor.sol, 94
+.loc ../contracts/CreditProcessor.sol, 95
 GETGLOB 9
 GETGLOB 12
 INDEX 1
@@ -962,10 +972,10 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 95
+.loc ../contracts/CreditProcessor.sol, 96
 GETGLOB 15
 THROWIF 1001
-.loc ../contracts/CreditProcessor.sol, 232
+.loc ../contracts/CreditProcessor.sol, 234
 DEPTH
 ADDCONST -2
 PICK
@@ -975,19 +985,19 @@ ADD
 UFITS 128
 GEQ
 THROWIFNOT 2000
-.loc ../contracts/CreditProcessor.sol, 233
+.loc ../contracts/CreditProcessor.sol, 235
 GETGLOB 21
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIF 1021
-.loc ../contracts/CreditProcessor.sol, 234
+.loc ../contracts/CreditProcessor.sol, 236
 GETGLOB 11
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIFNOT 1010
-.loc ../contracts/CreditProcessor.sol, 236
+.loc ../contracts/CreditProcessor.sol, 238
 GETGLOB 9
 PUSHSLICE xc00000000000000000000000002117193e
 NEWC
@@ -996,7 +1006,7 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 237
+.loc ../contracts/CreditProcessor.sol, 239
 GETGLOB 10
 GETGLOB 11
 NEWC
@@ -1036,7 +1046,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 244
+.loc ../contracts/CreditProcessor.sol, 246
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1049,7 +1059,7 @@ ENDS
 .loc ../contracts/CreditProcessor.sol, 0
 GETGLOB 15
 THROWIF 1001
-.loc ../contracts/CreditProcessor.sol, 248
+.loc ../contracts/CreditProcessor.sol, 250
 GETGLOB 9
 PARSEMSGADDR
 INDEX 3
@@ -1064,17 +1074,17 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 249
+.loc ../contracts/CreditProcessor.sol, 251
 GETGLOB 21
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIF 1021
-.loc ../contracts/CreditProcessor.sol, 251
-ACCEPT
 .loc ../contracts/CreditProcessor.sol, 253
-SETGLOB 21
+ACCEPT
 .loc ../contracts/CreditProcessor.sol, 255
+SETGLOB 21
+.loc ../contracts/CreditProcessor.sol, 257
 CALLREF {
 	CALL $checkAddressesDerived_internal_macro$
 }
@@ -1090,7 +1100,7 @@ SETGLOB 7
 CALL $checkAddressesDerived_internal_macro$
 
 .macro checkAddressesDerived_internal_macro
-.loc ../contracts/CreditProcessor.sol, 259
+.loc ../contracts/CreditProcessor.sol, 261
 GETGLOB 21
 PARSEMSGADDR
 INDEX 3
@@ -1162,7 +1172,7 @@ PUSHCONT {
 }
 IF
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 263
+	.loc ../contracts/CreditProcessor.sol, 265
 	GETPARAM 7
 	INDEX 0
 	GETGLOB 23
@@ -1171,7 +1181,7 @@ PUSHCONT {
 	UFITS 128
 	GEQ
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 264
+		.loc ../contracts/CreditProcessor.sol, 266
 		GETGLOB 10
 		GETGLOB 23
 		GETGLOB 11
@@ -1197,7 +1207,7 @@ PUSHCONT {
 		ENDC
 		PUSHINT 1
 		SENDRAWMSG
-		.loc ../contracts/CreditProcessor.sol, 269
+		.loc ../contracts/CreditProcessor.sol, 271
 		PUSHINT 2
 		CALLREF {
 			CALL $_changeState_internal_macro$
@@ -1205,7 +1215,7 @@ PUSHCONT {
 		.loc ../contracts/CreditProcessor.sol, 0
 	}
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 271
+		.loc ../contracts/CreditProcessor.sol, 273
 		PUSHINT 1
 		CALLREF {
 			CALL $_changeState_internal_macro$
@@ -1227,9 +1237,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 276
+.loc ../contracts/CreditProcessor.sol, 278
 ENDS
-.loc ../contracts/CreditProcessor.sol, 94
+.loc ../contracts/CreditProcessor.sol, 95
 GETGLOB 9
 GETGLOB 12
 INDEX 1
@@ -1244,12 +1254,12 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 95
+.loc ../contracts/CreditProcessor.sol, 96
 GETGLOB 15
 EQINT 1
-.loc ../contracts/CreditProcessor.sol, 69
+.loc ../contracts/CreditProcessor.sol, 70
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 282
+.loc ../contracts/CreditProcessor.sol, 284
 DEPTH
 ADDCONST -2
 PICK
@@ -1259,7 +1269,7 @@ ADD
 UFITS 128
 GEQ
 THROWIFNOT 100
-.loc ../contracts/CreditProcessor.sol, 283
+.loc ../contracts/CreditProcessor.sol, 285
 GETGLOB 9
 PUSHSLICE xc000000000000000000000000018cf006a
 NEWC
@@ -1268,12 +1278,12 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 284
+.loc ../contracts/CreditProcessor.sol, 286
 PUSHINT 2
 CALLREF {
 	CALL $_changeState_internal_macro$
 }
-.loc ../contracts/CreditProcessor.sol, 286
+.loc ../contracts/CreditProcessor.sol, 288
 GETGLOB 10
 GETGLOB 11
 NEWC
@@ -1312,9 +1322,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 292
+.loc ../contracts/CreditProcessor.sol, 294
 ENDS
-.loc ../contracts/CreditProcessor.sol, 94
+.loc ../contracts/CreditProcessor.sol, 95
 GETGLOB 9
 GETGLOB 12
 INDEX 1
@@ -1329,10 +1339,10 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 95
+.loc ../contracts/CreditProcessor.sol, 96
 GETGLOB 15
 THROWIF 1001
-.loc ../contracts/CreditProcessor.sol, 299
+.loc ../contracts/CreditProcessor.sol, 301
 DEPTH
 ADDCONST -2
 PICK
@@ -1342,19 +1352,19 @@ ADD
 UFITS 128
 GEQ
 THROWIFNOT 2000
-.loc ../contracts/CreditProcessor.sol, 300
+.loc ../contracts/CreditProcessor.sol, 302
 GETGLOB 22
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIF 1031
-.loc ../contracts/CreditProcessor.sol, 301
+.loc ../contracts/CreditProcessor.sol, 303
 GETGLOB 11
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIFNOT 1010
-.loc ../contracts/CreditProcessor.sol, 303
+.loc ../contracts/CreditProcessor.sol, 305
 GETGLOB 9
 PUSHSLICE xc000000000000000000000000048e276a3
 NEWC
@@ -1363,7 +1373,7 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 304
+.loc ../contracts/CreditProcessor.sol, 306
 GETGLOB 11
 NEWC
 STSLICECONST x62_
@@ -1389,7 +1399,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 311
+.loc ../contracts/CreditProcessor.sol, 313
 LDREF
 LDMSGADDRQ
 PUSHCONT {
@@ -1476,7 +1486,7 @@ ENDS
 .loc ../contracts/CreditProcessor.sol, 0
 GETGLOB 15
 THROWIF 1001
-.loc ../contracts/CreditProcessor.sol, 316
+.loc ../contracts/CreditProcessor.sol, 318
 GETGLOB 9
 PARSEMSGADDR
 INDEX 3
@@ -1491,22 +1501,22 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 317
+.loc ../contracts/CreditProcessor.sol, 319
 GETGLOB 22
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIF 1031
-.loc ../contracts/CreditProcessor.sol, 319
+.loc ../contracts/CreditProcessor.sol, 321
 DROP
 ACCEPT
-.loc ../contracts/CreditProcessor.sol, 321
+.loc ../contracts/CreditProcessor.sol, 323
 INDEX 3
 SETGLOB 22
-.loc ../contracts/CreditProcessor.sol, 322
+.loc ../contracts/CreditProcessor.sol, 324
 INDEX 2
 SETGLOB 23
-.loc ../contracts/CreditProcessor.sol, 324
+.loc ../contracts/CreditProcessor.sol, 326
 GETGLOB 22
 NEWC
 STSLICECONST x62_
@@ -1532,9 +1542,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 331
+.loc ../contracts/CreditProcessor.sol, 333
 ENDS
-.loc ../contracts/CreditProcessor.sol, 94
+.loc ../contracts/CreditProcessor.sol, 95
 GETGLOB 9
 GETGLOB 12
 INDEX 1
@@ -1549,10 +1559,10 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 95
+.loc ../contracts/CreditProcessor.sol, 96
 GETGLOB 15
 THROWIF 1001
-.loc ../contracts/CreditProcessor.sol, 338
+.loc ../contracts/CreditProcessor.sol, 340
 DEPTH
 ADDCONST -2
 PICK
@@ -1562,19 +1572,19 @@ ADD
 UFITS 128
 GEQ
 THROWIFNOT 2000
-.loc ../contracts/CreditProcessor.sol, 339
+.loc ../contracts/CreditProcessor.sol, 341
 GETGLOB 24
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIF 1041
-.loc ../contracts/CreditProcessor.sol, 340
+.loc ../contracts/CreditProcessor.sol, 342
 GETGLOB 22
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIFNOT 1030
-.loc ../contracts/CreditProcessor.sol, 342
+.loc ../contracts/CreditProcessor.sol, 344
 GETGLOB 9
 PUSHSLICE xc0000000000000000000000000507c8e80
 NEWC
@@ -1583,7 +1593,7 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 343
+.loc ../contracts/CreditProcessor.sol, 345
 GETGLOB 22
 NEWC
 STSLICECONST x62_
@@ -1609,9 +1619,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 350
+.loc ../contracts/CreditProcessor.sol, 352
 ENDS
-.loc ../contracts/CreditProcessor.sol, 94
+.loc ../contracts/CreditProcessor.sol, 95
 GETGLOB 9
 GETGLOB 12
 INDEX 1
@@ -1626,10 +1636,10 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 95
+.loc ../contracts/CreditProcessor.sol, 96
 GETGLOB 15
 THROWIF 1001
-.loc ../contracts/CreditProcessor.sol, 357
+.loc ../contracts/CreditProcessor.sol, 359
 DEPTH
 ADDCONST -2
 PICK
@@ -1639,24 +1649,24 @@ ADD
 UFITS 128
 GEQ
 THROWIFNOT 2000
-.loc ../contracts/CreditProcessor.sol, 358
+.loc ../contracts/CreditProcessor.sol, 360
 GETGLOB 24
-PUSHSLICE x800815a8538a164f8117a242da4e7c7535cc1c96a594740dee104ade9b88cfdc299_
+PUSHSLICE x800be2cc5b84d34be303c11cb5e184e8b1f3337f8891f267c31e3ffc381b9363dbf_
 SDEQ
 THROWIF 1070
-.loc ../contracts/CreditProcessor.sol, 359
+.loc ../contracts/CreditProcessor.sol, 361
 GETGLOB 24
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIFNOT 1040
-.loc ../contracts/CreditProcessor.sol, 360
+.loc ../contracts/CreditProcessor.sol, 362
 GETGLOB 28
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIF 1061
-.loc ../contracts/CreditProcessor.sol, 362
+.loc ../contracts/CreditProcessor.sol, 364
 GETGLOB 9
 PUSHSLICE xc000000000000000000000000066943bc7
 NEWC
@@ -1665,9 +1675,9 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 363
+.loc ../contracts/CreditProcessor.sol, 365
 PUSHREF {
-	.blob x6200465682b9a0fba7a81769f20287772332cc946b57bd2aee289ce3f1ba9c91757b00000000000000000000000000003d1bd325380fc6dd
+	.blob x62004d30d6815c30513821dfa513950b0b720fee2589b908b1a14e4fe2268b16fc7b00000000000000000000000000003d1bd325380fc6dd
 }
 PUSHINT 64
 SENDRAWMSG
@@ -1687,9 +1697,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 370
+.loc ../contracts/CreditProcessor.sol, 372
 ENDS
-.loc ../contracts/CreditProcessor.sol, 94
+.loc ../contracts/CreditProcessor.sol, 95
 GETGLOB 9
 GETGLOB 12
 INDEX 1
@@ -1704,10 +1714,10 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 95
+.loc ../contracts/CreditProcessor.sol, 96
 GETGLOB 15
 THROWIF 1001
-.loc ../contracts/CreditProcessor.sol, 377
+.loc ../contracts/CreditProcessor.sol, 379
 GETPARAM 7
 INDEX 0
 PUSHINT 100000000
@@ -1716,24 +1726,24 @@ ADD
 UFITS 128
 GEQ
 THROWIFNOT 2000
-.loc ../contracts/CreditProcessor.sol, 378
+.loc ../contracts/CreditProcessor.sol, 380
 GETGLOB 24
-PUSHSLICE x800815a8538a164f8117a242da4e7c7535cc1c96a594740dee104ade9b88cfdc299_
+PUSHSLICE x800be2cc5b84d34be303c11cb5e184e8b1f3337f8891f267c31e3ffc381b9363dbf_
 SDEQ
 THROWIF 1070
-.loc ../contracts/CreditProcessor.sol, 379
+.loc ../contracts/CreditProcessor.sol, 381
 GETGLOB 24
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIFNOT 1040
-.loc ../contracts/CreditProcessor.sol, 380
+.loc ../contracts/CreditProcessor.sol, 382
 GETGLOB 27
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIF 1051
-.loc ../contracts/CreditProcessor.sol, 382
+.loc ../contracts/CreditProcessor.sol, 384
 GETGLOB 9
 PUSHSLICE xc00000000000000000000000002e349466
 NEWC
@@ -1742,10 +1752,10 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 383
+.loc ../contracts/CreditProcessor.sol, 385
 GETGLOB 24
-PUSHSLICE x800815a8538a164f8117a242da4e7c7535cc1c96a594740dee104ade9b88cfdc299_
-PUSHSLICE x6200465682b9a0fba7a81769f20287772332cc946b57bd2aee289ce3f1ba9c91757b4_
+PUSHSLICE x800be2cc5b84d34be303c11cb5e184e8b1f3337f8891f267c31e3ffc381b9363dbf_
+PUSHSLICE x62004d30d6815c30513821dfa513950b0b720fee2589b908b1a14e4fe2268b16fc7b4_
 NEWC
 STSLICE
 PUSHINT 1
@@ -1779,7 +1789,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 390
+.loc ../contracts/CreditProcessor.sol, 392
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1837,7 +1847,7 @@ ENDS
 .loc ../contracts/CreditProcessor.sol, 0
 GETGLOB 15
 THROWIF 1001
-.loc ../contracts/CreditProcessor.sol, 391
+.loc ../contracts/CreditProcessor.sol, 393
 GETGLOB 9
 PARSEMSGADDR
 INDEX 3
@@ -1852,38 +1862,38 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 392
+.loc ../contracts/CreditProcessor.sol, 394
 GETGLOB 24
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIF 1041
-.loc ../contracts/CreditProcessor.sol, 394
-ACCEPT
 .loc ../contracts/CreditProcessor.sol, 396
+ACCEPT
+.loc ../contracts/CreditProcessor.sol, 398
 INDEX 3
 DUP
 SETGLOB 24
-.loc ../contracts/CreditProcessor.sol, 398
-PUSHSLICE x800815a8538a164f8117a242da4e7c7535cc1c96a594740dee104ade9b88cfdc299_
+.loc ../contracts/CreditProcessor.sol, 400
+PUSHSLICE x800be2cc5b84d34be303c11cb5e184e8b1f3337f8891f267c31e3ffc381b9363dbf_
 SDEQ
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 399
+	.loc ../contracts/CreditProcessor.sol, 401
 	GETGLOB 26
 	SETGLOB 25
 	.loc ../contracts/CreditProcessor.sol, 0
 }
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 401
+	.loc ../contracts/CreditProcessor.sol, 403
 	PUSHREF {
-		.blob x6200465682b9a0fba7a81769f20287772332cc946b57bd2aee289ce3f1ba9c91757b202faf0800000000000000000000000000003d1bd325380fc6dd
+		.blob x62004d30d6815c30513821dfa513950b0b720fee2589b908b1a14e4fe2268b16fc7b202faf0800000000000000000000000000003d1bd325380fc6dd
 	}
 	PUSHINT 1
 	SENDRAWMSG
-	.loc ../contracts/CreditProcessor.sol, 408
+	.loc ../contracts/CreditProcessor.sol, 410
 	GETGLOB 24
-	PUSHSLICE x800815a8538a164f8117a242da4e7c7535cc1c96a594740dee104ade9b88cfdc299_
-	PUSHSLICE x6200465682b9a0fba7a81769f20287772332cc946b57bd2aee289ce3f1ba9c91757b202faf080000000000000000000000000001
+	PUSHSLICE x800be2cc5b84d34be303c11cb5e184e8b1f3337f8891f267c31e3ffc381b9363dbf_
+	PUSHSLICE x62004d30d6815c30513821dfa513950b0b720fee2589b908b1a14e4fe2268b16fc7b202faf080000000000000000000000000001
 	NEWC
 	STSLICE
 	ROTREV
@@ -1899,7 +1909,7 @@ PUSHCONT {
 	ENDC
 	PUSHINT 1
 	SENDRAWMSG
-	.loc ../contracts/CreditProcessor.sol, 414
+	.loc ../contracts/CreditProcessor.sol, 416
 	MYADDR
 	MYADDR
 	PUSHINT 0
@@ -1924,7 +1934,7 @@ PUSHCONT {
 	ENDC
 	PUSHINT 1
 	SENDRAWMSG
-	.loc ../contracts/CreditProcessor.sol, 425
+	.loc ../contracts/CreditProcessor.sol, 427
 	MYADDR
 	PUSHINT 0
 	GETGLOB 24
@@ -1962,7 +1972,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 437
+.loc ../contracts/CreditProcessor.sol, 439
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -1975,28 +1985,28 @@ ENDS
 .loc ../contracts/CreditProcessor.sol, 0
 GETGLOB 15
 THROWIF 1001
-.loc ../contracts/CreditProcessor.sol, 438
+.loc ../contracts/CreditProcessor.sol, 440
 GETGLOB 9
-PUSHSLICE x800815a8538a164f8117a242da4e7c7535cc1c96a594740dee104ade9b88cfdc299_
+PUSHSLICE x800be2cc5b84d34be303c11cb5e184e8b1f3337f8891f267c31e3ffc381b9363dbf_
 SDEQ
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 440
-ACCEPT
 .loc ../contracts/CreditProcessor.sol, 442
+ACCEPT
+.loc ../contracts/CreditProcessor.sol, 444
 DUP
 SETGLOB 26
-.loc ../contracts/CreditProcessor.sol, 444
-PUSHSLICE x800815a8538a164f8117a242da4e7c7535cc1c96a594740dee104ade9b88cfdc299_
+.loc ../contracts/CreditProcessor.sol, 446
+PUSHSLICE x800be2cc5b84d34be303c11cb5e184e8b1f3337f8891f267c31e3ffc381b9363dbf_
 GETGLOB 24
 SDEQ
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 445
+	.loc ../contracts/CreditProcessor.sol, 447
 	DUP
 	SETGLOB 25
 	.loc ../contracts/CreditProcessor.sol, 0
 }
 IF
-.loc ../contracts/CreditProcessor.sol, 448
+.loc ../contracts/CreditProcessor.sol, 450
 TRUE
 MYADDR
 PUSH S2
@@ -2014,7 +2024,7 @@ STBREFR
 ENDC
 PUSHINT 1
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 449
+.loc ../contracts/CreditProcessor.sol, 451
 MYADDR
 SWAP
 NEWC
@@ -2030,7 +2040,7 @@ STBREFR
 ENDC
 PUSHINT 1
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 451
+.loc ../contracts/CreditProcessor.sol, 453
 CALLREF {
 	CALL $checkAddressesDerived_internal_macro$
 }
@@ -2050,7 +2060,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 454
+.loc ../contracts/CreditProcessor.sol, 456
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -2063,7 +2073,7 @@ ENDS
 .loc ../contracts/CreditProcessor.sol, 0
 GETGLOB 15
 THROWIF 1001
-.loc ../contracts/CreditProcessor.sol, 455
+.loc ../contracts/CreditProcessor.sol, 457
 GETGLOB 9
 PARSEMSGADDR
 INDEX 3
@@ -2078,12 +2088,12 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 457
-ACCEPT
 .loc ../contracts/CreditProcessor.sol, 459
+ACCEPT
+.loc ../contracts/CreditProcessor.sol, 461
 DUP
 SETGLOB 25
-.loc ../contracts/CreditProcessor.sol, 461
+.loc ../contracts/CreditProcessor.sol, 463
 TRUE
 MYADDR
 PUSH S2
@@ -2101,7 +2111,7 @@ STBREFR
 ENDC
 PUSHINT 1
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 462
+.loc ../contracts/CreditProcessor.sol, 464
 MYADDR
 SWAP
 NEWC
@@ -2117,7 +2127,7 @@ STBREFR
 ENDC
 PUSHINT 1
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 464
+.loc ../contracts/CreditProcessor.sol, 466
 CALLREF {
 	CALL $checkAddressesDerived_internal_macro$
 }
@@ -2137,7 +2147,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 467
+.loc ../contracts/CreditProcessor.sol, 469
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -2150,22 +2160,22 @@ ENDS
 .loc ../contracts/CreditProcessor.sol, 0
 GETGLOB 15
 THROWIF 1001
-.loc ../contracts/CreditProcessor.sol, 468
+.loc ../contracts/CreditProcessor.sol, 470
 GETGLOB 9
-PUSHSLICE x801195a0ae683ee9ea05da7c80a1ddc8ccb3251ad5ef4abb8a2738fc6ea7245d5ed_
+PUSHSLICE x80134c35a0570c144e0877e944e542c2dc83fb89626e422c685393f889a2c5bf1ed_
 SDEQ
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 469
+.loc ../contracts/CreditProcessor.sol, 471
 GETGLOB 28
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIF 1061
-.loc ../contracts/CreditProcessor.sol, 471
-ACCEPT
 .loc ../contracts/CreditProcessor.sol, 473
-SETGLOB 28
+ACCEPT
 .loc ../contracts/CreditProcessor.sol, 475
+SETGLOB 28
+.loc ../contracts/CreditProcessor.sol, 477
 CALLREF {
 	CALL $checkAddressesDerived_internal_macro$
 }
@@ -2185,7 +2195,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 478
+.loc ../contracts/CreditProcessor.sol, 480
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -2198,16 +2208,16 @@ ENDS
 .loc ../contracts/CreditProcessor.sol, 0
 GETGLOB 15
 THROWIF 1001
-.loc ../contracts/CreditProcessor.sol, 479
+.loc ../contracts/CreditProcessor.sol, 481
 GETGLOB 9
-PUSHSLICE x801195a0ae683ee9ea05da7c80a1ddc8ccb3251ad5ef4abb8a2738fc6ea7245d5ed_
+PUSHSLICE x80134c35a0570c144e0877e944e542c2dc83fb89626e422c685393f889a2c5bf1ed_
 SDEQ
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 481
-ACCEPT
 .loc ../contracts/CreditProcessor.sol, 483
-SETGLOB 27
+ACCEPT
 .loc ../contracts/CreditProcessor.sol, 485
+SETGLOB 27
+.loc ../contracts/CreditProcessor.sol, 487
 CALLREF {
 	CALL $checkAddressesDerived_internal_macro$
 }
@@ -2227,28 +2237,32 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 488
+.loc ../contracts/CreditProcessor.sol, 490
 LDU 8
 OVER
 GTINT 3
 THROWIF 73
 ENDS
-.loc ../contracts/CreditProcessor.sol, 489
-GETGLOB 21
+.loc ../contracts/CreditProcessor.sol, 491
+GETGLOB 9
 PARSEMSGADDR
 INDEX 3
 PLDU 256
-THROWIFNOT 1020
-.loc ../contracts/CreditProcessor.sol, 490
-GETGLOB 9
-GETGLOB 21
-SDEQ
+NEQINT 0
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 9
+	GETGLOB 21
+	SDEQ
+}
+IF
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 491
+.loc ../contracts/CreditProcessor.sol, 492
 ACCEPT
-.loc ../contracts/CreditProcessor.sol, 493
+.loc ../contracts/CreditProcessor.sol, 494
 SETGLOB 17
-.loc ../contracts/CreditProcessor.sol, 495
+.loc ../contracts/CreditProcessor.sol, 496
 GETGLOB 15
 EQINT 2
 DUP
@@ -2259,11 +2273,11 @@ PUSHCONT {
 }
 IFNOT
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 498
+	.loc ../contracts/CreditProcessor.sol, 499
 	GETGLOB 17
 	EQINT 2
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 499
+		.loc ../contracts/CreditProcessor.sol, 500
 		PUSHINT 3
 		CALLREF {
 			CALL $_changeState_internal_macro$
@@ -2274,7 +2288,7 @@ PUSHCONT {
 		GETGLOB 17
 		EQINT 3
 		PUSHCONT {
-			.loc ../contracts/CreditProcessor.sol, 501
+			.loc ../contracts/CreditProcessor.sol, 502
 			PUSHINT 4
 			CALLREF {
 				CALL $_changeState_internal_macro$
@@ -2304,9 +2318,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 506
+.loc ../contracts/CreditProcessor.sol, 507
 ENDS
-.loc ../contracts/CreditProcessor.sol, 94
+.loc ../contracts/CreditProcessor.sol, 95
 GETGLOB 9
 GETGLOB 12
 INDEX 1
@@ -2321,7 +2335,7 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 511
+.loc ../contracts/CreditProcessor.sol, 512
 GETGLOB 15
 EQINT 2
 DUP
@@ -2332,7 +2346,7 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 515
+.loc ../contracts/CreditProcessor.sol, 516
 GETGLOB 9
 PUSHSLICE xc0000000000000000000000000292c1e07
 NEWC
@@ -2341,11 +2355,11 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 517
+.loc ../contracts/CreditProcessor.sol, 518
 GETGLOB 17
 EQINT 2
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 518
+	.loc ../contracts/CreditProcessor.sol, 519
 	PUSHINT 3
 	CALLREF {
 		CALL $_changeState_internal_macro$
@@ -2356,7 +2370,7 @@ PUSHCONT {
 	GETGLOB 17
 	EQINT 3
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 520
+		.loc ../contracts/CreditProcessor.sol, 521
 		PUSHINT 4
 		CALLREF {
 			CALL $_changeState_internal_macro$
@@ -2369,7 +2383,7 @@ PUSHCONT {
 		INDEX 3
 		PLDU 256
 		PUSHCONT {
-			.loc ../contracts/CreditProcessor.sol, 522
+			.loc ../contracts/CreditProcessor.sol, 523
 			GETGLOB 21
 			NEWC
 			STSLICECONST x62_
@@ -2382,7 +2396,7 @@ PUSHCONT {
 			.loc ../contracts/CreditProcessor.sol, 0
 		}
 		PUSHCONT {
-			.loc ../contracts/CreditProcessor.sol, 528
+			.loc ../contracts/CreditProcessor.sol, 529
 			GETGLOB 9
 			NEWC
 			STSLICECONST x42_
@@ -2417,7 +2431,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 532
+.loc ../contracts/CreditProcessor.sol, 533
 LDUQ 256
 PUSHCONT {
 	LDREF
@@ -2578,7 +2592,7 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/CreditProcessor.sol, 543
+.loc ../contracts/CreditProcessor.sol, 544
 GETGLOB 15
 EQINT 2
 DUP
@@ -2589,25 +2603,25 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 546
+.loc ../contracts/CreditProcessor.sol, 547
 GETGLOB 21
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIFNOT 1020
-.loc ../contracts/CreditProcessor.sol, 547
+.loc ../contracts/CreditProcessor.sol, 548
 GETGLOB 9
 GETGLOB 21
 SDEQ
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 549
+.loc ../contracts/CreditProcessor.sol, 550
 PUSH S4
 SETGLOB 17
-.loc ../contracts/CreditProcessor.sol, 551
+.loc ../contracts/CreditProcessor.sol, 552
 PUSH S4
 EQINT 2
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 552
+	.loc ../contracts/CreditProcessor.sol, 553
 	PUSHINT 3
 	CALLREF {
 		CALL $_changeState_internal_macro$
@@ -2618,7 +2632,7 @@ PUSHCONT {
 	PUSH S4
 	EQINT 3
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 554
+		.loc ../contracts/CreditProcessor.sol, 555
 		PUSHINT 4
 		CALLREF {
 			CALL $_changeState_internal_macro$
@@ -2646,7 +2660,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 559
+.loc ../contracts/CreditProcessor.sol, 560
 LDUQ 256
 PUSHCONT {
 	LDREF
@@ -2731,7 +2745,7 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/CreditProcessor.sol, 563
+.loc ../contracts/CreditProcessor.sol, 564
 GETGLOB 15
 EQINT 2
 DUP
@@ -2739,30 +2753,86 @@ PUSHCONT {
 	DROP
 	GETGLOB 15
 	EQINT 1
+	DUP
+	PUSHCONT {
+		DROP
+		GETGLOB 15
+		EQINT 3
+	}
+	IFNOT
 }
 IFNOT
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 566
+.loc ../contracts/CreditProcessor.sol, 568
+GETGLOB 11
+GETGLOB 9
+SDEQ
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 9
+	PARSEMSGADDR
+	INDEX 3
+	PLDU 256
+	NEQINT 0
+}
+IF
+THROWIFNOT 1000
+.loc ../contracts/CreditProcessor.sol, 569
 DROP
 INDEX 1
 GETGLOB 9
 SDEQ
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 567
-GETGLOB 11
-GETGLOB 9
-SDEQ
-THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 569
-ACCEPT
 .loc ../contracts/CreditProcessor.sol, 571
+ACCEPT
+.loc ../contracts/CreditProcessor.sol, 573
 PUSHINT 2
 SETGLOB 17
-.loc ../contracts/CreditProcessor.sol, 572
-PUSHINT 3
-CALLREF {
-	CALL $_changeState_internal_macro$
+.loc ../contracts/CreditProcessor.sol, 575
+GETGLOB 15
+NEQINT 3
+PUSHCONT {
+	.loc ../contracts/CreditProcessor.sol, 576
+	PUSHINT 3
+	CALLREF {
+		CALL $_changeState_internal_macro$
+	}
+	.loc ../contracts/CreditProcessor.sol, 0
 }
+IF
+.loc ../contracts/CreditProcessor.sol, 579
+GETGLOB 11
+GETGLOB 10
+GETGLOB 18
+FALSE
+NEWC
+STSLICECONST x6_
+STI 1
+PUSHINT 3
+STZEROES
+STSLICE
+PUSHSLICE x405f5e100000000000000000000000000003_
+STSLICER
+ROTREV
+NEWC
+STSLICECONST x5896bc85
+SWAP
+UNTUPLE 5
+REVERSE 6, 0
+STU 256
+STU 32
+STREF
+STU 32
+STU 256
+SWAP
+NEWC
+STSLICE
+STBREFR
+STBREFR
+ENDC
+PUSHINT 1
+SENDRAWMSG
 .loc ../contracts/CreditProcessor.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
@@ -2779,9 +2849,60 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 575
+.loc ../contracts/CreditProcessor.sol, 586
 ENDS
-.loc ../contracts/CreditProcessor.sol, 79
+.loc ../contracts/CreditProcessor.sol, 0
+GETGLOB 15
+EQINT 3
+.loc ../contracts/CreditProcessor.sol, 70
+THROWIFNOT 1001
+.loc ../contracts/CreditProcessor.sol, 587
+GETGLOB 19
+PUSHCONT {
+	GETGLOB 9
+	GETGLOB 12
+	INDEX 3
+	SDEQ
+	DUP
+	PUSHCONT {
+		DROP
+		GETGLOB 9
+		GETGLOB 12
+		INDEX 1
+		SDEQ
+	}
+	IFNOT
+	DUP
+	PUSHCONT {
+		DROP
+		DEPTH
+		ADDCONST -2
+		PICK
+		GETGLOB 19
+		GREATER
+		DUP
+		PUSHCONT {
+			DROP
+			GETPARAM 7
+			INDEX 0
+			GETGLOB 19
+			PUSHINT 5000000000
+			ADD
+			UFITS 128
+			GREATER
+		}
+		IF
+	}
+	IF
+}
+PUSHCONT {
+	GETGLOB 9
+	GETGLOB 12
+	INDEX 1
+	SDEQ
+}
+IFELSE
+.loc ../contracts/CreditProcessor.sol, 592
 GETGLOB 9
 GETGLOB 18
 SDEQ
@@ -2792,17 +2913,38 @@ PUSHCONT {
 	GETGLOB 12
 	INDEX 2
 	SDEQ
+	OVER
+	OR
 }
 IFNOT
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 80
-GETGLOB 15
-EQINT 3
-.loc ../contracts/CreditProcessor.sol, 69
-THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 576
+.loc ../contracts/CreditProcessor.sol, 597
 ACCEPT
-.loc ../contracts/CreditProcessor.sol, 578
+.loc ../contracts/CreditProcessor.sol, 599
+GETGLOB 19
+GTINT 0
+AND
+PUSHCONT {
+	.loc ../contracts/CreditProcessor.sol, 600
+	GETGLOB 19
+	GETGLOB 18
+	NEWC
+	STSLICECONST x42_
+	STSLICE
+	SWAP
+	STGRAMS
+	PUSHINT 107
+	STZEROES
+	ENDC
+	PUSHINT 1
+	SENDRAWMSG
+	.loc ../contracts/CreditProcessor.sol, 601
+	PUSHINT 0
+	SETGLOB 19
+	.loc ../contracts/CreditProcessor.sol, 0
+}
+IF
+.loc ../contracts/CreditProcessor.sol, 604
 GETGLOB 9
 PUSHSLICE xc0000000000000000000000000215623b9
 NEWC
@@ -2811,7 +2953,7 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 580
+.loc ../contracts/CreditProcessor.sol, 606
 GETGLOB 25
 NEWC
 STSLICECONST x62_
@@ -2821,7 +2963,7 @@ STSLICER
 ENDC
 PUSHINT 1
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 586
+.loc ../contracts/CreditProcessor.sol, 612
 PUSHINT 5
 CALLREF {
 	CALL $_changeState_internal_macro$
@@ -2833,7 +2975,7 @@ CALLREF {
 TRUE
 SETGLOB 7
 
-.macro cancel
+.macro payDebtForUser
 DROP
 GETGLOB 6
 THROWIFNOT 76
@@ -2842,15 +2984,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 589
+.loc ../contracts/CreditProcessor.sol, 615
 ENDS
-.loc ../contracts/CreditProcessor.sol, 89
-GETGLOB 9
-GETGLOB 12
-INDEX 1
-SDEQ
-THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 590
+.loc ../contracts/CreditProcessor.sol, 616
 GETGLOB 15
 EQINT 3
 DUP
@@ -2882,11 +3018,106 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 596
+.loc ../contracts/CreditProcessor.sol, 621
+DEPTH
+ADDCONST -2
+PICK
+GETGLOB 19
+GREATER
+DUP
+PUSHCONT {
+	DROP
+	GETPARAM 7
+	INDEX 0
+	GETGLOB 19
+	PUSHINT 5000000000
+	ADD
+	UFITS 128
+	GREATER
+}
+IF
+THROWIFNOT 2000
+.loc ../contracts/CreditProcessor.sol, 623
+GETGLOB 19
+GTINT 0
+THROWIFNOT 1090
+.loc ../contracts/CreditProcessor.sol, 625
+GETGLOB 19
+GETGLOB 18
+NEWC
+STSLICECONST x42_
+STSLICE
+SWAP
+STGRAMS
+PUSHINT 107
+STZEROES
+ENDC
+PUSHINT 1
+SENDRAWMSG
+.loc ../contracts/CreditProcessor.sol, 626
+PUSHINT 0
+SETGLOB 19
+.loc ../contracts/CreditProcessor.sol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+TRUE
+SETGLOB 7
+
+.macro cancel
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/CreditProcessor.sol, 629
+ENDS
+.loc ../contracts/CreditProcessor.sol, 90
+GETGLOB 9
+GETGLOB 12
+INDEX 1
+SDEQ
+THROWIFNOT 1000
+.loc ../contracts/CreditProcessor.sol, 630
+GETGLOB 15
+EQINT 3
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 15
+	EQINT 8
+	DUP
+	PUSHCONT {
+		DROP
+		GETGLOB 15
+		EQINT 9
+		DUP
+		PUSHCONT {
+			DROP
+			GETGLOB 15
+			EQINT 11
+			DUP
+			PUSHCONT {
+				DROP
+				GETGLOB 15
+				EQINT 12
+			}
+			IFNOT
+		}
+		IFNOT
+	}
+	IFNOT
+}
+IFNOT
+THROWIFNOT 1001
+.loc ../contracts/CreditProcessor.sol, 636
 GETGLOB 19
 GTINT 0
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 597
+	.loc ../contracts/CreditProcessor.sol, 637
 	GETPARAM 7
 	INDEX 0
 	GETGLOB 19
@@ -2898,13 +3129,13 @@ PUSHCONT {
 	UFITS 128
 	GEQ
 	THROWIFNOT 2000
-	.loc ../contracts/CreditProcessor.sol, 598
+	.loc ../contracts/CreditProcessor.sol, 638
 	ACCEPT
-	.loc ../contracts/CreditProcessor.sol, 599
+	.loc ../contracts/CreditProcessor.sol, 639
 	GETGLOB 19
 	GETGLOB 18
 	NEWC
-	STSLICECONST x62_
+	STSLICECONST x42_
 	STSLICE
 	SWAP
 	STGRAMS
@@ -2913,18 +3144,18 @@ PUSHCONT {
 	ENDC
 	PUSHINT 1
 	SENDRAWMSG
-	.loc ../contracts/CreditProcessor.sol, 600
+	.loc ../contracts/CreditProcessor.sol, 640
 	PUSHINT 0
 	SETGLOB 19
 	.loc ../contracts/CreditProcessor.sol, 0
 }
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 602
+	.loc ../contracts/CreditProcessor.sol, 642
 	ACCEPT
 	.loc ../contracts/CreditProcessor.sol, 0
 }
 IFELSE
-.loc ../contracts/CreditProcessor.sol, 604
+.loc ../contracts/CreditProcessor.sol, 644
 GETGLOB 9
 PUSHSLICE xc000000000000000000000000044d4964d
 NEWC
@@ -2933,7 +3164,7 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 605
+.loc ../contracts/CreditProcessor.sol, 645
 PUSHINT 14
 CALLREF {
 	CALL $_changeState_internal_macro$
@@ -2954,7 +3185,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 608
+.loc ../contracts/CreditProcessor.sol, 648
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -3013,18 +3244,24 @@ PUSHCONT {
 IFNOT
 LDREF
 ENDS
-.loc ../contracts/CreditProcessor.sol, 89
+.loc ../contracts/CreditProcessor.sol, 90
 GETGLOB 9
 GETGLOB 12
 INDEX 1
 SDEQ
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 90
+.loc ../contracts/CreditProcessor.sol, 658
 GETGLOB 15
 EQINT 14
-.loc ../contracts/CreditProcessor.sol, 69
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 15
+	EQINT 13
+}
+IFNOT
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 618
+.loc ../contracts/CreditProcessor.sol, 661
 GETPARAM 7
 INDEX 0
 PUSHINT 500000000
@@ -3036,7 +3273,7 @@ ADD
 UFITS 128
 GEQ
 THROWIFNOT 2000
-.loc ../contracts/CreditProcessor.sol, 623
+.loc ../contracts/CreditProcessor.sol, 666
 PUSH S6
 PUSHINT 500000000
 PUSH S5
@@ -3044,9 +3281,9 @@ ADD
 UFITS 128
 GEQ
 THROWIFNOT 2000
-.loc ../contracts/CreditProcessor.sol, 628
+.loc ../contracts/CreditProcessor.sol, 671
 ACCEPT
-.loc ../contracts/CreditProcessor.sol, 630
+.loc ../contracts/CreditProcessor.sol, 673
 XCHG S2
 PUSHINT 0
 ROLL 4
@@ -3095,7 +3332,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 645
+.loc ../contracts/CreditProcessor.sol, 688
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -3121,20 +3358,26 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/CreditProcessor.sol, 89
+.loc ../contracts/CreditProcessor.sol, 90
 GETGLOB 9
 GETGLOB 12
 INDEX 1
 SDEQ
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 90
+.loc ../contracts/CreditProcessor.sol, 693
 GETGLOB 15
 EQINT 14
-.loc ../contracts/CreditProcessor.sol, 69
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 15
+	EQINT 13
+}
+IFNOT
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 650
+.loc ../contracts/CreditProcessor.sol, 696
 ACCEPT
-.loc ../contracts/CreditProcessor.sol, 651
+.loc ../contracts/CreditProcessor.sol, 697
 XCHG S2
 NEWC
 STSLICECONST x42_
@@ -3162,21 +3405,21 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 654
+.loc ../contracts/CreditProcessor.sol, 700
 ENDS
-.loc ../contracts/CreditProcessor.sol, 74
+.loc ../contracts/CreditProcessor.sol, 75
 GETGLOB 9
 GETGLOB 18
 SDEQ
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 75
+.loc ../contracts/CreditProcessor.sol, 76
 GETGLOB 15
 EQINT 4
-.loc ../contracts/CreditProcessor.sol, 69
+.loc ../contracts/CreditProcessor.sol, 70
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 655
+.loc ../contracts/CreditProcessor.sol, 701
 ACCEPT
-.loc ../contracts/CreditProcessor.sol, 657
+.loc ../contracts/CreditProcessor.sol, 703
 GETGLOB 9
 PUSHSLICE xc000000000000000000000000045a678aa
 NEWC
@@ -3185,15 +3428,15 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 659
+.loc ../contracts/CreditProcessor.sol, 705
 GETPARAM 7
 INDEX 0
-.loc ../contracts/CreditProcessor.sol, 660
+.loc ../contracts/CreditProcessor.sol, 706
 DUP
 GETGLOB 19
 LESS
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 661
+	.loc ../contracts/CreditProcessor.sol, 707
 	GETGLOB 19
 	OVER
 	SUB
@@ -3202,13 +3445,13 @@ PUSHCONT {
 	.loc ../contracts/CreditProcessor.sol, 0
 }
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 663
+	.loc ../contracts/CreditProcessor.sol, 709
 	PUSHINT 0
 	SETGLOB 19
 	.loc ../contracts/CreditProcessor.sol, 0
 }
 IFELSE
-.loc ../contracts/CreditProcessor.sol, 665
+.loc ../contracts/CreditProcessor.sol, 711
 GETGLOB 18
 NEWC
 STSLICECONST x42_
@@ -3235,7 +3478,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 672
+.loc ../contracts/CreditProcessor.sol, 718
 LDUQ 128
 PUSHCONT {
 	LDREF
@@ -3248,24 +3491,34 @@ ENDS
 .loc ../contracts/CreditProcessor.sol, 0
 GETGLOB 15
 EQINT 5
-.loc ../contracts/CreditProcessor.sol, 69
+.loc ../contracts/CreditProcessor.sol, 70
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 673
-GETGLOB 25
+.loc ../contracts/CreditProcessor.sol, 719
 GETGLOB 9
-SDEQ
+PARSEMSGADDR
+INDEX 3
+PLDU 256
+NEQINT 0
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 25
+	GETGLOB 9
+	SDEQ
+}
+IF
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 674
+.loc ../contracts/CreditProcessor.sol, 720
 ACCEPT
-.loc ../contracts/CreditProcessor.sol, 675
+.loc ../contracts/CreditProcessor.sol, 721
 DUP
 GETGLOB 13
 GEQ
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 677
+	.loc ../contracts/CreditProcessor.sol, 723
 	DUP
 	SETGLOB 13
-	.loc ../contracts/CreditProcessor.sol, 680
+	.loc ../contracts/CreditProcessor.sol, 726
 	GETGLOB 19
 	EQINT 0
 	DUP
@@ -3295,13 +3548,13 @@ PUSHCONT {
 	}
 	IF
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 684
+		.loc ../contracts/CreditProcessor.sol, 730
 		PUSHINT 0
 		SETGLOB 31
-		.loc ../contracts/CreditProcessor.sol, 685
+		.loc ../contracts/CreditProcessor.sol, 731
 		PUSHINT 0
 		SETGLOB 30
-		.loc ../contracts/CreditProcessor.sol, 686
+		.loc ../contracts/CreditProcessor.sol, 732
 		CALLREF {
 			CALL $_payDebtThenTransfer_internal_macro$
 		}
@@ -3312,7 +3565,7 @@ PUSHCONT {
 		GETGLOB 26
 		SDEQ
 		PUSHCONT {
-			.loc ../contracts/CreditProcessor.sol, 690
+			.loc ../contracts/CreditProcessor.sol, 736
 			GETGLOB 12
 			INDEX 6
 			PUSHCONT {
@@ -3320,7 +3573,7 @@ PUSHCONT {
 				INDEX 6
 				EQINT 1
 				PUSHCONT {
-					.loc ../contracts/CreditProcessor.sol, 695
+					.loc ../contracts/CreditProcessor.sol, 741
 					GETGLOB 13
 					GETGLOB 12
 					INDEX 4
@@ -3333,7 +3586,7 @@ PUSHCONT {
 				.loc ../contracts/CreditProcessor.sol, 0
 			}
 			PUSHCONT {
-				.loc ../contracts/CreditProcessor.sol, 692
+				.loc ../contracts/CreditProcessor.sol, 738
 				GETGLOB 12
 				INDEX 5
 				GETGLOB 19
@@ -3343,7 +3596,7 @@ PUSHCONT {
 				.loc ../contracts/CreditProcessor.sol, 0
 			}
 			IFELSE
-			.loc ../contracts/CreditProcessor.sol, 698
+			.loc ../contracts/CreditProcessor.sol, 744
 			GETGLOB 13
 			GETGLOB 12
 			INDEX 4
@@ -3364,14 +3617,14 @@ PUSHCONT {
 			}
 			IF
 			PUSHCONT {
-				.loc ../contracts/CreditProcessor.sol, 699
+				.loc ../contracts/CreditProcessor.sol, 745
 				CALLREF {
 					CALL $_unwrapWTON_internal_macro$
 				}
 				.loc ../contracts/CreditProcessor.sol, 0
 			}
 			PUSHCONT {
-				.loc ../contracts/CreditProcessor.sol, 702
+				.loc ../contracts/CreditProcessor.sol, 748
 				PUSHINT 11
 				CALLREF {
 					CALL $_changeState_internal_macro$
@@ -3410,27 +3663,27 @@ PUSHCONT {
 			}
 			IF
 			PUSHCONT {
-				.loc ../contracts/CreditProcessor.sol, 708
+				.loc ../contracts/CreditProcessor.sol, 754
 				GETPARAM 7
 				INDEX 0
 				PUSHINT 2700000000
 				GREATER
 				PUSHCONT {
-					.loc ../contracts/CreditProcessor.sol, 711
+					.loc ../contracts/CreditProcessor.sol, 757
 					GETGLOB 13
 					GETGLOB 12
 					INDEX 4
 					SUB
 					UFITS 128
 					SETGLOB 30
-					.loc ../contracts/CreditProcessor.sol, 712
+					.loc ../contracts/CreditProcessor.sol, 758
 					CALLREF {
 						CALL $_swap_internal_macro$
 					}
 					.loc ../contracts/CreditProcessor.sol, 0
 				}
 				PUSHCONT {
-					.loc ../contracts/CreditProcessor.sol, 717
+					.loc ../contracts/CreditProcessor.sol, 763
 					PUSHINT 8
 					CALLREF {
 						CALL $_changeState_internal_macro$
@@ -3456,8 +3709,8 @@ PUSHCONT {
 				}
 				IF
 				PUSHCONT {
-					.loc ../contracts/CreditProcessor.sol, 724
-					PUSHSLICE x800815a8538a164f8117a242da4e7c7535cc1c96a594740dee104ade9b88cfdc299_
+					.loc ../contracts/CreditProcessor.sol, 770
+					PUSHSLICE x800be2cc5b84d34be303c11cb5e184e8b1f3337f8891f267c31e3ffc381b9363dbf_
 					GETGLOB 12
 					INDEX 5
 					GETGLOB 19
@@ -3489,7 +3742,7 @@ PUSHCONT {
 					ENDC
 					PUSHINT 1
 					SENDRAWMSG
-					.loc ../contracts/CreditProcessor.sol, 733
+					.loc ../contracts/CreditProcessor.sol, 779
 					PUSHINT 6
 					CALLREF {
 						CALL $_changeState_internal_macro$
@@ -3497,7 +3750,7 @@ PUSHCONT {
 					.loc ../contracts/CreditProcessor.sol, 0
 				}
 				PUSHCONT {
-					.loc ../contracts/CreditProcessor.sol, 735
+					.loc ../contracts/CreditProcessor.sol, 781
 					PUSHINT 8
 					CALLREF {
 						CALL $_changeState_internal_macro$
@@ -3514,7 +3767,7 @@ PUSHCONT {
 	.loc ../contracts/CreditProcessor.sol, 0
 }
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 738
+	.loc ../contracts/CreditProcessor.sol, 784
 	GETGLOB 16
 	CALLREF {
 		CALL $_changeState_internal_macro$
@@ -3539,9 +3792,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 742
+.loc ../contracts/CreditProcessor.sol, 788
 ENDS
-.loc ../contracts/CreditProcessor.sol, 99
+.loc ../contracts/CreditProcessor.sol, 100
 GETGLOB 9
 GETGLOB 12
 INDEX 1
@@ -3565,12 +3818,12 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 102
+.loc ../contracts/CreditProcessor.sol, 103
 GETGLOB 15
 EQINT 11
-.loc ../contracts/CreditProcessor.sol, 69
+.loc ../contracts/CreditProcessor.sol, 70
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 748
+.loc ../contracts/CreditProcessor.sol, 794
 GETGLOB 25
 GETGLOB 26
 SDEQ
@@ -3588,7 +3841,7 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1080
-.loc ../contracts/CreditProcessor.sol, 750
+.loc ../contracts/CreditProcessor.sol, 796
 GETGLOB 31
 GETGLOB 12
 INDEX 5
@@ -3597,7 +3850,7 @@ ADD
 UFITS 128
 GEQ
 THROWIFNOT 1080
-.loc ../contracts/CreditProcessor.sol, 752
+.loc ../contracts/CreditProcessor.sol, 798
 GETPARAM 7
 INDEX 0
 PUSHINT 600000000
@@ -3606,7 +3859,7 @@ ADD
 UFITS 128
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/CreditProcessor.sol, 754
+.loc ../contracts/CreditProcessor.sol, 800
 GETGLOB 9
 GETGLOB 12
 INDEX 3
@@ -3633,9 +3886,9 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 2000
-.loc ../contracts/CreditProcessor.sol, 759
+.loc ../contracts/CreditProcessor.sol, 805
 ACCEPT
-.loc ../contracts/CreditProcessor.sol, 761
+.loc ../contracts/CreditProcessor.sol, 807
 GETGLOB 9
 PUSHSLICE xc00000000000000000000000006fcb303c
 NEWC
@@ -3644,7 +3897,7 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 763
+.loc ../contracts/CreditProcessor.sol, 809
 CALLREF {
 	CALL $_unwrapWTON_internal_macro$
 }
@@ -3664,7 +3917,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 766
+.loc ../contracts/CreditProcessor.sol, 812
 LDUQ 128
 PUSHCONT {
 	LDREF
@@ -3685,7 +3938,7 @@ ROTREV
 PAIR
 SWAP
 ENDS
-.loc ../contracts/CreditProcessor.sol, 94
+.loc ../contracts/CreditProcessor.sol, 95
 GETGLOB 9
 GETGLOB 12
 INDEX 1
@@ -3700,21 +3953,21 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 95
+.loc ../contracts/CreditProcessor.sol, 96
 GETGLOB 15
 EQINT 8
-.loc ../contracts/CreditProcessor.sol, 69
+.loc ../contracts/CreditProcessor.sol, 70
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 772
+.loc ../contracts/CreditProcessor.sol, 818
 DUP
 INDEX 1
 OVER
 INDEX 0
 GREATER
 THROWIFNOT 1130
-.loc ../contracts/CreditProcessor.sol, 773
+.loc ../contracts/CreditProcessor.sol, 819
 ACCEPT
-.loc ../contracts/CreditProcessor.sol, 774
+.loc ../contracts/CreditProcessor.sol, 820
 GETGLOB 9
 PUSHSLICE xc000000000000000000000000001e20317
 NEWC
@@ -3723,7 +3976,7 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 775
+.loc ../contracts/CreditProcessor.sol, 821
 SETGLOB 14
 .loc ../contracts/CreditProcessor.sol, 0
 CALLREF {
@@ -3741,9 +3994,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 778
+.loc ../contracts/CreditProcessor.sol, 824
 ENDS
-.loc ../contracts/CreditProcessor.sol, 99
+.loc ../contracts/CreditProcessor.sol, 100
 GETGLOB 9
 GETGLOB 12
 INDEX 1
@@ -3767,18 +4020,18 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 102
+.loc ../contracts/CreditProcessor.sol, 103
 GETGLOB 15
 EQINT 8
-.loc ../contracts/CreditProcessor.sol, 69
+.loc ../contracts/CreditProcessor.sol, 70
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 784
+.loc ../contracts/CreditProcessor.sol, 830
 GETPARAM 7
 INDEX 0
 PUSHINT 3100000000
 GREATER
 THROWIFNOT 2000
-.loc ../contracts/CreditProcessor.sol, 785
+.loc ../contracts/CreditProcessor.sol, 831
 GETGLOB 9
 GETGLOB 12
 INDEX 3
@@ -3805,9 +4058,9 @@ PUSHCONT {
 }
 IFNOT
 THROWIFNOT 2000
-.loc ../contracts/CreditProcessor.sol, 788
+.loc ../contracts/CreditProcessor.sol, 834
 ACCEPT
-.loc ../contracts/CreditProcessor.sol, 790
+.loc ../contracts/CreditProcessor.sol, 836
 GETGLOB 9
 PUSHSLICE xc000000000000000000000000066d8a0f1
 NEWC
@@ -3816,7 +4069,7 @@ STSLICE
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 792
+.loc ../contracts/CreditProcessor.sol, 838
 GETGLOB 25
 NEWC
 STSLICECONST x62_
@@ -3826,7 +4079,7 @@ STSLICER
 ENDC
 PUSHINT 1
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 798
+.loc ../contracts/CreditProcessor.sol, 844
 PUSHINT 5
 CALLREF {
 	CALL $_changeState_internal_macro$
@@ -3843,21 +4096,21 @@ SETGLOB 7
 CALL $_swap_internal_macro$
 
 .macro _swap_internal_macro
-.loc ../contracts/CreditProcessor.sol, 802
+.loc ../contracts/CreditProcessor.sol, 848
 GETGLOB 29
 INC
 UFITS 64
 SETGLOB 29
-.loc ../contracts/CreditProcessor.sol, 804
+.loc ../contracts/CreditProcessor.sol, 850
 PUSHINT 10
 NEWC
-.loc ../contracts/CreditProcessor.sol, 805
+.loc ../contracts/CreditProcessor.sol, 851
 STU 8
-.loc ../contracts/CreditProcessor.sol, 806
+.loc ../contracts/CreditProcessor.sol, 852
 GETGLOB 29
 SWAP
 STU 64
-.loc ../contracts/CreditProcessor.sol, 807
+.loc ../contracts/CreditProcessor.sol, 853
 GETGLOB 12
 INDEX 5
 GETGLOB 19
@@ -3865,33 +4118,33 @@ ADD
 UFITS 128
 SWAP
 STU 128
-.loc ../contracts/CreditProcessor.sol, 809
+.loc ../contracts/CreditProcessor.sol, 855
 PUSHINT 44
 NEWC
-.loc ../contracts/CreditProcessor.sol, 810
+.loc ../contracts/CreditProcessor.sol, 856
 STU 8
-.loc ../contracts/CreditProcessor.sol, 811
+.loc ../contracts/CreditProcessor.sol, 857
 GETGLOB 29
 SWAP
 STU 64
-.loc ../contracts/CreditProcessor.sol, 812
+.loc ../contracts/CreditProcessor.sol, 858
 GETGLOB 30
 SWAP
 STU 128
-.loc ../contracts/CreditProcessor.sol, 814
+.loc ../contracts/CreditProcessor.sol, 860
 PUSHINT 1
 NEWC
-.loc ../contracts/CreditProcessor.sol, 815
+.loc ../contracts/CreditProcessor.sol, 861
 STU 8
-.loc ../contracts/CreditProcessor.sol, 816
+.loc ../contracts/CreditProcessor.sol, 862
 GETGLOB 29
 SWAP
 STU 64
-.loc ../contracts/CreditProcessor.sol, 817
+.loc ../contracts/CreditProcessor.sol, 863
 PUSHINT 0
 SWAP
 STU 128
-.loc ../contracts/CreditProcessor.sol, 818
+.loc ../contracts/CreditProcessor.sol, 864
 GETGLOB 12
 INDEX 5
 GETGLOB 19
@@ -3899,12 +4152,12 @@ ADD
 UFITS 128
 SWAP
 STU 128
-.loc ../contracts/CreditProcessor.sol, 819
+.loc ../contracts/CreditProcessor.sol, 865
 ROT
 STBREFR
-.loc ../contracts/CreditProcessor.sol, 820
+.loc ../contracts/CreditProcessor.sol, 866
 STBREF
-.loc ../contracts/CreditProcessor.sol, 822
+.loc ../contracts/CreditProcessor.sol, 868
 ENDC
 TRUE
 MYADDR
@@ -3937,7 +4190,7 @@ STBREFR
 ENDC
 PUSHINT 1
 SENDRAWMSG
-.loc ../contracts/CreditProcessor.sol, 836
+.loc ../contracts/CreditProcessor.sol, 882
 PUSHINT 7
 CALLREF {
 	CALL $_changeState_internal_macro$
@@ -3953,7 +4206,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 839
+.loc ../contracts/CreditProcessor.sol, 885
 LDUQ 128
 PUSHCONT {
 	LDREF
@@ -3974,16 +4227,16 @@ ENDS
 .loc ../contracts/CreditProcessor.sol, 0
 GETGLOB 15
 EQINT 6
-.loc ../contracts/CreditProcessor.sol, 69
+.loc ../contracts/CreditProcessor.sol, 70
 THROWIFNOT 1001
-.loc ../contracts/CreditProcessor.sol, 843
+.loc ../contracts/CreditProcessor.sol, 889
 GETGLOB 9
 GETGLOB 27
 SDEQ
 THROWIFNOT 1000
-.loc ../contracts/CreditProcessor.sol, 844
+.loc ../contracts/CreditProcessor.sol, 890
 ACCEPT
-.loc ../contracts/CreditProcessor.sol, 846
+.loc ../contracts/CreditProcessor.sol, 892
 OVER
 GETGLOB 13
 GETGLOB 12
@@ -4001,7 +4254,7 @@ PUSHCONT {
 }
 IF
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 849
+	.loc ../contracts/CreditProcessor.sol, 895
 	GETGLOB 12
 	INDEX 6
 	PUSHCONT {
@@ -4009,7 +4262,7 @@ PUSHCONT {
 		INDEX 6
 		EQINT 1
 		PUSHCONT {
-			.loc ../contracts/CreditProcessor.sol, 852
+			.loc ../contracts/CreditProcessor.sol, 898
 			GETGLOB 13
 			GETGLOB 12
 			INDEX 4
@@ -4022,20 +4275,20 @@ PUSHCONT {
 		.loc ../contracts/CreditProcessor.sol, 0
 	}
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 850
+		.loc ../contracts/CreditProcessor.sol, 896
 		OVER
 		SETGLOB 30
 		.loc ../contracts/CreditProcessor.sol, 0
 	}
 	IFELSE
-	.loc ../contracts/CreditProcessor.sol, 855
+	.loc ../contracts/CreditProcessor.sol, 901
 	CALLREF {
 		CALL $_swap_internal_macro$
 	}
 	.loc ../contracts/CreditProcessor.sol, 0
 }
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 858
+	.loc ../contracts/CreditProcessor.sol, 904
 	PUSHINT 8
 	CALLREF {
 		CALL $_changeState_internal_macro$
@@ -4060,7 +4313,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 862
+.loc ../contracts/CreditProcessor.sol, 908
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -4127,20 +4380,20 @@ PUSHCONT {
 IFNOT
 LDREF
 ENDS
-.loc ../contracts/CreditProcessor.sol, 873
+.loc ../contracts/CreditProcessor.sol, 919
 GETGLOB 9
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIFNOT 100
-.loc ../contracts/CreditProcessor.sol, 875
+.loc ../contracts/CreditProcessor.sol, 921
 GETGLOB 15
 EQINT 7
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 876
+	.loc ../contracts/CreditProcessor.sol, 922
 	DUP
 	CTOS
-	.loc ../contracts/CreditProcessor.sol, 877
+	.loc ../contracts/CreditProcessor.sol, 923
 	GETGLOB 9
 	GETGLOB 26
 	SDEQ
@@ -4162,15 +4415,15 @@ PUSHCONT {
 	}
 	IF
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 878
+		.loc ../contracts/CreditProcessor.sol, 924
 		ACCEPT
-		.loc ../contracts/CreditProcessor.sol, 879
+		.loc ../contracts/CreditProcessor.sol, 925
 		DUP
 		LDU 8
 		LDU 64
 		LDU 128
 		POP S4
-		.loc ../contracts/CreditProcessor.sol, 880
+		.loc ../contracts/CreditProcessor.sol, 926
 		ROT
 		EQINT 10
 		DUP
@@ -4189,17 +4442,17 @@ PUSHCONT {
 		}
 		IF
 		PUSHCONT {
-			.loc ../contracts/CreditProcessor.sol, 881
+			.loc ../contracts/CreditProcessor.sol, 927
 			PUSH S9
 			SETGLOB 31
-			.loc ../contracts/CreditProcessor.sol, 882
+			.loc ../contracts/CreditProcessor.sol, 928
 			CALLREF {
 				CALL $_unwrapWTON_internal_macro$
 			}
 			.loc ../contracts/CreditProcessor.sol, 0
 		}
 		PUSHCONT {
-			.loc ../contracts/CreditProcessor.sol, 884
+			.loc ../contracts/CreditProcessor.sol, 930
 			PUSHINT 9
 			CALLREF {
 				CALL $_changeState_internal_macro$
@@ -4232,15 +4485,15 @@ PUSHCONT {
 		}
 		IF
 		PUSHCONT {
-			.loc ../contracts/CreditProcessor.sol, 887
+			.loc ../contracts/CreditProcessor.sol, 933
 			ACCEPT
-			.loc ../contracts/CreditProcessor.sol, 888
+			.loc ../contracts/CreditProcessor.sol, 934
 			DUP
 			LDU 8
 			LDU 64
 			LDU 128
 			POP S4
-			.loc ../contracts/CreditProcessor.sol, 889
+			.loc ../contracts/CreditProcessor.sol, 935
 			ROT
 			EQINT 44
 			DUP
@@ -4259,7 +4512,7 @@ PUSHCONT {
 			}
 			IF
 			PUSHCONT {
-				.loc ../contracts/CreditProcessor.sol, 890
+				.loc ../contracts/CreditProcessor.sol, 936
 				PUSHINT 8
 				CALLREF {
 					CALL $_changeState_internal_macro$
@@ -4267,7 +4520,7 @@ PUSHCONT {
 				.loc ../contracts/CreditProcessor.sol, 0
 			}
 			PUSHCONT {
-				.loc ../contracts/CreditProcessor.sol, 892
+				.loc ../contracts/CreditProcessor.sol, 938
 				PUSHINT 9
 				CALLREF {
 					CALL $_changeState_internal_macro$
@@ -4307,9 +4560,9 @@ PUSHCONT {
 			}
 			IFNOT
 			PUSHCONT {
-				.loc ../contracts/CreditProcessor.sol, 896
+				.loc ../contracts/CreditProcessor.sol, 942
 				ACCEPT
-				.loc ../contracts/CreditProcessor.sol, 897
+				.loc ../contracts/CreditProcessor.sol, 943
 				PUSHINT 9
 				CALLREF {
 					CALL $_changeState_internal_macro$
@@ -4343,7 +4596,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 902
+.loc ../contracts/CreditProcessor.sol, 948
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -4385,13 +4638,13 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/CreditProcessor.sol, 909
+.loc ../contracts/CreditProcessor.sol, 955
 GETGLOB 9
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIFNOT 100
-.loc ../contracts/CreditProcessor.sol, 911
+.loc ../contracts/CreditProcessor.sol, 957
 GETGLOB 15
 EQINT 7
 DUP
@@ -4411,9 +4664,9 @@ PUSHCONT {
 }
 IF
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 912
+	.loc ../contracts/CreditProcessor.sol, 958
 	ACCEPT
-	.loc ../contracts/CreditProcessor.sol, 913
+	.loc ../contracts/CreditProcessor.sol, 959
 	PUSHINT 8
 	CALLREF {
 		CALL $_changeState_internal_macro$
@@ -4440,9 +4693,9 @@ PUSHCONT {
 	}
 	IF
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 915
+		.loc ../contracts/CreditProcessor.sol, 961
 		ACCEPT
-		.loc ../contracts/CreditProcessor.sol, 916
+		.loc ../contracts/CreditProcessor.sol, 962
 		PUSHINT 11
 		CALLREF {
 			CALL $_changeState_internal_macro$
@@ -4469,9 +4722,9 @@ PUSHCONT {
 		}
 		IF
 		PUSHCONT {
-			.loc ../contracts/CreditProcessor.sol, 918
+			.loc ../contracts/CreditProcessor.sol, 964
 			ACCEPT
-			.loc ../contracts/CreditProcessor.sol, 919
+			.loc ../contracts/CreditProcessor.sol, 965
 			PUSHINT 14
 			CALLREF {
 				CALL $_changeState_internal_macro$
@@ -4497,7 +4750,7 @@ SETGLOB 7
 CALL $_unwrapWTON_internal_macro$
 
 .macro _unwrapWTON_internal_macro
-.loc ../contracts/CreditProcessor.sol, 924
+.loc ../contracts/CreditProcessor.sol, 970
 GETGLOB 31
 GETGLOB 12
 INDEX 5
@@ -4518,16 +4771,16 @@ PUSHCONT {
 }
 IF
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 926
+	.loc ../contracts/CreditProcessor.sol, 972
 	PUSHREF {
 	}
-	.loc ../contracts/CreditProcessor.sol, 928
+	.loc ../contracts/CreditProcessor.sol, 974
 	TRUE
 	MYADDR
 	PUSHINT 0
 	DUP
 	GETGLOB 31
-	PUSHSLICE x800f10c704127f533c232850d594598e96dc83f480c23eff41d9c4d17d043573795_
+	PUSHSLICE x801ebcaf080c5be6ae9c8ae33bd27dbf4b4195f2bcac9c1b70afda9b7b6b8e918a9_
 	PUSHINT 0
 	GETGLOB 26
 	NEWC
@@ -4553,7 +4806,7 @@ PUSHCONT {
 	ENDC
 	PUSHINT 1
 	SENDRAWMSG
-	.loc ../contracts/CreditProcessor.sol, 942
+	.loc ../contracts/CreditProcessor.sol, 988
 	PUSHINT 10
 	CALLREF {
 		CALL $_changeState_internal_macro$
@@ -4561,7 +4814,7 @@ PUSHCONT {
 	.loc ../contracts/CreditProcessor.sol, 0
 }
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 944
+	.loc ../contracts/CreditProcessor.sol, 990
 	PUSHINT 11
 	CALLREF {
 		CALL $_changeState_internal_macro$
@@ -4576,7 +4829,7 @@ IFELSE
 CALL $_payDebtThenTransfer_internal_macro$
 
 .macro _payDebtThenTransfer_internal_macro
-.loc ../contracts/CreditProcessor.sol, 949
+.loc ../contracts/CreditProcessor.sol, 995
 GETGLOB 13
 GETGLOB 25
 GETGLOB 26
@@ -4590,9 +4843,10 @@ PUSHCONT {
 IFELSE
 SUB
 UFITS 128
-.loc ../contracts/CreditProcessor.sol, 951
+.loc ../contracts/CreditProcessor.sol, 997
 GETPARAM 7
 INDEX 0
+PUSHINT 100000000
 GETGLOB 19
 GTINT 0
 PUSHCONT {
@@ -4605,6 +4859,8 @@ PUSHCONT {
 	PUSHINT 0
 }
 IFELSE
+ADD
+UFITS 128
 GETGLOB 12
 INDEX 5
 ADD
@@ -4616,25 +4872,31 @@ PUSHCONT {
 	PUSHINT 100000000
 	ADD
 	UFITS 128
+	PUSHINT 100000000
+	ADD
+	UFITS 128
 }
 PUSHCONT {
 	PUSHINT 100000000
+	DUP
+	ADD
+	UFITS 128
 }
 IFELSE
 ADD
 UFITS 128
 GREATER
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 957
+	.loc ../contracts/CreditProcessor.sol, 1007
 	PUSHINT 13
 	CALLREF {
 		CALL $_changeState_internal_macro$
 	}
-	.loc ../contracts/CreditProcessor.sol, 959
+	.loc ../contracts/CreditProcessor.sol, 1009
 	GETGLOB 19
 	GTINT 0
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 960
+		.loc ../contracts/CreditProcessor.sol, 1010
 		GETGLOB 19
 		GETGLOB 18
 		NEWC
@@ -4647,17 +4909,17 @@ PUSHCONT {
 		ENDC
 		PUSHINT 1
 		SENDRAWMSG
-		.loc ../contracts/CreditProcessor.sol, 961
+		.loc ../contracts/CreditProcessor.sol, 1011
 		PUSHINT 0
 		SETGLOB 19
 		.loc ../contracts/CreditProcessor.sol, 0
 	}
 	IF
-	.loc ../contracts/CreditProcessor.sol, 964
+	.loc ../contracts/CreditProcessor.sol, 1014
 	DUP
 	GTINT 0
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 965
+		.loc ../contracts/CreditProcessor.sol, 1015
 		GETGLOB 10
 		INDEX 2
 		TRUE
@@ -4680,12 +4942,33 @@ PUSHCONT {
 		GETGLOB 12
 		INDEX 3
 		PUSHINT 0
+		GETGLOB 12
+		INDEX 1
+		GETGLOB 12
+		INDEX 3
+		SDEQ
+		PUSHCONT {
+			PUSHINT 500000000
+			PUSHINT 100000000
+			ADD
+			UFITS 128
+		}
+		PUSHCONT {
+			GETGLOB 12
+			INDEX 5
+			PUSHINT 500000000
+			ADD
+			UFITS 128
+		}
+		IFELSE
 		GETGLOB 25
 		NEWC
 		STSLICECONST x62_
 		STSLICE
+		SWAP
+		STGRAMS
 		PUSHINT 1
-		STUR 111
+		STUR 107
 		ROLLREV 8
 		NEWC
 		STSLICECONST x3f10d1ab
@@ -4702,12 +4985,25 @@ PUSHCONT {
 		STBREFR
 		STBREFR
 		ENDC
+		PUSHINT 1
+		SENDRAWMSG
+		.loc ../contracts/CreditProcessor.sol, 1032
+		GETGLOB 12
+		INDEX 1
+		NEWC
+		STSLICECONST x42_
+		STSLICE
+		PUSHINT 111
+		STZEROES
+		ENDC
 		PUSHINT 128
+		ADDCONST 2
+		UFITS 8
 		SENDRAWMSG
 		.loc ../contracts/CreditProcessor.sol, 0
 	}
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 980
+		.loc ../contracts/CreditProcessor.sol, 1038
 		GETGLOB 12
 		GETGLOB 12
 		INDEX 3
@@ -4766,7 +5062,7 @@ PUSHCONT {
 	GETGLOB 15
 	NEQINT 12
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 987
+		.loc ../contracts/CreditProcessor.sol, 1045
 		PUSHINT 12
 		CALLREF {
 			CALL $_changeState_internal_macro$
@@ -4788,14 +5084,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 992
+.loc ../contracts/CreditProcessor.sol, 1050
 GETGLOB 15
 EQINT 10
 DUP
 PUSHCONT {
 	DROP
 	GETGLOB 9
-	PUSHSLICE x800815a8538a164f8117a242da4e7c7535cc1c96a594740dee104ade9b88cfdc299_
+	PUSHSLICE x800be2cc5b84d34be303c11cb5e184e8b1f3337f8891f267c31e3ffc381b9363dbf_
 	SDEQ
 	DUP
 	PUSHCONT {
@@ -4810,9 +5106,9 @@ PUSHCONT {
 }
 IF
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 993
+	.loc ../contracts/CreditProcessor.sol, 1051
 	ACCEPT
-	.loc ../contracts/CreditProcessor.sol, 994
+	.loc ../contracts/CreditProcessor.sol, 1052
 	CALLREF {
 		CALL $_payDebtThenTransfer_internal_macro$
 	}
@@ -4832,9 +5128,9 @@ PUSHCONT {
 	}
 	IF
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 996
+		.loc ../contracts/CreditProcessor.sol, 1054
 		ACCEPT
-		.loc ../contracts/CreditProcessor.sol, 998
+		.loc ../contracts/CreditProcessor.sol, 1056
 		DEPTH
 		ADDCONST -2
 		PICK
@@ -4847,7 +5143,7 @@ PUSHCONT {
 		ENDC
 		PUSHINT 0
 		SENDRAWMSG
-		.loc ../contracts/CreditProcessor.sol, 1000
+		.loc ../contracts/CreditProcessor.sol, 1058
 		CALLREF {
 			CALL $_payDebtThenTransfer_internal_macro$
 		}
@@ -4903,9 +5199,9 @@ PUSHCONT {
 		}
 		IF
 		PUSHCONT {
-			.loc ../contracts/CreditProcessor.sol, 1006
+			.loc ../contracts/CreditProcessor.sol, 1064
 			ACCEPT
-			.loc ../contracts/CreditProcessor.sol, 1008
+			.loc ../contracts/CreditProcessor.sol, 1066
 			CALLREF {
 				CALL $_unwrapWTON_internal_macro$
 			}
@@ -4930,12 +5226,12 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/CreditProcessor.sol, 1013
+.loc ../contracts/CreditProcessor.sol, 1071
 ACCEPT
-.loc ../contracts/CreditProcessor.sol, 1015
+.loc ../contracts/CreditProcessor.sol, 1073
 LDU 32
 DROP
-.loc ../contracts/CreditProcessor.sol, 1017
+.loc ../contracts/CreditProcessor.sol, 1075
 DUP
 PUSHINT 782424727
 EQUAL
@@ -4947,7 +5243,7 @@ PUSHCONT {
 }
 IF
 PUSHCONT {
-	.loc ../contracts/CreditProcessor.sol, 1020
+	.loc ../contracts/CreditProcessor.sol, 1078
 	PUSHINT 8
 	CALLREF {
 		CALL $_changeState_internal_macro$
@@ -4966,7 +5262,7 @@ PUSHCONT {
 	}
 	IF
 	PUSHCONT {
-		.loc ../contracts/CreditProcessor.sol, 1024
+		.loc ../contracts/CreditProcessor.sol, 1082
 		GETGLOB 16
 		CALLREF {
 			CALL $_changeState_internal_macro$
@@ -4994,7 +5290,7 @@ PUSHCONT {
 		}
 		IF
 		PUSHCONT {
-			.loc ../contracts/CreditProcessor.sol, 1029
+			.loc ../contracts/CreditProcessor.sol, 1087
 			PUSHINT 14
 			CALLREF {
 				CALL $_changeState_internal_macro$
@@ -5844,7 +6140,7 @@ IFJMPREF {
 	}
 }
 DUP
-PUSHINT 2032029702
+PUSHINT 1983964396
 LEQ
 IFJMPREF {
 	DUP
@@ -5877,7 +6173,7 @@ IFJMPREF {
 		}
 	}
 	DUP
-	PUSHINT 1497440185
+	PUSHINT 1371237916
 	LEQ
 	IFJMPREF {
 		DUP
@@ -5899,16 +6195,22 @@ IFJMPREF {
 			CALL $notifyEventStatusChanged$
 		}
 		DUP
+		PUSHINT 1371237916
+		EQUAL
+		IFJMPREF {
+			CALL $payDebtForUser$
+		}
+	}
+	DUP
+	PUSHINT 1631609143
+	LEQ
+	IFJMPREF {
+		DUP
 		PUSHINT 1497440185
 		EQUAL
 		IFJMPREF {
 			CALL $tokensReceivedCallback$
 		}
-	}
-	DUP
-	PUSHINT 1724294739
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1509981558
 		EQUAL
@@ -5927,17 +6229,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $requestDexPairAddress$
 		}
+	}
+	DUP
+	PUSHINT 1983964396
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1724294739
 		EQUAL
 		IFJMPREF {
 			CALL $broxusBridgeCallback$
 		}
-	}
-	DUP
-	PUSHINT 2032029702
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1817782511
 		EQUAL
@@ -5956,12 +6258,12 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $requestTokenEventProxyConfig$
 		}
-		DUP
-		PUSHINT 2032029702
-		EQUAL
-		IFJMPREF {
-			CALL $retryUnwrap$
-		}
 	}
+}
+DUP
+PUSHINT 2032029702
+EQUAL
+IFJMPREF {
+	CALL $retryUnwrap$
 }
 

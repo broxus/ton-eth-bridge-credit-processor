@@ -1,0 +1,108 @@
+{
+	"ABI version": 2,
+	"version": "2.1",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"deployer_","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getDetails",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"factory_","type":"address"},
+				{"name":"tokenRoot_","type":"address"},
+				{"name":"tokenWallet_","type":"address"}
+			]
+		},
+		{
+			"name": "onTokenWallet",
+			"inputs": [
+				{"name":"wallet","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "tokensReceivedCallback",
+			"inputs": [
+				{"name":"tokenWallet_","type":"address"},
+				{"name":"tokenRoot_","type":"address"},
+				{"name":"amount","type":"uint128"},
+				{"name":"senderPublicKey","type":"uint256"},
+				{"name":"senderAddress","type":"address"},
+				{"name":"senderWallet","type":"address"},
+				{"name":"originalGasTo","type":"address"},
+				{"name":"value7","type":"uint128"},
+				{"name":"payload","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "buildLevel3",
+			"inputs": [
+				{"name":"proxy","type":"address"},
+				{"name":"evmAddress","type":"uint160"},
+				{"name":"chainId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
+			"name": "onReceiveTONsFromBridgeCallback",
+			"inputs": [
+				{"components":[{"name":"amount","type":"uint128"},{"name":"user","type":"address"},{"name":"creditor","type":"address"},{"name":"recipient","type":"address"},{"name":"tokenAmount","type":"uint128"},{"name":"tonAmount","type":"uint128"},{"name":"swapType","type":"uint8"},{"components":[{"name":"numerator","type":"uint128"},{"name":"denominator","type":"uint128"}],"name":"slippage","type":"tuple"},{"name":"layer3","type":"cell"}],"name":"decodedEventData","type":"tuple"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "factory",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"factory","type":"address"}
+			]
+		},
+		{
+			"name": "tokenRoot",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"tokenRoot","type":"address"}
+			]
+		},
+		{
+			"name": "tokenWallet",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"tokenWallet","type":"address"}
+			]
+		}
+	],
+	"data": [
+		{"key":1,"name":"factory","type":"address"},
+		{"key":2,"name":"tokenRoot","type":"address"}
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"factory","type":"address"},
+		{"name":"tokenRoot","type":"address"},
+		{"name":"tokenWallet","type":"address"},
+		{"name":"deployer","type":"address"}
+	]
+}

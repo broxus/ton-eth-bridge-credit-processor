@@ -16,6 +16,7 @@ library CreditProcessorErrorCodes {
     uint16 constant NON_EMPTY_DEX_VAULT             = 1061;
     uint16 constant TOKEN_IS_WTON                   = 1070;
     uint16 constant WRONG_UNWRAP_PARAMS             = 1080;
+    uint16 constant HAS_NOT_DEBT                    = 1090;
 
     uint16 constant WRONG_SLIPPAGE                  = 1130;
 

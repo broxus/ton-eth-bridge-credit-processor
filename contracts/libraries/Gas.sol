@@ -5,8 +5,10 @@ library Gas {
     uint128 constant MAX_FWD_FEE                    = 0.1 ton;
     uint128 constant MIN_BALANCE                    = 0.1 ton;
 
-    uint128 constant CREDIT_BODY                    = 5 ton;
-    uint128 constant DEPLOY_PROCESSOR               = 0.2 ton;
+    uint128 constant CREDIT_BODY                        = 5 ton;
+    uint128 constant DEPLOY_PROCESSOR                   = 0.2 ton;
+    uint128 constant MIN_CALLBACK_VALUE                 = 0.1 ton;
+    uint128 constant READY_TO_PROCESS_CALLBACK_VALUE    = 0.1 ton;
 
     // EVENT
     uint128 constant DERIVE_EVENT_ADDRESS           = 0.2 ton;
@@ -39,4 +41,6 @@ library Gas {
     uint128 constant RETRY_SWAP_MIN_VALUE                   = 3 ton; //RETRY_SWAP_MIN_BALANCE - MIN_BALANCE;
 
     uint128 constant END_PROCESS_MIN_VALUE                  = 1 ton;
+
+    uint128 constant UPGRADE_FACTORY_MIN_BALANCE            = 10 ton;
 }
