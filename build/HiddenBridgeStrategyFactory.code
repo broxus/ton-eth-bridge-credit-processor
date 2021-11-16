@@ -56,7 +56,7 @@ SETGLOB 7
 CALL $deployStrategy_internal_macro$
 
 .macro deployStrategy_internal_macro
-.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 59
+.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 61
 PUSHINT 1000000000
 GETPARAM 7
 INDEX 0
@@ -101,6 +101,7 @@ DROP
 GETGLOB 6
 THROWIFNOT 76
 .loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 32
+LDU 32
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -128,16 +129,20 @@ IFNOT
 ENDS
 .loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 34
 NEWC
-.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 35
+.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 36
+ROLL 4
+SWAP
+STU 32
+.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 37
 ROLL 3
 SWAP
 STSLICE
-.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 36
+.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 38
 XCHG S1, S2
 STU 160
-.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 37
-STU 32
 .loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 39
+STU 32
+.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 41
 ENDC
 .loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 0
 OVER
@@ -151,7 +156,7 @@ PUSHCONT {
 	NEWC
 	STSLICECONST xc
 	STSLICE
-	PUSHSLICE x000000000000000000000000318a45936_
+	PUSHSLICE x0000000000000000000000003ecca891e_
 	STSLICER
 	STREF
 	ENDC
@@ -177,7 +182,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 42
+.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 44
 LDU 32
 GETGLOB 4
 ROT
@@ -192,7 +197,7 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 43
+.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 45
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -278,7 +283,7 @@ SETGLOB 7
 CALL $_buildInitData_internal_macro$
 
 .macro _buildInitData_internal_macro
-.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 47
+.loc ../contracts/strategies/HiddenBridgeStrategyFactory.sol, 49
 NEWDICT
 PUSHINT 0
 NEWC
@@ -555,7 +560,7 @@ IFJMPREF {
 	}
 }
 DUP
-PUSHINT 1177097805
+PUSHINT 2066915911
 LEQ
 IFJMPREF {
 	DUP
@@ -565,7 +570,7 @@ IFJMPREF {
 		CALL $strategyCode$
 	}
 	DUP
-	PUSHINT 1177097805
+	PUSHINT 2066915911
 	EQUAL
 	IFJMPREF {
 		CALL $buildLevel3$

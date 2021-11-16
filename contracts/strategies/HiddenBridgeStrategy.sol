@@ -18,6 +18,15 @@ import "../libraries/HiddenBridgeStrategyErrorCodes.sol";
 
 contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, ITokensReceivedCallback {
 
+    event BurnTokens(
+        uint32 id,
+        address user,
+        address processor,
+        uint128 amount,
+        uint160 evmAddress,
+        uint32  chainId
+    );
+
     address public static factory;
     address public static tokenRoot;
     
@@ -108,16 +117,20 @@ contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, ITokensReceived
             CreditEventData eventData = EventDataDecoder.decode(payload);
             TvmSlice l3 = eventData.layer3.toSlice();
 
-            if (l3.bits() == 459) {
+            if (l3.bits() == 491) {
                 (
+                    uint32 id,
                     address proxy,
                     uint160 evmAddress,
                     uint32 chainId
-                ) = l3.decode(address, uint160, uint32);
+                ) = l3.decode(uint32, address, uint160, uint32);
 
                 TvmBuilder burnPayload;
                 burnPayload.store(evmAddress);
                 burnPayload.store(chainId);
+                burnPayload.store(id);
+
+                emit BurnTokens(id, eventData.user, senderAddress, amount, evmAddress, chainId);
 
                 IBurnableByOwnerTokenWallet(msg.sender).burnByOwner{
                     value: 0,
@@ -162,9 +175,11 @@ contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, ITokensReceived
         }
     }
 
-    function buildLevel3(address proxy, uint160 evmAddress, uint32 chainId) external pure returns(TvmCell) {
+    function buildLevel3(uint32 id, address proxy, uint160 evmAddress, uint32 chainId) external pure returns(TvmCell) {
 
         TvmBuilder b;
+
+        b.store(id);
         b.store(proxy);
         b.store(evmAddress);
         b.store(chainId);

@@ -18,7 +18,7 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 29
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 38
 GETGLOB 9
 GETGLOB 10
 SDEQ
@@ -60,14 +60,14 @@ PUSHCONT {
 }
 IF
 PUSHCONT {
-	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 197
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 212
 	PUSHINT 1000000000
 	PUSHINT 0
 	RAWRESERVE
-	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 36
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 45
 	BLKPUSH 2, 0
 	SETGLOB 13
-	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 38
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 47
 	MYADDR
 	PUSHINT 0
 	PUSHINT 100000000
@@ -91,7 +91,7 @@ PUSHCONT {
 	ENDC
 	PUSHINT 1
 	SENDRAWMSG
-	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 48
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 57
 	MYADDR
 	PUSHINT 0
 	GETGLOB 11
@@ -113,7 +113,7 @@ PUSHCONT {
 	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
 }
 PUSHCONT {
-	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 57
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 66
 	GETGLOB 10
 	NEWC
 	STSLICECONST x42_
@@ -145,14 +145,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 61
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 70
 LDU 32
 GETGLOB 4
 ROT
 SETINDEXQ 5
 SETGLOB 4
 ENDS
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 66
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 75
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -252,7 +252,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 69
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 78
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -262,7 +262,7 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 70
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 79
 GETGLOB 9
 PARSEMSGADDR
 INDEX 3
@@ -277,19 +277,19 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1000
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 71
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 80
 GETGLOB 12
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 THROWIF 1500
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 197
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 212
 PUSHINT 1000000000
 PUSHINT 0
 RAWRESERVE
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 74
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 83
 SETGLOB 12
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 76
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 85
 FALSE
 MYADDR
 GETGLOB 12
@@ -307,12 +307,12 @@ STBREFR
 ENDC
 PUSHINT 1
 SENDRAWMSG
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 81
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 90
 GETGLOB 13
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 82
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 91
 PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
 SETGLOB 13
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 83
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 92
 NEWC
 STSLICECONST x42_
 STSLICE
@@ -339,7 +339,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 86
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 95
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -406,7 +406,7 @@ PUSHCONT {
 IFNOT
 LDREF
 ENDS
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 97
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 106
 GETGLOB 9
 PARSEMSGADDR
 INDEX 3
@@ -421,14 +421,14 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1000
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 197
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 212
 PUSHINT 1000000000
 PUSHINT 0
 RAWRESERVE
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 99
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 108
 PUSHREF {
 }
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 101
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 110
 ROLL 9
 GETGLOB 12
 SDEQ
@@ -451,7 +451,7 @@ PUSHCONT {
 			DEPTH
 			ADDCONST -2
 			PICK
-			PUSHINT 3000000000
+			PUSHINT 2500000000
 			GEQ
 		}
 		IF
@@ -460,35 +460,66 @@ PUSHCONT {
 }
 IF
 PUSHCONT {
-	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 108
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 117
 	OVER
 	CALLREF {
 		CALL $EventDataDecoder_no_obj_decode_macro$
 	}
-	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 109
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 118
 	DUP
 	INDEX 8
 	CTOS
-	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 111
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 120
 	DUP
 	SBITS
-	PUSHINT 459
+	PUSHINT 491
 	EQUAL
 	PUSHCONT {
-		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 112
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 121
 		DUP
+		LDU 32
 		LDMSGADDR
 		LDU 160
 		LDU 32
-		POP S4
-		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 118
-		SWAP
+		POP S5
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 128
+		OVER
 		NEWC
-		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 119
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 129
 		STU 160
-		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 120
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 130
+		OVER
+		SWAP
 		STU 32
-		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 122
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 131
+		PUSH S4
+		SWAP
+		STU 32
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 133
+		XCHG S2
+		PUSH3 S14, S12, S6
+		INDEX 1
+		ROLL 7
+		PUSHSLICE xc0000000000000000000000001
+		NEWC
+		STSLICE
+		ROLLREV 6
+		NEWC
+		STSLICECONST x0428c1ae
+		STU 32
+		STSLICE
+		ROLLREV 4
+		NEWC
+		STSLICE
+		STU 128
+		STU 160
+		STU 32
+		STBREFR
+		STBREFR
+		ENDC
+		PUSHINT 0
+		SENDRAWMSG
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 135
 		ENDC
 		SWAP
 		PUSH S3
@@ -519,7 +550,7 @@ PUSHCONT {
 		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
 	}
 	PUSHCONT {
-		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 133
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 146
 		PUSH S2
 		TRUE
 		PUSH S3
@@ -553,7 +584,7 @@ PUSHCONT {
 		ENDC
 		PUSHINT 1
 		SENDRAWMSG
-		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 147
+		.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 160
 		OVER
 		INDEX 1
 		NEWC
@@ -573,7 +604,7 @@ PUSHCONT {
 	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
 }
 PUSHCONT {
-	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 154
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 167
 	DUP
 	FALSE
 	PUSH S5
@@ -616,7 +647,8 @@ SETGLOB 7
 DROP
 GETGLOB 6
 THROWIFNOT 76
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 165
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 178
+LDU 32
 LDMSGADDRQ
 PUSHCONT {
 	LDREF
@@ -642,18 +674,22 @@ PUSHCONT {
 }
 IFNOT
 ENDS
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 167
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 180
 NEWC
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 168
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 182
+ROLL 4
+SWAP
+STU 32
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 183
 ROLL 3
 SWAP
 STSLICE
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 169
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 184
 XCHG S1, S2
 STU 160
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 170
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 185
 STU 32
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 172
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 187
 ENDC
 .loc ../contracts/strategies/HiddenBridgeStrategy.sol, 0
 OVER
@@ -667,7 +703,7 @@ PUSHCONT {
 	NEWC
 	STSLICECONST xc
 	STSLICE
-	PUSHSLICE x000000000000000000000000318a45936_
+	PUSHSLICE x0000000000000000000000003ecca891e_
 	STSLICER
 	STREF
 	ENDC
@@ -693,7 +729,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 175
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 190
 LDUQ 128
 PUSHCONT {
 	LDREF
@@ -774,11 +810,11 @@ ROLLREV 9
 TUPLE 9
 SWAP
 ENDS
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 197
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 212
 PUSHINT 1000000000
 PUSHINT 0
 RAWRESERVE
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 177
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 192
 INDEX 1
 NEWC
 STSLICECONST x42_
@@ -805,12 +841,12 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 185
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 200
 ACCEPT
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 187
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 202
 LDU 32
 DROP
-.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 189
+.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 204
 DUP
 PUSHINT 110758136
 EQUAL
@@ -823,7 +859,7 @@ PUSHCONT {
 }
 IFNOT
 PUSHCONT {
-	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 192
+	.loc ../contracts/strategies/HiddenBridgeStrategy.sol, 207
 	GETGLOB 10
 	NEWC
 	STSLICECONST x42_
@@ -1314,7 +1350,7 @@ TUPLE 9
 
 .macro public_function_selector
 DUP
-PUSHINT 1177097805
+PUSHINT 1196840156
 LEQ
 IFJMPREF {
 	DUP
@@ -1336,22 +1372,16 @@ IFJMPREF {
 		CALL $factory$
 	}
 	DUP
-	PUSHINT 1177097805
-	EQUAL
-	IFJMPREF {
-		CALL $buildLevel3$
-	}
-}
-DUP
-PUSHINT 1896024939
-LEQ
-IFJMPREF {
-	DUP
 	PUSHINT 1196840156
 	EQUAL
 	IFJMPREF {
 		CALL $constructor$
 	}
+}
+DUP
+PUSHINT 2066915911
+LEQ
+IFJMPREF {
 	DUP
 	PUSHINT 1236465367
 	EQUAL
@@ -1369,6 +1399,12 @@ IFJMPREF {
 	EQUAL
 	IFJMPREF {
 		CALL $tokenWallet$
+	}
+	DUP
+	PUSHINT 2066915911
+	EQUAL
+	IFJMPREF {
+		CALL $buildLevel3$
 	}
 }
 DUP
