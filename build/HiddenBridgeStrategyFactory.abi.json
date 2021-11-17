@@ -22,6 +22,7 @@
 		{
 			"name": "buildLevel3",
 			"inputs": [
+				{"name":"id","type":"uint32"},
 				{"name":"proxy","type":"address"},
 				{"name":"evmAddress","type":"uint160"},
 				{"name":"chainId","type":"uint32"}

@@ -29,9 +29,11 @@ contract HiddenBridgeStrategyFactory is RandomNonce {
 
     }
 
-    function buildLevel3(address proxy, uint160 evmAddress, uint32 chainId) external pure returns(TvmCell) {
+    function buildLevel3(uint32 id, address proxy, uint160 evmAddress, uint32 chainId) external pure returns(TvmCell) {
 
         TvmBuilder b;
+
+        b.store(id);
         b.store(proxy);
         b.store(evmAddress);
         b.store(chainId);

@@ -49,6 +49,7 @@
 		{
 			"name": "buildLevel3",
 			"inputs": [
+				{"name":"id","type":"uint32"},
 				{"name":"proxy","type":"address"},
 				{"name":"evmAddress","type":"uint160"},
 				{"name":"chainId","type":"uint32"}
@@ -95,6 +96,19 @@
 		{"key":2,"name":"tokenRoot","type":"address"}
 	],
 	"events": [
+		{
+			"name": "BurnTokens",
+			"inputs": [
+				{"name":"id","type":"uint32"},
+				{"name":"user","type":"address"},
+				{"name":"processor","type":"address"},
+				{"name":"amount","type":"uint128"},
+				{"name":"evmAddress","type":"uint160"},
+				{"name":"chainId","type":"uint32"}
+			],
+			"outputs": [
+			]
+		}
 	],
 	"fields": [
 		{"name":"_pubkey","type":"uint256"},
