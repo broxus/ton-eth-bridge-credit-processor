@@ -1,8 +1,9 @@
 const {
-  logContract,
-  isValidTonAddress,
-  stringToBytesArray,
-} = require('../../node_modules/bridge/free-ton/test/utils');
+    logContract,
+    isValidTonAddress,
+    stringToBytesArray,
+    DEX_CONTRACTS_PATH,
+} = require('./../utils');
 
 const prompts = require('prompts');
 const fs = require('fs');
@@ -10,140 +11,193 @@ const ethers = require('ethers');
 const ora = require('ora');
 const BigNumber = require('bignumber.js');
 
+// FIXME:
+const ETHEREUM_BRIDGE_ABI_PATH = '/path/to/bridge-contracts/ethereum/abi'
 
 const main = async () => {
-  const [keyPair] = await locklift.keys.getKeyPairs();
+    const [keyPair] = await locklift.keys.getKeyPairs();
 
-  // Get all contracts from the build
-  const build = [...new Set(fs.readdirSync('build').map(o => o.split('.')[0]))];
+    // Get all contracts from the build
+    const build = [...new Set(fs.readdirSync('build').map(o => o.split('.')[0]))];
 
-  const ethereumEventAbi = {
-        "name": "LandOnFreeTON",
-        "type": "event",
-        "inputs": [
-            { "name": "amount",                 "type": "uint128" },
-            { "name": "wid",                    "type": "int8" },
-            { "name": "user",                   "type": "uint256" },
-            { "name": "creditor",               "type": "uint256" },
-            { "name": "recipient",              "type": "uint256" },
+    const events = fs.readdirSync(ETHEREUM_BRIDGE_ABI_PATH);
 
-            { "name": "tokenAmount",            "type": "uint128" },
-            { "name": "tonAmount",              "type": "uint128" },
-            { "name": "swapType",               "type": "uint8" },
-            { "name": "slippageNumerator",      "type": "uint128" },
-            { "name": "slippageDenominator",    "type": "uint128" },
+    const {
+        eventAbiFile
+    } = await prompts({
+        type: 'select',
+        name: 'eventAbiFile',
+        message: 'Select Ethereum ABI, which contains target event',
+        choices: events.map(e => new Object({ title: e, value: e }))
+    });
 
-            { "name": "separator",              "type": "bytes1" }, // == 0x03
+    const abi = JSON.parse(fs.readFileSync(`${ETHEREUM_BRIDGE_ABI_PATH}/${eventAbiFile}`));
 
-            { "name": "level3",                 "type": "bytes" }
-        ],
-        "outputs":[]
-  };
+    const {
+        event
+    } = await prompts({
+        type: 'select',
+        name: 'event',
+        message: 'Choose Ethereum event',
+        choices: abi
+            .filter(o => o.type == 'event' && o.anonymous == false)
+            .map(event => {
+                return {
+                    title: `${event.name} (${event.inputs.map(i => i.type.concat(' ').concat(i.name)).join(',')})`,
+                    value: event,
+                }
+            }),
+    });
 
-  const response = await prompts([
-    {
-      type: 'text',
-      name: 'owner',
-      message: 'Initial configuration owner',
-      validate: value => isValidTonAddress(value) ? true : 'Invalid TON address'
-    },
-    {
-      type: 'text',
-      name: 'staking',
-      message: 'Staking contract',
-      validate: value => isValidTonAddress(value) ? true : 'Invalid TON address'
-    },
-    {
-      type: 'number',
-      name: 'eventInitialBalance',
-      initial: 2,
-      message: 'Event initial balance (in TONs)'
-    },
-    {
-      type: 'text',
-      name: 'meta',
-      message: 'Configuration meta, can be empty (TvmCell encoded)',
-    },
-    {
-      type: 'select',
-      name: 'chainId',
-      message: 'Choose network',
-      choices: [
-        { title: 'Goerli',  value: 5 },
-        { title: 'Ropsten',  value: 3 },
-        { title: 'Ethereum',  value: 1 },
-      ],
-    },
-    {
-      type: 'text',
-      name: 'eventEmitter',
-      message: 'Contract address, which emits event (Ethereum)',
-      validate: value => ethers.utils.isAddress(value) ? true : 'Invalid Ethereum address'
-    },
-    {
-      type: 'number',
-      name: 'eventBlocksToConfirm',
-      message: 'Blocks to confirm',
-      initial: 12,
-    },
-    {
-      type: 'text',
-      name: 'proxy',
-      message: 'Target address in FreeTON (proxy)',
-      validate: value => isValidTonAddress(value) ? true : 'Invalid TON address'
-    },
-    {
-      type: 'number',
-      name: 'startBlockNumber',
-      message: 'Start block number'
-    },
-    {
-      type: 'number',
-      name: 'value',
-      message: 'Configuration initial balance (in TONs)',
-      initial: 10
-    },
-  ]);
+    const response = await prompts([
+        {
+            type: 'text',
+            name: 'owner',
+            message: 'Initial configuration owner',
+            validate: value => isValidTonAddress(value) ? true : 'Invalid TON address'
+        },
+        {
+            type: 'text',
+            name: 'staking',
+            message: 'Staking contract',
+            validate: value => isValidTonAddress(value) ? true : 'Invalid TON address'
+        },
+        {
+            type: 'number',
+            name: 'eventInitialBalance',
+            initial: 2,
+            message: 'Event initial balance (in TONs)'
+        },
+        {
+            type: 'select',
+            name: 'eventContract',
+            message: 'Choose event contract',
+            choices: build.map(c => new Object({ title: c, value: c }))
+        },
+        {
+            type: 'text',
+            name: 'meta',
+            message: 'Configuration meta, can be empty (TvmCell encoded)',
+        },
+        {
+            type: 'select',
+            name: 'chainId',
+            message: 'Choose network',
+            choices: [
+                { title: 'Goerli',  value: 5 },
+                { title: 'Ropsten',  value: 3 },
+                { title: 'Ethereum',  value: 1 },
+                { title: 'BSC',  value: 56 },
+                { title: 'Fantom',  value: 250 },
+                { title: 'Polygon',  value: 137 },
+            ],
+        },
+        {
+            type: 'text',
+            name: 'eventEmitter',
+            message: 'Contract address, which emits event (Ethereum)',
+            validate: value => ethers.utils.isAddress(value) ? true : 'Invalid Ethereum address'
+        },
+        {
+            type: 'number',
+            name: 'eventBlocksToConfirm',
+            message: 'Blocks to confirm',
+            initial: 12,
+        },
+        {
+            type: 'text',
+            name: 'proxy',
+            message: 'Target address in FreeTON (proxy)',
+            validate: value => isValidTonAddress(value) ? true : 'Invalid TON address'
+        },
+        {
+            type: 'number',
+            name: 'startBlockNumber',
+            message: 'Start block number'
+        },
+        {
+            type: 'number',
+            name: 'value',
+            message: 'Configuration initial balance (in TONs)',
+            initial: 10
+        },
+    ]);
 
-  const EthereumEventConfiguration = await locklift.factory.getContract('CreditEthereumEventConfiguration');
-  const EthereumEvent = await locklift.factory.getContract('CreditTokenTransferEthereumEvent');
+    const EthereumEventConfiguration = await locklift.factory.getContract('CreditEthereumEventConfiguration');
+    const EthereumEvent = await locklift.factory.getContract(response.eventContract);
 
-  const spinner = ora('Deploying Ethereum event configuration').start();
+    const spinner = ora('Deploying Ethereum event configuration').start();
 
-  const ethereumEventConfiguration = await locklift.giver.deployContract({
-    contract: EthereumEventConfiguration,
-    constructorParams: {
-      _owner: response.owner,
-      _meta: response.meta,
-    },
-    initParams: {
-      basicConfiguration: {
-        eventABI: stringToBytesArray(JSON.stringify(ethereumEventAbi)),
-        eventInitialBalance: locklift.utils.convertCrystal(response.eventInitialBalance, 'nano'),
-        staking: response.staking,
-        eventCode: EthereumEvent.code,
-      },
-      networkConfiguration: {
-        chainId: response.chainId,
-        eventEmitter: new BigNumber(response.eventEmitter.toLowerCase()).toFixed(),
-        eventBlocksToConfirm: response.eventBlocksToConfirm,
-        proxy: response.proxy,
-        startBlockNumber: response.startBlockNumber,
-        endBlockNumber: 0,
-      }
-    },
-    keyPair
-  }, locklift.utils.convertCrystal(response.value, 'nano'));
+    const Account = await locklift.factory.getAccount('Wallet', DEX_CONTRACTS_PATH);
 
-  spinner.stop();
+    let account = await locklift.giver.deployContract({
+        contract: Account,
+        constructorParams: {},
+        initParams: {
+            _randomNonce: Math.random() * 6400 | 0,
+        },
+        keyPair,
+    }, locklift.utils.convertCrystal('10', 'nano'));
+    console.log(`Account: ${account.address}`);
 
-  await logContract(ethereumEventConfiguration);
+    const ethereumEventConfiguration = await locklift.giver.deployContract({
+        contract: EthereumEventConfiguration,
+        constructorParams: {
+            _owner: account.address,
+            _meta: response.meta,
+        },
+        initParams: {
+            basicConfiguration: {
+                eventABI: stringToBytesArray(JSON.stringify(event)),
+                eventInitialBalance: locklift.utils.convertCrystal(response.eventInitialBalance, 'nano'),
+                staking: response.staking,
+                eventCode: EthereumEvent.code,
+            },
+            networkConfiguration: {
+                chainId: response.chainId,
+                eventEmitter: new BigNumber(response.eventEmitter.toLowerCase()).toFixed(),
+                eventBlocksToConfirm: response.eventBlocksToConfirm,
+                proxy: response.proxy,
+                startBlockNumber: response.startBlockNumber,
+                endBlockNumber: 0,
+            }
+        },
+        keyPair
+    }, locklift.utils.convertCrystal(response.value, 'nano'));
+
+    const CreditProcessor = await locklift.factory.getContract('CreditProcessor');
+
+    console.log(`CreditEthereumEventConfiguration.setCreditProcessorCode`);
+    await account.runTarget({
+        contract: ethereumEventConfiguration,
+        method: 'setCreditProcessorCode',
+        params: {
+            value: CreditProcessor.code
+        },
+        value: locklift.utils.convertCrystal(0.2, 'nano'),
+        keyPair
+    });
+
+    console.log(`CreditEthereumEventConfiguration.transferOwner`);
+    await account.runTarget({
+        contract: ethereumEventConfiguration,
+        method: 'transferOwnership',
+        params: {
+            newOwner: response.owner
+        },
+        value: locklift.utils.convertCrystal(0.2, 'nano'),
+        keyPair
+    });
+
+    spinner.stop();
+
+    await logContract(ethereumEventConfiguration);
 };
 
 
 main()
-  .then(() => process.exit(0))
-  .catch(e => {
-    console.log(e);
-    process.exit(1);
-  });
+    .then(() => process.exit(0))
+    .catch(e => {
+        console.log(e);
+        process.exit(1);
+    });

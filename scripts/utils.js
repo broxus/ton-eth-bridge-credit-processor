@@ -1,4 +1,5 @@
 const fs = require('fs');
+const logger = require('mocha-logger');
 
 const TOKEN_CONTRACTS_PATH = 'node_modules/tokens/free-ton/build'
 const DEX_CONTRACTS_PATH = 'node_modules/dex/build'
@@ -11,6 +12,8 @@ const BigNumber = require('bignumber.js');
 BigNumber.config({EXPONENTIAL_AT: 257});
 
 const getRandomNonce = () => Math.random() * 64000 | 0;
+
+const isValidTonAddress = (address) => /^(?:-1|0):[0-9a-fA-F]{64}$/.test(address);
 
 const stringToBytesArray = (dataString) => {
   return Buffer.from(dataString).toString('hex')
@@ -26,6 +29,12 @@ const displayAccount = async (contract) => {
 const getBalance = async (contract) => {
   return locklift.utils.convertCrystal((await locklift.ton.getBalance(contract.address)), 'ton').toNumber();
 }
+
+const logContract = async (contract) => {
+  const balance = await locklift.ton.getBalance(contract.address);
+
+  logger.log(`${contract.name} (${contract.address}) - ${locklift.utils.convertCrystal(balance, 'ton')}`);
+};
 
 async function sleep(ms) {
   ms = ms === undefined ? 1000 : ms;
@@ -131,7 +140,9 @@ module.exports = {
   Migration,
   Constants,
   getRandomNonce,
+  isValidTonAddress,
   stringToBytesArray,
+  logContract,
   sleep,
   getBalance,
   displayAccount,
