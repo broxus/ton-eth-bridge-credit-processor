@@ -130,6 +130,10 @@ contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, ITokensReceived
                 burnPayload.store(chainId);
                 burnPayload.store(id);
 
+                if (senderAddress.value != 0) {
+                    burnPayload.store(senderAddress);
+                }
+
                 emit BurnTokens(id, eventData.user, senderAddress, amount, evmAddress, chainId);
 
                 IBurnableByOwnerTokenWallet(msg.sender).burnByOwner{
