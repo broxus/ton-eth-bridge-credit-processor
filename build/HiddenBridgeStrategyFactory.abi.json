@@ -20,7 +20,7 @@
 			]
 		},
 		{
-			"name": "buildLevel3",
+			"name": "buildLayer3",
 			"inputs": [
 				{"name":"id","type":"uint32"},
 				{"name":"proxy","type":"address"},
