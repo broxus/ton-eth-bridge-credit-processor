@@ -137,7 +137,7 @@ const main = async () => {
             _randomNonce: Math.random() * 6400 | 0,
         },
         keyPair,
-    }, locklift.utils.convertCrystal('10', 'nano'));
+    }, locklift.utils.convertCrystal('1', 'nano'));
     console.log(`Account: ${account.address}`);
 
     const ethereumEventConfiguration = await locklift.giver.deployContract({
