@@ -1,14 +1,14 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/IEventNotificationReceiver.sol';
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-contracts/IBasicEvent.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/IEventNotificationReceiver.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-contracts/IBasicEvent.sol';
 import '../interfaces/IEthereumEventWithDetails.sol';
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/IProxy.sol';
-import '../../node_modules/@broxus/contracts/contracts/libraries/MsgFlag.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/IProxy.sol';
+import '@broxus/contracts/contracts/libraries/MsgFlag.sol';
 
 
 contract TestEthereumEvent is IEthereumEvent, IBasicEvent, IEthereumEventWithDetails {
@@ -45,7 +45,7 @@ contract TestEthereumEvent is IEthereumEvent, IBasicEvent, IEthereumEventWithDet
     function onConfirm() internal view {
         notifyEventStatusChanged();
 
-        IProxy(eventInitData.configuration).broxusBridgeCallback{
+        IProxy(eventInitData.configuration).onEventConfirmed{
             flag: MsgFlag.ALL_NOT_RESERVED
         }(eventInitData, initializer);
     }

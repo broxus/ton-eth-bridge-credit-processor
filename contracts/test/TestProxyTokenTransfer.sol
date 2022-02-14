@@ -1,9 +1,9 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "../../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol";
+import "ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol";
 
 contract TestProxyTokenTransfer is ProxyTokenTransfer {
     constructor(address owner_) ProxyTokenTransfer(owner_) public {}

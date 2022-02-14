@@ -1,8 +1,8 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "../../node_modules/@broxus/contracts/contracts/_ErrorCodes.sol";
+import "@broxus/contracts/contracts/_ErrorCodes.sol";
 
 abstract contract MultiOwner {
     address public admin;

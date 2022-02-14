@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 
 pragma AbiHeader time;
 pragma AbiHeader expire;
@@ -8,7 +8,7 @@ import "./HiddenBridgeStrategy.sol";
 
 import "../libraries/StrategyGas.sol";
 import "../libraries/MessageFlags.sol";
-import "../../node_modules/@broxus/contracts/contracts/utils/RandomNonce.sol";
+import "@broxus/contracts/contracts/utils/RandomNonce.sol";
 
 contract HiddenBridgeStrategyFactory is RandomNonce {
     TvmCell public strategyCode;

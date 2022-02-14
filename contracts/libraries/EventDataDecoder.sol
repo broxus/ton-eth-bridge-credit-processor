@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 
 import "../interfaces/structures/ICreditEventDataStructure.sol";
 import "../interfaces/structures/INumeratorDenominatorStructure.sol";
@@ -25,12 +25,12 @@ custom
 */
 
 library EventDataDecoder {
-    function isValid(TvmCell eventData) external pure returns(bool) {
+    function isValid(TvmCell eventData) external returns(bool) {
         TvmSlice l1 = eventData.toSlice();
         return l1.hasNBitsAndRefs(904, 1) && l1.loadRefAsSlice().hasNBitsAndRefs(520, 1);
     }
 
-    function decode(TvmCell eventData) external pure returns(ICreditEventDataStructure.CreditEventData) {
+    function decode(TvmCell eventData) external returns(ICreditEventDataStructure.CreditEventData) {
         TvmSlice l1 = eventData.toSlice();
         TvmSlice l2 = l1.loadRefAsSlice();
 

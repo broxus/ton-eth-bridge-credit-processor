@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 
 library CreditFactoryErrorCodes {
     uint16 constant NOT_PERMITTED                   = 1000;

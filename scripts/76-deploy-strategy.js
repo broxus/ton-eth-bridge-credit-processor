@@ -13,7 +13,7 @@ async function main() {
 
     const token = Constants.tokens[tokenId];
     const TokenRoot = migration.load(
-        await locklift.factory.getContract('RootTokenContract', TOKEN_CONTRACTS_PATH), token.symbol + 'Root'
+        await locklift.factory.getContract('TokenRootUpgradeable', TOKEN_CONTRACTS_PATH), token.symbol + 'Root'
     );
 
     const HiddenBridgeStrategy = await locklift.factory.getContract('HiddenBridgeStrategy');

@@ -1,7 +1,7 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-contracts/IBasicEvent.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-contracts/IBasicEvent.sol';
 
 interface IEthereumEventWithDetails {
     function getDetails() external view responsible returns (

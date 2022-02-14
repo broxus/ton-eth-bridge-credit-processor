@@ -1,27 +1,27 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import '../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-contracts/IBasicEvent.sol';
-import '../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
-import '../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-configuration-contracts/IEthereumEventConfiguration.sol';
-import '../node_modules/bridge/free-ton/contracts/bridge/interfaces/IProxyTokenTransferConfigurable.sol';
-import "../node_modules/bridge/free-ton/contracts/bridge/interfaces/IEventNotificationReceiver.sol";
-import "../node_modules/bridge/free-ton/contracts/bridge/interfaces/IProxy.sol";
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-contracts/IBasicEvent.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-configuration-contracts/IEthereumEventConfiguration.sol';
+import "ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/IEventNotificationReceiver.sol";
+import "ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/IProxy.sol";
 
-import './interfaces/tokens/IRootTokenContract.sol';
-import './interfaces/tokens/ITONTokenWallet.sol';
+import 'ton-eth-bridge-token-contracts/contracts/interfaces/ITokenRoot.sol';
+import 'ton-eth-bridge-token-contracts/contracts/interfaces/ITokenWallet.sol';
+import 'ton-eth-bridge-token-contracts/contracts/interfaces/TIP3TokenWallet.sol';
 
-import '../node_modules/dex/contracts/interfaces/IDexRoot.sol';
-import '../node_modules/dex/contracts/interfaces/IDexPair.sol';
-import "../node_modules/dex/contracts/libraries/OperationTypes.sol";
+import 'ton-dex/contracts/interfaces/IDexRoot.sol';
+import 'ton-dex/contracts/interfaces/IDexPair.sol';
+import "ton-dex/contracts/libraries/DexOperationTypes.sol";
 
 import './interfaces/IEthereumEventWithDetails.sol';
 import "./interfaces/ICreditFactory.sol";
 import "./interfaces/ICreditProcessor.sol";
-import "./interfaces/ICreditProcessorReadyToProcessCallback.sol";
 import "./interfaces/IReceiveTONsFromBridgeCallback.sol";
+import './interfaces/IHasTokenRoot.sol';
 
 import './Addresses.sol';
 
@@ -29,7 +29,7 @@ import './libraries/MessageFlags.sol';
 import './libraries/CreditProcessorErrorCodes.sol';
 import "./libraries/EventDataDecoder.sol";
 import './libraries/OperationStatus.sol';
-import './libraries/Gas.sol';
+import './libraries/CreditGas.sol';
 
 
 contract CreditProcessor is ICreditProcessor, Addresses {
@@ -105,7 +105,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
 
     constructor(uint128 fee, address deployer_) public {
 
-        if (msg.value >= (Gas.CREDIT_BODY - Gas.DEPLOY_PROCESSOR - Gas.MAX_FWD_FEE) &&
+        if (msg.value >= (CreditGas.CREDIT_BODY - CreditGas.DEPLOY_PROCESSOR - CreditGas.MAX_FWD_FEE) &&
             msg.sender.value != 0 && tvm.pubkey() == 0 &&
             EventDataDecoder.isValid(eventVoteData.eventData) &&
             configuration.value != 0)
@@ -116,7 +116,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
 
             if (deployer == eventData.creditor) {
                 fee_ = fee;
-                debt = math.max(Gas.CREDIT_BODY, msg.value) + fee_;
+                debt = math.max(CreditGas.CREDIT_BODY, msg.value) + fee_;
             }
 
             amount = eventData.amount;
@@ -136,36 +136,25 @@ contract CreditProcessor is ICreditProcessor, Addresses {
                 state = CreditProcessorStatus.Created;
 
                 IEthereumEventConfiguration(configuration).deriveEventAddress{
-                    value: Gas.DERIVE_EVENT_ADDRESS,
+                    value: CreditGas.DERIVE_EVENT_ADDRESS,
                     flag: MessageFlags.SENDER_PAYS_FEES,
                     callback: CreditProcessor.onEventAddress
                 }(eventVoteData);
 
                 IEthereumEventConfiguration(configuration).getDetails{
-                    value: Gas.GET_EVENT_CONFIG_DETAILS,
+                    value: CreditGas.GET_EVENT_CONFIG_DETAILS,
                     flag: MessageFlags.SENDER_PAYS_FEES,
                     callback: CreditProcessor.onEventConfigDetails
                 }();
 
-                IRootTokenContract(WTON_ROOT)
-                    .deployEmptyWallet {
-                        value: Gas.DEPLOY_EMPTY_WALLET_VALUE,
-                        flag: MessageFlags.SENDER_PAYS_FEES
-                    }(
-                        Gas.DEPLOY_EMPTY_WALLET_GRAMS,  // deploy_grams
-                        0,                              // wallet_public_key
-                        address(this),                  // owner_address
-                        address(this)                   // gas_back_address
-                    );
-
-                IRootTokenContract(WTON_ROOT)
-                    .getWalletAddress{
-                        value: Gas.GET_WALLET_ADDRESS_VALUE,
+                ITokenRoot(WEVER_ROOT)
+                    .deployWallet {
+                        value: CreditGas.DEPLOY_EMPTY_WALLET_VALUE,
                         flag: MessageFlags.SENDER_PAYS_FEES,
                         callback: CreditProcessor.onWtonWallet
                     }(
-                        0,                              // wallet_public_key_
-                        address(this)                   // owner_address_
+                        address(this),
+                        CreditGas.DEPLOY_EMPTY_WALLET_GRAMS
                     );
 
                 emit CreditProcessorDeployed(_buildDetails());
@@ -193,8 +182,8 @@ contract CreditProcessor is ICreditProcessor, Addresses {
             slippage_,
 
             DEX_ROOT,
-            WTON_VAULT,
-            WTON_ROOT,
+            WEVER_VAULT,
+            WEVER_ROOT,
 
             state,
             eventState,
@@ -231,7 +220,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         onlyUserOrCreditor
         onlyState(CreditProcessorStatus.Created)
     {
-        require(msg.value >= Gas.DERIVE_EVENT_ADDRESS + Gas.MAX_FWD_FEE, CreditProcessorErrorCodes.LOW_GAS);
+        require(msg.value >= CreditGas.DERIVE_EVENT_ADDRESS + CreditGas.MAX_FWD_FEE, CreditProcessorErrorCodes.LOW_GAS);
         require(eventAddress.value == 0, CreditProcessorErrorCodes.NON_EMPTY_EVENT_ADDRESS);
         require(configuration.value != 0, CreditProcessorErrorCodes.EMPTY_CONFIG_ADDRESS);
 
@@ -262,7 +251,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
             tokenRoot.value != 0 && tokenWallet.value != 0 && wtonWallet.value != 0 &&
             ((dexPair.value != 0 && dexVault.value != 0) || tokenWallet == wtonWallet))
         {
-            if (address(this).balance >= eventInitialBalance + Gas.MAX_FWD_FEE) {
+            if (address(this).balance >= eventInitialBalance + CreditGas.MAX_FWD_FEE) {
                 IEthereumEventConfiguration(configuration).deployEvent{
                     value: eventInitialBalance,
                     flag: MessageFlags.SENDER_PAYS_FEES
@@ -281,7 +270,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         onlyUserOrCreditor
         onlyState(CreditProcessorStatus.EventNotDeployed)
     {
-        require(msg.value >= eventInitialBalance + Gas.MAX_FWD_FEE);
+        require(msg.value >= eventInitialBalance + CreditGas.MAX_FWD_FEE);
         emit DeployEventCalled(msg.sender);
         _changeState(CreditProcessorStatus.EventDeployInProgress);
 
@@ -298,7 +287,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         onlyUserOrCreditor
         onlyState(CreditProcessorStatus.Created)
     {
-        require(msg.value >= Gas.GET_EVENT_CONFIG_DETAILS + Gas.MAX_FWD_FEE, CreditProcessorErrorCodes.LOW_GAS);
+        require(msg.value >= CreditGas.GET_EVENT_CONFIG_DETAILS + CreditGas.MAX_FWD_FEE, CreditProcessorErrorCodes.LOW_GAS);
         require(eventProxy.value == 0, CreditProcessorErrorCodes.NON_EMPTY_PROXY_ADDRESS);
         require(configuration.value != 0, CreditProcessorErrorCodes.EMPTY_CONFIG_ADDRESS);
 
@@ -323,10 +312,10 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         eventProxy = _networkConfiguration.proxy;
         eventInitialBalance = _basicConfiguration.eventInitialBalance;
 
-        IProxyTokenTransferConfigurable(eventProxy).getConfiguration{
-            value: Gas.GET_PROXY_CONFIG,
+        IHasTokenRoot(eventProxy).getTokenRoot{
+            value: CreditGas.GET_PROXY_TOKEN_ROOT,
             flag: MessageFlags.SENDER_PAYS_FEES,
-            callback: CreditProcessor.onTokenEventProxyConfig
+            callback: CreditProcessor.onTokenRoot
         }();
     }
 
@@ -337,15 +326,15 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         onlyUserOrCreditor
         onlyState(CreditProcessorStatus.Created)
     {
-        require(msg.value >= Gas.GET_PROXY_CONFIG + Gas.MAX_FWD_FEE, CreditProcessorErrorCodes.LOW_GAS);
+        require(msg.value >= CreditGas.GET_PROXY_TOKEN_ROOT + CreditGas.MAX_FWD_FEE, CreditProcessorErrorCodes.LOW_GAS);
         require(tokenRoot.value == 0, CreditProcessorErrorCodes.NON_EMPTY_TOKEN_ROOT);
         require(eventProxy.value != 0, CreditProcessorErrorCodes.EMPTY_PROXY_ADDRESS);
 
         emit RequestTokenEventProxyConfigCalled(msg.sender);
-        IProxyTokenTransferConfigurable(eventProxy).getConfiguration{
+        IHasTokenRoot(eventProxy).getTokenRoot{
             value: 0,
             flag: MessageFlags.REMAINING_GAS,
-            callback: CreditProcessor.onTokenEventProxyConfig
+            callback: CreditProcessor.onTokenRoot
         }();
     }
 
@@ -356,8 +345,8 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         onlyUserOrCreditor
         onlyState(CreditProcessorStatus.Created)
     {
-        require(msg.value >= Gas.GET_DEX_VAULT + Gas.MAX_FWD_FEE, CreditProcessorErrorCodes.LOW_GAS);
-        require(tokenRoot != WTON_ROOT, CreditProcessorErrorCodes.TOKEN_IS_WTON);
+        require(msg.value >= CreditGas.GET_DEX_VAULT + CreditGas.MAX_FWD_FEE, CreditProcessorErrorCodes.LOW_GAS);
+        require(tokenRoot != WEVER_ROOT, CreditProcessorErrorCodes.TOKEN_IS_WTON);
         require(tokenRoot.value != 0, CreditProcessorErrorCodes.EMPTY_TOKEN_ROOT);
         require(dexVault.value == 0, CreditProcessorErrorCodes.NON_EMPTY_DEX_VAULT);
 
@@ -376,8 +365,8 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         onlyUserOrCreditor
         onlyState(CreditProcessorStatus.Created)
     {
-        require(address(this).balance >= Gas.GET_DEX_PAIR_ADDRESS + Gas.MAX_FWD_FEE, CreditProcessorErrorCodes.LOW_GAS);
-        require(tokenRoot != WTON_ROOT, CreditProcessorErrorCodes.TOKEN_IS_WTON);
+        require(address(this).balance >= CreditGas.GET_DEX_PAIR_ADDRESS + CreditGas.MAX_FWD_FEE, CreditProcessorErrorCodes.LOW_GAS);
+        require(tokenRoot != WEVER_ROOT, CreditProcessorErrorCodes.TOKEN_IS_WTON);
         require(tokenRoot.value != 0, CreditProcessorErrorCodes.EMPTY_TOKEN_ROOT);
         require(dexPair.value == 0, CreditProcessorErrorCodes.NON_EMPTY_DEX_PAIR);
 
@@ -386,69 +375,55 @@ contract CreditProcessor is ICreditProcessor, Addresses {
             value: 0,
             flag: MessageFlags.REMAINING_GAS,
             callback: CreditProcessor.onPairAddress
-        }(WTON_ROOT, tokenRoot);
+        }(WEVER_ROOT, tokenRoot);
     }
 
-    function onTokenEventProxyConfig(IProxyTokenTransferConfigurable.Configuration value) external onlyState(CreditProcessorStatus.Created) {
+    function onTokenRoot(address _tokenRoot) external onlyState(CreditProcessorStatus.Created) {
         require(msg.sender.value != 0 && msg.sender == eventProxy, CreditProcessorErrorCodes.NOT_PERMITTED);
         require(tokenRoot.value == 0, CreditProcessorErrorCodes.NON_EMPTY_TOKEN_ROOT);
 
         tvm.accept();
 
-        tokenRoot = value.tokenRoot;
+        tokenRoot = _tokenRoot;
 
-        if (tokenRoot == WTON_ROOT) {
+        if (tokenRoot == WEVER_ROOT) {
             tokenWallet = wtonWallet;
         } else {
             IDexRoot(DEX_ROOT)
                 .getVault{
-                    value: Gas.GET_DEX_VAULT,
+                    value: CreditGas.GET_DEX_VAULT,
                     flag: MessageFlags.SENDER_PAYS_FEES,
                     callback: CreditProcessor.onDexVault
                 }();
 
             IDexRoot(DEX_ROOT).getExpectedPairAddress{
-                value: Gas.GET_DEX_PAIR_ADDRESS,
+                value: CreditGas.GET_DEX_PAIR_ADDRESS,
                 flag: MessageFlags.SENDER_PAYS_FEES,
                 callback: CreditProcessor.onPairAddress
-            }(WTON_ROOT, tokenRoot);
+            }(WEVER_ROOT, tokenRoot);
 
-            IRootTokenContract(tokenRoot)
-                .deployEmptyWallet {
-                    value: Gas.DEPLOY_EMPTY_WALLET_VALUE,
-                    flag: MessageFlags.SENDER_PAYS_FEES
-                }(
-                    Gas.DEPLOY_EMPTY_WALLET_GRAMS,  // deploy_grams
-                    0,                              // wallet_public_key
-                    address(this),                  // owner_address
-                    address(this)                   // gas_back_address
-                );
-
-            IRootTokenContract(tokenRoot)
-                .getWalletAddress{
-                    value: Gas.GET_WALLET_ADDRESS_VALUE,
+            ITokenRoot(tokenRoot)
+                .deployWallet {
+                    value: CreditGas.DEPLOY_EMPTY_WALLET_VALUE,
                     flag: MessageFlags.SENDER_PAYS_FEES,
                     callback: CreditProcessor.onTokenWallet
                 }(
-                    0,                              // wallet_public_key_
-                    address(this)                   // owner_address_
+                    address(this),
+                    CreditGas.DEPLOY_EMPTY_WALLET_GRAMS
                 );
         }
     }
 
     function onWtonWallet(address value) external onlyState(CreditProcessorStatus.Created) {
-        require(msg.sender == WTON_ROOT, CreditProcessorErrorCodes.NOT_PERMITTED);
+        require(msg.sender == WEVER_ROOT, CreditProcessorErrorCodes.NOT_PERMITTED);
 
         tvm.accept();
 
         wtonWallet = value;
 
-        if (WTON_ROOT == tokenRoot) {
+        if (WEVER_ROOT == tokenRoot) {
             tokenWallet = value;
         }
-
-        ITONTokenWallet(value).setReceiveCallback{ value: Gas.SET_RECEIVE_CALLBACK_VALUE, flag: MessageFlags.SENDER_PAYS_FEES }(address(this), true);
-        ITONTokenWallet(value).setBouncedCallback{ value: Gas.SET_BOUNCED_CALLBACK_VALUE, flag: MessageFlags.SENDER_PAYS_FEES }(address(this));
 
         checkAddressesDerived();
     }
@@ -459,9 +434,6 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         tvm.accept();
 
         tokenWallet = value;
-
-        ITONTokenWallet(value).setReceiveCallback{ value: Gas.SET_RECEIVE_CALLBACK_VALUE, flag: MessageFlags.SENDER_PAYS_FEES }(address(this), true);
-        ITONTokenWallet(value).setBouncedCallback{ value: Gas.SET_BOUNCED_CALLBACK_VALUE, flag: MessageFlags.SENDER_PAYS_FEES }(address(this));
 
         checkAddressesDerived();
     }
@@ -485,23 +457,6 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         dexPair = value;
 
         checkAddressesDerived();
-    }
-
-    function notifyEventStatusChanged(IBasicEvent.Status eventState_) override external {
-        require(msg.sender.value != 0 && msg.sender == eventAddress, CreditProcessorErrorCodes.NOT_PERMITTED);
-        tvm.accept();
-
-        eventState = eventState_;
-
-        if(state == CreditProcessorStatus.EventDeployInProgress ||
-           state == CreditProcessorStatus.EventNotDeployed)
-        {
-            if (eventState == IBasicEvent.Status.Confirmed) {
-                _changeState(CreditProcessorStatus.EventConfirmed);
-            } else if(eventState == IBasicEvent.Status.Rejected) {
-                _changeState(CreditProcessorStatus.EventRejected);
-            }
-        }
     }
 
     function checkEventStatus()
@@ -557,7 +512,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
 
     }
 
-    function broxusBridgeCallback(
+    function onEventConfirmed(
         IEthereumEvent.EthereumEventInitData eventInitData_,
         address /* gasBackAddress */
     ) override external {
@@ -575,19 +530,46 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         if (state != CreditProcessorStatus.EventConfirmed) {
             _changeState(CreditProcessorStatus.EventConfirmed);
         }
+    }
 
-        ICreditProcessorReadyToProcessCallback(deployer).onReadyToProcess{
-            value: Gas.READY_TO_PROCESS_CALLBACK_VALUE,
-            flag: MessageFlags.SENDER_PAYS_FEES,
-            bounce: false
-        }(eventVoteData, configuration);
+    function onAcceptTokensMint(
+        address _tokenRoot,
+        uint128 _amount,
+        address _remainingGasTo,
+        TvmCell _payload
+    ) override external {
+        require(
+            msg.sender.value != 0 && tokenWallet == msg.sender,
+            CreditProcessorErrorCodes.NOT_PERMITTED
+        );
+
+        if (_amount >= amount && state == CreditProcessorStatus.EventConfirmed) {
+            amount = _amount;
+
+            _onTokenWalletRequiredBalance();
+        }
+    }
+
+    function onAcceptTokensBurn(
+        uint128 /* _amount */,
+        address /* _walletOwner */,
+        address /* _wallet */,
+        address /* _remainingGasTo */,
+        TvmCell /* _payload */
+    ) override external {
+        require(msg.sender.value != 0 && msg.sender == WEVER_ROOT, CreditProcessorErrorCodes.NOT_PERMITTED);
+
+        if (state == CreditProcessorStatus.UnwrapInProgress) {
+            tvm.accept();
+            _payDebtThenTransfer();
+        }
     }
 
     function process() override external onlyState(CreditProcessorStatus.EventConfirmed) {
         bool payingDebtsBeforeProcess = debt == 0 ? msg.sender == eventData.user : (
                 (msg.sender == eventData.recipient || msg.sender == eventData.user) &&
                 msg.value > debt &&
-                address(this).balance > debt + Gas.CREDIT_BODY
+                address(this).balance > debt + CreditGas.CREDIT_BODY
             );
         require(
             msg.sender == deployer || msg.sender == eventData.creditor || payingDebtsBeforeProcess,
@@ -603,8 +585,8 @@ contract CreditProcessor is ICreditProcessor, Addresses {
 
         emit ProcessCalled(msg.sender);
 
-        ITONTokenWallet(tokenWallet).balance{
-            value: Gas.CHECK_BALANCE,
+        TIP3TokenWallet(tokenWallet).balance{
+            value: CreditGas.CHECK_BALANCE,
             flag: MessageFlags.SENDER_PAYS_FEES,
             callback: CreditProcessor.onTokenWalletBalance
         }();
@@ -619,7 +601,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
                 CreditProcessorStatus.UnwrapFailed == state ||
                 CreditProcessorStatus.ProcessRequiresGas == state, CreditProcessorErrorCodes.WRONG_STATE);
         require(msg.value > debt &&
-                address(this).balance > debt + Gas.CREDIT_BODY, CreditProcessorErrorCodes.LOW_GAS);
+                address(this).balance > debt + CreditGas.CREDIT_BODY, CreditProcessorErrorCodes.LOW_GAS);
         require(debt > 0, CreditProcessorErrorCodes.HAS_NOT_DEBT);
 
         deployer.transfer({ value: debt, flag: MessageFlags.SENDER_PAYS_FEES, bounce: false });
@@ -634,7 +616,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
                 CreditProcessorStatus.ProcessRequiresGas == state, CreditProcessorErrorCodes.WRONG_STATE);
 
         if (debt > 0) {
-            require(address(this).balance >= debt + Gas.MAX_FWD_FEE + Gas.MIN_BALANCE, CreditProcessorErrorCodes.LOW_GAS);
+            require(address(this).balance >= debt + CreditGas.MAX_FWD_FEE + CreditGas.MIN_BALANCE, CreditProcessorErrorCodes.LOW_GAS);
             tvm.accept();
             deployer.transfer({ value: debt, flag: MessageFlags.SENDER_PAYS_FEES, bounce: false });
             debt = 0;
@@ -645,43 +627,32 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         _changeState(CreditProcessorStatus.Cancelled);
     }
 
-    function proxyTransferToRecipient(
-        address tokenWallet_,
-        uint128 gasValue,
-        uint128 amount_,
-        address recipient,
-        uint128 deployGrams,
-        address gasBackAddress,
-        bool    notifyReceiver,
-        TvmCell payload
+    function proxyTokensTransfer(
+        address _tokenWallet,
+        uint128 _gasValue,
+        uint128 _amount,
+        address _recipient,
+        uint128 _deployWalletValue,
+        address _remainingGasTo,
+        bool _notify,
+        TvmCell _payload
     ) override external view onlyUser {
         require(CreditProcessorStatus.Cancelled == state ||
                 CreditProcessorStatus.Processed == state,
             CreditProcessorErrorCodes.WRONG_STATE);
-        require(
-            address(this).balance >=
-                Gas.TRANSFER_TO_RECIPIENT_VALUE + Gas.MAX_FWD_FEE + Gas.MIN_BALANCE,
-            CreditProcessorErrorCodes.LOW_GAS
-        );
-        require(
-            gasValue >= Gas.TRANSFER_TO_RECIPIENT_VALUE + deployGrams,
-            CreditProcessorErrorCodes.LOW_GAS
-        );
 
         tvm.accept();
 
-        ITONTokenWallet(tokenWallet_).transferToRecipient{
-            value: gasValue,
+        ITokenWallet(_tokenWallet).transfer{
+            value: _gasValue,
             flag: MessageFlags.SENDER_PAYS_FEES
         }(
-            0,                          // recipient_public_key
-            recipient,                  // recipient_address
-            amount_,                    // amount
-            deployGrams,                // deploy_grams
-            0,                          // transfer_grams
-            gasBackAddress,             // gas_back_address
-            notifyReceiver,             // notify_receiver
-            payload                     // payload
+            _amount,
+            _recipient,
+            _deployWalletValue,
+            _remainingGasTo,
+            _notify,
+            _payload
         );
     }
 
@@ -722,66 +693,70 @@ contract CreditProcessor is ICreditProcessor, Addresses {
             // кто-то мог докинуть токенов на счет CreditProcessor
             amount = balance;
 
-            // операция происходит не в кредит И
-            if (debt == 0 && eventData.tonAmount == 0 &&
-                // не требует swap и/или unwrap
-                (eventData.swapType == 0 || eventData.tokenAmount == eventData.amount))
-            {
-                unwrapAmount = 0;
-                swapAmount = 0;
-                _payDebtThenTransfer();
-
-            // иначе, если пользователь переводит WTON и требуется unwrap на покрытие кредита/гарантии определенного объема газа на выходе
-            } else if (tokenWallet == wtonWallet) {
-                if (eventData.swapType == 0) {
-                    // unwrap-им ровно столько, сколько нужно на покрытие долга + гарантию газа
-                    unwrapAmount = eventData.tonAmount + debt;
-                } else if (eventData.swapType == 1) {
-                    // unwrap-им ровно столько, чтобы осталось ровно eventData.tokenAmount
-                    unwrapAmount = amount - eventData.tokenAmount;
-                }
-                // при этом мы точно гарантируем определенное число WTON, TON на выходе после выплаты кредита
-                if (amount - eventData.tokenAmount >= unwrapAmount && unwrapAmount >= eventData.tonAmount + debt) {
-                    _unwrapWTON();
-                } else {
-                    // или сигнализируем о том, что параметры unwrap невыполнимы
-                    _changeState(CreditProcessorStatus.UnwrapFailed);
-                }
-
-            // иначе, если это swap по маркету
-            } else if (debt == 0 && eventData.tonAmount == 0 && eventData.swapType == 1 && eventData.tokenAmount != amount) {
-                // если газа достаточно
-                if (address(this).balance > Gas.SWAP_MIN_BALANCE)
-                {
-                    // совершаем обмен так, чтобы у нас осталось ровно требуемое число токенов
-                    swapAmount = amount - eventData.tokenAmount;
-                    _swap();
-
-                // иначе
-                } else {
-                    // меняем состояние на SwapFailed
-                    _changeState(CreditProcessorStatus.SwapFailed);
-                }
-
-            // т.к мы тут, значит это swap по limit-у
-            // если достаточно газа и корректный slippage
-            } else if (address(this).balance > Gas.GET_EXPECTED_SPENT_AMOUNT_MIN_BALANCE && slippage_.numerator < slippage_.denominator) {
-                // запрашиваем требуемое количество токенов для обмена с учетом проскальзывания
-                IDexPair(dexPair).expectedSpendAmount{
-                    value: Gas.GET_EXPECTED_SPENT_AMOUNT,
-                    flag: MessageFlags.SENDER_PAYS_FEES,
-                    // продолжение в onExpectedSpentAmount
-                    callback: CreditProcessor.onExpectedSpentAmount
-                }(
-                    math.muldiv(eventData.tonAmount + debt, slippage_.denominator, slippage_.denominator - slippage_.numerator),
-                    WTON_ROOT
-                );
-                _changeState(CreditProcessorStatus.CalculateSwap);
-            } else {
-                _changeState(CreditProcessorStatus.SwapFailed);
-            }
+            _onTokenWalletRequiredBalance();
         } else {
             _changeState(prevState);
+        }
+    }
+
+    function _onTokenWalletRequiredBalance() internal {
+        // операция происходит не в кредит И
+        if (debt == 0 && eventData.tonAmount == 0 &&
+            // не требует swap и/или unwrap
+            (eventData.swapType == 0 || eventData.tokenAmount == eventData.amount))
+        {
+            unwrapAmount = 0;
+            swapAmount = 0;
+            _payDebtThenTransfer();
+
+        // иначе, если пользователь переводит WTON и требуется unwrap на покрытие кредита/гарантии определенного объема газа на выходе
+        } else if (tokenWallet == wtonWallet) {
+            if (eventData.swapType == 0) {
+                // unwrap-им ровно столько, сколько нужно на покрытие долга + гарантию газа
+                unwrapAmount = eventData.tonAmount + debt;
+            } else if (eventData.swapType == 1) {
+                // unwrap-им ровно столько, чтобы осталось ровно eventData.tokenAmount
+                unwrapAmount = amount - eventData.tokenAmount;
+            }
+            // при этом мы точно гарантируем определенное число WTON, TON на выходе после выплаты кредита
+            if (amount - eventData.tokenAmount >= unwrapAmount && unwrapAmount >= eventData.tonAmount + debt) {
+                _unwrapWEVER();
+            } else {
+                // или сигнализируем о том, что параметры unwrap невыполнимы
+                _changeState(CreditProcessorStatus.UnwrapFailed);
+            }
+
+        // иначе, если это swap по маркету
+        } else if (debt == 0 && eventData.tonAmount == 0 && eventData.swapType == 1 && eventData.tokenAmount != amount) {
+            // если газа достаточно
+            if (address(this).balance > CreditGas.SWAP_MIN_BALANCE)
+            {
+                // совершаем обмен так, чтобы у нас осталось ровно требуемое число токенов
+                swapAmount = amount - eventData.tokenAmount;
+                _swap();
+
+            // иначе
+            } else {
+                // меняем состояние на SwapFailed
+                _changeState(CreditProcessorStatus.SwapFailed);
+            }
+
+        // т.к мы тут, значит это swap по limit-у
+        // если достаточно газа и корректный slippage
+        } else if (address(this).balance > CreditGas.GET_EXPECTED_SPENT_AMOUNT_MIN_BALANCE && slippage_.numerator < slippage_.denominator) {
+            // запрашиваем требуемое количество токенов для обмена с учетом проскальзывания
+            IDexPair(dexPair).expectedSpendAmount{
+                value: CreditGas.GET_EXPECTED_SPENT_AMOUNT,
+                flag: MessageFlags.SENDER_PAYS_FEES,
+                // продолжение в onExpectedSpentAmount
+                callback: CreditProcessor.onExpectedSpentAmount
+            }(
+                math.muldiv(eventData.tonAmount + debt, slippage_.denominator, slippage_.denominator - slippage_.numerator),
+                WEVER_ROOT
+            );
+            _changeState(CreditProcessorStatus.CalculateSwap);
+        } else {
+            _changeState(CreditProcessorStatus.SwapFailed);
         }
     }
 
@@ -795,18 +770,18 @@ contract CreditProcessor is ICreditProcessor, Addresses {
             CreditProcessorErrorCodes.WRONG_UNWRAP_PARAMS);
         require(unwrapAmount >= eventData.tonAmount + debt,
             CreditProcessorErrorCodes.WRONG_UNWRAP_PARAMS);
-        require(address(this).balance > Gas.UNWRAP_MIN_VALUE + Gas.MIN_BALANCE,
+        require(address(this).balance > CreditGas.UNWRAP_MIN_VALUE + CreditGas.MIN_BALANCE,
             CreditProcessorErrorCodes.LOW_GAS);
         require(msg.sender != eventData.recipient ||
                 eventData.user == eventData.recipient ||
-                msg.value >= Gas.UNWRAP_MIN_VALUE,
+                msg.value >= CreditGas.UNWRAP_MIN_VALUE,
             CreditProcessorErrorCodes.LOW_GAS);
 
         tvm.accept();
 
         emit RetryUnwrapCalled(msg.sender);
 
-        _unwrapWTON();
+        _unwrapWEVER();
     }
 
     function setSlippage(NumeratorDenominator slippage)
@@ -827,16 +802,16 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         onlyUserOrCreditorOrRecipient
         onlyState(CreditProcessorStatus.SwapFailed)
     {
-        require(address(this).balance > Gas.RETRY_SWAP_MIN_BALANCE, CreditProcessorErrorCodes.LOW_GAS);
+        require(address(this).balance > CreditGas.RETRY_SWAP_MIN_BALANCE, CreditProcessorErrorCodes.LOW_GAS);
         require(msg.sender != eventData.recipient ||
                 eventData.recipient == eventData.user ||
-                msg.value >= Gas.RETRY_SWAP_MIN_VALUE, CreditProcessorErrorCodes.LOW_GAS);
+                msg.value >= CreditGas.RETRY_SWAP_MIN_VALUE, CreditProcessorErrorCodes.LOW_GAS);
         tvm.accept();
 
         emit RetrySwapCalled(msg.sender);
 
-        ITONTokenWallet(tokenWallet).balance{
-            value: Gas.CHECK_BALANCE,
+        ITokenWallet(tokenWallet).balance{
+            value: CreditGas.CHECK_BALANCE,
             flag: MessageFlags.SENDER_PAYS_FEES,
             callback: CreditProcessor.onTokenWalletBalance
         }();
@@ -858,24 +833,22 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         cancelBuilder.store(swapAmount);
 
         TvmBuilder builder;
-        builder.store(OperationTypes.EXCHANGE);
+        builder.store(DexOperationTypes.EXCHANGE);
         builder.store(swapAttempt);
         builder.store(uint128(0));
         builder.store(eventData.tonAmount + debt);
         builder.storeRef(successBuilder);
         builder.storeRef(cancelBuilder);
 
-        ITONTokenWallet(tokenWallet).transferToRecipient{
-            value: Gas.SWAP_VALUE,
+        ITokenWallet(tokenWallet).transfer{
+            value: CreditGas.SWAP_VALUE,
             flag: MessageFlags.SENDER_PAYS_FEES
         }(
-            0,                          // recipient_public_key
-            dexPair,                    // recipient_address
             swapAmount,                 // amount
-            0,                          // deploy_grams
-            0,                          // transfer_grams
-            address(this),              // gas_back_address
-            true,                       // notify_receiver
+            dexPair,                    // recipient
+            0,                          // deployWalletValue
+            address(this),              // remainingGasTo
+            true,                       // notify
             builder.toCell()            // payload
         );
 
@@ -890,7 +863,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         tvm.accept();
 
         if (expectedSpentAmount <= (amount - eventData.tokenAmount) &&
-            address(this).balance > Gas.SWAP_MIN_BALANCE)
+            address(this).balance > CreditGas.SWAP_MIN_BALANCE)
         {
             if(eventData.swapType == 0) {
                 swapAmount = expectedSpentAmount;
@@ -905,15 +878,12 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         }
     }
 
-    function tokensReceivedCallback(
-        address /* token_wallet */,
-        address /* token_root */,
+    function onAcceptTokensTransfer(
+        address /* tokenRoot */,
         uint128 receivedAmount,
-        uint256 /* sender_public_key */,
         address senderAddress,
-        address /* sender_wallet */,
-        address /* originalGasTo */,
-        uint128 /* updated_balance */,
+        address /* senderWallet */,
+        address /* remainingGasTo */,
         TvmCell payload
     ) external override {
         require(msg.sender.value != 0);
@@ -925,7 +895,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
                 (uint8 status, uint64 id, uint128 expectedAmount) = s.decode(uint8, uint64, uint128);
                 if (status == OperationStatus.SUCCESS && receivedAmount >= expectedAmount && id == swapAttempt) {
                     unwrapAmount = receivedAmount;
-                    _unwrapWTON();
+                    _unwrapWEVER();
                 } else {
                     _changeState(CreditProcessorStatus.SwapUnknown);
                 }
@@ -945,43 +915,39 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         }
     }
 
-    function tokensBouncedCallback(
-        address wallet_,
+    function onBounceTokensTransfer(
         address /* tokenRoot_ */,
         uint128 /* amount */,
-        address /* bounced_from */,
-        uint128 /* updated_balance */
+        address /* revertedFrom */
     ) external override {
         require(msg.sender.value != 0);
 
-        if (state == CreditProcessorStatus.SwapInProgress && msg.sender == tokenWallet && wallet_ == tokenWallet) {
+        if (state == CreditProcessorStatus.SwapInProgress && msg.sender == tokenWallet) {
             tvm.accept();
             _changeState(CreditProcessorStatus.SwapFailed);
-        } else if (state == CreditProcessorStatus.UnwrapInProgress && msg.sender == wtonWallet && wallet_ == wtonWallet) {
+        } else if (state == CreditProcessorStatus.UnwrapInProgress && msg.sender == wtonWallet) {
             tvm.accept();
             _changeState(CreditProcessorStatus.UnwrapFailed);
-        } else if (state == CreditProcessorStatus.Processed && msg.sender == tokenWallet && wallet_ == tokenWallet) {
+        } else if (state == CreditProcessorStatus.Processed && msg.sender == tokenWallet) {
             tvm.accept();
             _changeState(CreditProcessorStatus.Cancelled);
         }
     }
 
-    function _unwrapWTON() private {
+    function _unwrapWEVER() private {
         if (unwrapAmount >= eventData.tonAmount + debt &&
-            address(this).balance > Gas.UNWRAP_MIN_VALUE + Gas.MIN_BALANCE) {
+            address(this).balance > CreditGas.UNWRAP_MIN_VALUE + CreditGas.MIN_BALANCE) {
             TvmCell empty;
 
-            ITONTokenWallet(wtonWallet).transferToRecipient{
-                value: Gas.UNWRAP_VALUE,
+            ITokenWallet(wtonWallet).transfer{
+                value: CreditGas.UNWRAP_VALUE,
                 flag: MessageFlags.SENDER_PAYS_FEES
             }(
-                0,                          // recipient_public_key
-                WTON_VAULT,                 // recipient_address
                 unwrapAmount,               // amount
-                0,                          // deploy_grams
-                0,                          // transfer_grams
-                address(this),              // gas_back_address
-                true,                       // notify_receiver
+                WEVER_VAULT,                 // recipient
+                0,                          // deployWalletValue
+                address(this),              // remainingGasTo
+                true,                       // notify
                 empty                       // payload
             );
 
@@ -995,12 +961,12 @@ contract CreditProcessor is ICreditProcessor, Addresses {
         uint128 currentAmount = amount - (tokenWallet == wtonWallet ? unwrapAmount : swapAmount);
 
         if (address(this).balance >
-            Gas.MIN_BALANCE +
-            (debt > 0 ? debt + Gas.MAX_FWD_FEE : uint128(0)) +
+            CreditGas.MIN_BALANCE +
+            (debt > 0 ? debt + CreditGas.MAX_FWD_FEE : uint128(0)) +
             eventData.tonAmount +
             (currentAmount > 0 ?
-                Gas.TRANSFER_TO_RECIPIENT_VALUE + Gas.DEPLOY_EMPTY_WALLET_GRAMS + Gas.MAX_FWD_FEE :
-                Gas.MAX_FWD_FEE + Gas.MIN_CALLBACK_VALUE
+                CreditGas.TRANSFER_TOKENS_VALUE + CreditGas.DEPLOY_EMPTY_WALLET_GRAMS + CreditGas.MAX_FWD_FEE :
+                CreditGas.MAX_FWD_FEE + CreditGas.MIN_CALLBACK_VALUE
             ))
         {
 
@@ -1012,28 +978,17 @@ contract CreditProcessor is ICreditProcessor, Addresses {
             }
 
             if (currentAmount > 0) {
-                ITONTokenWallet(tokenWallet).transferToRecipient{
-                    value: (eventData.user == eventData.recipient ?
-                        Gas.TRANSFER_TO_RECIPIENT_VALUE + Gas.DEPLOY_EMPTY_WALLET_GRAMS :
-                        eventData.tonAmount + Gas.TRANSFER_TO_RECIPIENT_VALUE
-                    ),
-                    flag: MessageFlags.SENDER_PAYS_FEES
-                }(
-                    0,                              // recipient_public_key
-                    eventData.recipient,            // recipient_address
-                    currentAmount,                  // amount
-                    (eventData.user == eventData.recipient ? Gas.DEPLOY_EMPTY_WALLET_GRAMS : uint128(0)), // deploy_grams
-                    0,                              // transfer_grams
-                    eventData.user,                 // gas_back_address
-                    true,                           // notify_receiver
-                    eventVoteData.eventData         // payload
-                );
-
-                eventData.user.transfer({
+                ITokenWallet(tokenWallet).transfer{
                     value: 0,
-                    flag: MessageFlags.ALL_NOT_RESERVED + MessageFlags.IGNORE_ERRORS,
-                    bounce: false
-                });
+                    flag: MessageFlags.ALL_NOT_RESERVED
+                }(
+                    currentAmount,
+                    eventData.recipient,
+                    (eventData.user == eventData.recipient ? CreditGas.DEPLOY_EMPTY_WALLET_GRAMS : uint128(0)),
+                    eventData.user,
+                    true,
+                    eventVoteData.eventData
+                );
             } else {
                 IReceiveTONsFromBridgeCallback(eventData.recipient).onReceiveTONsFromBridgeCallback{
                     value: 0,
@@ -1047,23 +1002,20 @@ contract CreditProcessor is ICreditProcessor, Addresses {
     }
 
     receive() external {
-        if (state == CreditProcessorStatus.UnwrapInProgress && msg.sender == WTON_ROOT && msg.value >= unwrapAmount) {
-            tvm.accept();
-            _payDebtThenTransfer();
-        } else if (state == CreditProcessorStatus.ProcessRequiresGas && msg.value >= Gas.END_PROCESS_MIN_VALUE) {
+        if (state == CreditProcessorStatus.ProcessRequiresGas && msg.value >= CreditGas.END_PROCESS_MIN_VALUE) {
             tvm.accept();
 
             emit GasDonation(msg.sender, msg.value);
 
             _payDebtThenTransfer();
         } else if (state == CreditProcessorStatus.UnwrapFailed &&
-                   msg.value >= Gas.UNWRAP_MIN_VALUE + Gas.MIN_BALANCE &&
+                   msg.value >= CreditGas.UNWRAP_MIN_VALUE + CreditGas.MIN_BALANCE &&
                    (tokenWallet != wtonWallet || (amount - eventData.tokenAmount >= unwrapAmount)) &&
                    unwrapAmount >= (eventData.tonAmount + debt))
         {
                 tvm.accept();
 
-                _unwrapWTON();
+                _unwrapWEVER();
         }
     }
 
@@ -1076,7 +1028,7 @@ contract CreditProcessor is ICreditProcessor, Addresses {
                    state == CreditProcessorStatus.CalculateSwap)
         {
             _changeState(CreditProcessorStatus.SwapFailed);
-        } else if (functionId == tvm.functionId(ITONTokenWallet.balance) &&
+        } else if (functionId == tvm.functionId(TIP3TokenWallet.balance) &&
             state == CreditProcessorStatus.CheckingAmount)
         {
             _changeState(prevState);

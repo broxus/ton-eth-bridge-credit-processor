@@ -1,14 +1,20 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/IEventNotificationReceiver.sol';
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/IProxy.sol';
-import "../interfaces/tokens/ITokensReceivedCallback.sol";
-import "../interfaces/tokens/ITokensBouncedCallback.sol";
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/IProxy.sol';
+import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensTransferCallback.sol";
+import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensMintCallback.sol";
+import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensBurnCallback.sol";
+import "ton-eth-bridge-token-contracts/contracts/interfaces/IBounceTokensTransferCallback.sol";
 import "./structures/ICreditEventDataStructure.sol";
 
-interface ICreditProcessor is ITokensReceivedCallback, ITokensBouncedCallback, IEventNotificationReceiver, IProxy,
-                              ICreditEventDataStructure
+interface ICreditProcessor is
+    IAcceptTokensTransferCallback,
+    IAcceptTokensMintCallback,
+    IAcceptTokensBurnCallback,
+    IBounceTokensTransferCallback,
+    IProxy,
+    ICreditEventDataStructure
 {
 
     enum CreditProcessorStatus {
@@ -117,18 +123,15 @@ interface ICreditProcessor is ITokensReceivedCallback, ITokensBouncedCallback, I
 
     // Methods allowed to user in Cancelled state
     // Proxy call for TONTokenWallet transferToRecipient, balance must be > (0.7 TON + deployGrams)
-    function proxyTransferToRecipient(
-        // address of TONTokenWallet
-        address tokenWallet_,
-        // transferToRecipient gas value, must be > 0.5 TON + deployGrams
-        uint128 gasValue,
-        // TONTokenWallet.transferToRecipient params
-        uint128 amount_,
-        address recipient,
-        uint128 deployGrams,
-        address gasBackAddress,
-        bool    notifyReceiver,
-        TvmCell payload
+    function proxyTokensTransfer(
+        address _tokenWallet,
+        uint128 _gasValue,
+        uint128 _amount,
+        address _recipient,
+        uint128 _deployWalletValue,
+        address _remainingGasTo,
+        bool _notify,
+        TvmCell _payload
     ) external view;
 
     // transfer gas

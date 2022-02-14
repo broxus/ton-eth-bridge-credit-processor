@@ -1,13 +1,13 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-configuration-contracts/IEthereumEventConfiguration.sol';
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
-import '../../node_modules/bridge/free-ton/contracts/utils/ErrorCodes.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-configuration-contracts/IEthereumEventConfiguration.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/utils/ErrorCodes.sol';
 import './TestEthereumEvent.sol';
-import '../../node_modules/@broxus/contracts/contracts/libraries/MsgFlag.sol';
+import '@broxus/contracts/contracts/libraries/MsgFlag.sol';
 import '../CreditProcessor.sol';
 import "../interfaces/structures/ICreditEventDataStructure.sol";
 
@@ -128,7 +128,7 @@ contract TestEthereumEventConfiguration is IEthereumEventConfiguration, IProxy, 
         return {value: 0, bounce: false, flag: MsgFlag.REMAINING_GAS} EventType.Ethereum;
     }
 
-    function broxusBridgeCallback(
+    function onEventConfirmed(
         IEthereumEvent.EthereumEventInitData eventInitData,
         address gasBackAddress
     ) override external {
@@ -162,7 +162,7 @@ contract TestEthereumEventConfiguration is IEthereumEventConfiguration, IProxy, 
 
         address processor = address(tvm.hash(processorStateInit));
 
-        IProxy(processor).broxusBridgeCallback{ flag: 0, value: 0.1 ton }(eventInitData, gasBackAddress);
+        IProxy(processor).onEventConfirmed{ flag: 0, value: 0.1 ton }(eventInitData, gasBackAddress);
 
         TvmBuilder builder;
         builder.store(uint256(amount_));
@@ -182,7 +182,7 @@ contract TestEthereumEventConfiguration is IEthereumEventConfiguration, IProxy, 
             eventInitData.chainId
         );
 
-        IProxy(networkConfiguration.proxy).broxusBridgeCallback{
+        IProxy(networkConfiguration.proxy).onEventConfirmed{
             flag: MsgFlag.ALL_NOT_RESERVED
         }(eventInitData_, gasBackAddress);
     }

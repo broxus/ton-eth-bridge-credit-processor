@@ -41,7 +41,7 @@ let User;
 let CreditFactory;
 let CreditProcessor;
 let TestEthereumEventConfiguration;
-let RootTokenContract;
+let TokenRoot;
 let CreditProcessorTokenWallet;
 let UserTokenWallet;
 let HiddenBridgeStrategyFactory;
@@ -124,7 +124,7 @@ async function getCreditProcessorBalances() {
 
     let result = {};
 
-    await CreditProcessorTokenWallet.call({method: 'balance', params: {_answer_id: 0}}).then(n => {
+    await CreditProcessorTokenWallet.call({method: 'balance', params: {}}).then(n => {
         result[options.token_id] = new BigNumber(n).shiftedBy(-token.decimals).toString();
     }).catch(e => {/*ignored*/});
 
@@ -140,7 +140,7 @@ async function getUserBalances() {
 
     let result = {};
 
-    await UserTokenWallet.call({method: 'balance', params: {_answer_id: 0}}).then(n => {
+    await UserTokenWallet.call({method: 'balance', params: {}}).then(n => {
         result[options.token_id] = new BigNumber(n).shiftedBy(-token.decimals).toString();
     }).catch(e => {/*ignored*/});
 
@@ -193,11 +193,11 @@ describe('Credit ETH-TON', async function () {
         CreditProcessor = await locklift.factory.getContract('CreditProcessor');
         TestEthereumEvent = await locklift.factory.getContract('TestEthereumEvent');
         DexPair = await locklift.factory.getContract('DexPair', DEX_CONTRACTS_PATH);
-        RootTokenContract = await locklift.factory.getContract('RootTokenContract', TOKEN_CONTRACTS_PATH);
-        migration.load(RootTokenContract, token.symbol + 'Root');
+        TokenRoot = await locklift.factory.getContract('TokenRootUpgradeable', TOKEN_CONTRACTS_PATH);
+        migration.load(TokenRoot, token.symbol + 'Root');
 
-        CreditProcessorTokenWallet = await locklift.factory.getContract('TONTokenWallet', TOKEN_CONTRACTS_PATH);
-        UserTokenWallet = await locklift.factory.getContract('TONTokenWallet', TOKEN_CONTRACTS_PATH);
+        CreditProcessorTokenWallet = await locklift.factory.getContract('TokenWalletUpgradeable', TOKEN_CONTRACTS_PATH);
+        UserTokenWallet = await locklift.factory.getContract('TokenWalletUpgradeable', TOKEN_CONTRACTS_PATH);
 
         CreditFactory = await locklift.factory.getContract('CreditFactory');
         migration.load(CreditFactory, 'CreditFactory');
@@ -226,13 +226,14 @@ describe('Credit ETH-TON', async function () {
     });
 
     describe('Derive addresses', async function () {
-        it(`Call HiddenBridgeStrategyFactory.buildLevel3`, async function () {
+        it(`Call HiddenBridgeStrategyFactory.buildLayer3`, async function () {
             logger.log('#################################################');
             logger.log(``);
-            logger.log(`HiddenBridgeStrategyFactory(${HiddenBridgeStrategyFactory.address}).buildLevel3`);
+            logger.log(`HiddenBridgeStrategyFactory(${HiddenBridgeStrategyFactory.address}).buildLayer3`);
             logger.log(``);
 
             const params = {
+               id: getRandomNonce(),
                proxy: ProxyTokenTransfer.address,
                evmAddress: '1',
                chainId: '1'
@@ -241,7 +242,7 @@ describe('Credit ETH-TON', async function () {
             logger.log(`params = ${JSON.stringify(params)}`);
 
             LAYER_3 = await HiddenBridgeStrategyFactory.call({
-                method: 'buildLevel3',
+                method: 'buildLayer3',
                 params
             });
             logger.log(`LAYER_3 = ${LAYER_3}`);
@@ -328,20 +329,18 @@ describe('Credit ETH-TON', async function () {
             logger.log(`CreditProcessor: ${CreditProcessor.address}`);
         });
 
-        it(`Call RootTokenContract.getWalletAddress for User`, async function () {
+
+        it(`Call TokenRootUpgradeable.walletOf for User`, async function () {
             logger.log('#################################################');
 
             logger.log(``);
-            logger.log(`RootTokenContract(${RootTokenContract.address}).getWalletAddress(`);
-            logger.log(`    wallet_public_key_: 0,`);
-            logger.log(`    owner_address_: ${User.address} (User)`);
+            logger.log(`TokenRootUpgradeable(${TokenRoot.address}).walletOf(`);
+            logger.log(`    walletOwner: ${User.address} (User)`);
             logger.log(`)`);
             logger.log(``);
-            const expectedUserTokenWallet = await RootTokenContract.call({
-                method: 'getWalletAddress', params: {
-                    _answer_id: 0,
-                    wallet_public_key_: `0x0`,
-                    owner_address_: User.address
+            const expectedUserTokenWallet = await TokenRoot.call({
+                method: 'walletOf', params: {
+                    walletOwner: User.address
                 }
             });
             UserTokenWallet.setAddress(expectedUserTokenWallet);
@@ -351,20 +350,17 @@ describe('Credit ETH-TON', async function () {
             await logUserBalance();
         });
 
-        it(`Call RootTokenContract.getWalletAddress for CreditProcessor`, async function () {
+        it(`Call TokenRootUpgradeable.walletOf for CreditProcessor`, async function () {
             logger.log('#################################################');
 
             logger.log(``);
-            logger.log(`RootTokenContract(${RootTokenContract.address}).getWalletAddress(`);
-            logger.log(`    wallet_public_key_: 0,`);
-            logger.log(`    owner_address_: ${CreditProcessor.address} (CreditProcessor)`);
+            logger.log(`TokenRootUpgradeable(${TokenRoot.address}).walletOf(`);
+            logger.log(`    walletOwner: ${CreditProcessor.address} (CreditProcessor)`);
             logger.log(`)`);
             logger.log(``);
-            const expectedProcessorTokenWallet = await RootTokenContract.call({
-                method: 'getWalletAddress', params: {
-                    _answer_id: 0,
-                    wallet_public_key_: `0x0`,
-                    owner_address_: CreditProcessor.address
+            const expectedProcessorTokenWallet = await TokenRoot.call({
+                method: 'walletOf', params: {
+                    walletOwner: CreditProcessor.address
                 }
             });
             CreditProcessorTokenWallet.setAddress(expectedProcessorTokenWallet);
@@ -429,38 +425,38 @@ describe('Credit ETH-TON', async function () {
             logTx(tx);
             if(!LOG_FULL_GAS) { await logGas(); }
 
-            const details = await CreditProcessor.call({
-               method: 'getDetails',
-               params: {}
-            });
-
-            if (states[details.state.toNumber()] === 'EventConfirmed') {
-                logger.log(`(!) Not processed automatically  - state is EventConfirmed`);
-                showCreditProcessorDetails(details);
-                const balances = await logCreditProcessorBalance();
-                expect(balances[options.token_id]).to.equal(new BigNumber(options.amount).toString(), `Wrong CreditProcessor ${token.symbol} balance`);
-                expect(states[details.state.toNumber()]).to.equal('EventConfirmed', `Wrong state: ${states[details.state.toNumber()]}`);
-
-                if(!LOG_FULL_GAS) { await migration.balancesCheckpoint(); }
-
-                logger.log(``);
-                logger.log(`CreditFactory(${CreditFactory.address})`);
-                logger.log(`.runProcess(${CreditProcessor.address})`);
-                logger.log(``);
-
-                const tx = await CreditFactory.run({
-                    method: 'runProcess',
-                    params: {
-                        creditProcessor: CreditProcessor.address
-                    },
-                    keyPair: keyPairs[4]
-                });
-
-                logTx(tx);
-                if(!LOG_FULL_GAS) { await logGas(); }
-
-                await afterRun();
-            }
+            // const details = await CreditProcessor.call({
+            //    method: 'getDetails',
+            //    params: {}
+            // });
+            //
+            // if (states[details.state.toNumber()] === 'EventConfirmed') {
+            //     logger.log(`(!) Not processed automatically  - state is EventConfirmed`);
+            //     showCreditProcessorDetails(details);
+            //     const balances = await logCreditProcessorBalance();
+            //     expect(balances[options.token_id]).to.equal(new BigNumber(options.amount).toString(), `Wrong CreditProcessor ${token.symbol} balance`);
+            //     expect(states[details.state.toNumber()]).to.equal('EventConfirmed', `Wrong state: ${states[details.state.toNumber()]}`);
+            //
+            //     if(!LOG_FULL_GAS) { await migration.balancesCheckpoint(); }
+            //
+            //     logger.log(``);
+            //     logger.log(`CreditFactory(${CreditFactory.address})`);
+            //     logger.log(`.runProcess(${CreditProcessor.address})`);
+            //     logger.log(``);
+            //
+            //     const tx = await CreditFactory.run({
+            //         method: 'runProcess',
+            //         params: {
+            //             creditProcessor: CreditProcessor.address
+            //         },
+            //         keyPair: keyPairs[4]
+            //     });
+            //
+            //     logTx(tx);
+            //     if(!LOG_FULL_GAS) { await logGas(); }
+            //
+            //     await afterRun();
+            // }
 
         });
 

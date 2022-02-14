@@ -1,10 +1,9 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
 import "./structures/ICreditEventDataStructure.sol";
-import "./ICreditProcessorReadyToProcessCallback.sol";
 
-interface ICreditFactory is ICreditEventDataStructure, ICreditProcessorReadyToProcessCallback {
+interface ICreditFactory is ICreditEventDataStructure {
 
     struct CreditFactoryDetails {
         uint256[] owners;

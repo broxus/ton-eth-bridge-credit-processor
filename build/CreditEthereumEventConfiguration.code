@@ -1,4 +1,4 @@
-.version sol 0.49.0
+.version sol 0.57.1
 
 .macro constructor
 DROP
@@ -9,17 +9,17 @@ IFREF {
 }
 GETGLOB 6
 THROWIF 51
-LDMSGADDRQ
+OVER
 PUSHCONT {
 	LDREF
 	ENDS
 	CTOS
-	LDMSGADDR
 }
-IFNOT
+IF
+LDMSGADDR
 LDREF
 ENDS
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/utils/CheckPubKey.sol, 9
+.loc ../node_modules/@broxus/contracts/contracts/utils/CheckPubKey.sol, 9
 GETGLOB 5
 DUP
 ISNULL
@@ -40,12 +40,11 @@ CALLREF {
 }
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 32
 SETGLOB 13
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/utils/CheckPubKey.sol, 0
+.loc ../node_modules/@broxus/contracts/contracts/utils/CheckPubKey.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .macro setMeta
 DROP
@@ -59,14 +58,25 @@ IFREF {
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 40
 LDREF
 ENDS
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
+CALLREF {
+	CALL $setMeta_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro setMeta_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
 GETGLOB 9
 GETGLOB 10
 SDEQ
 THROWIFNOT 1101
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 26
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 26
 GETPARAM 7
-INDEX 0
+FIRST
 DEPTH
 ADDCONST -2
 PICK
@@ -76,7 +86,7 @@ PUSHINT 2
 RAWRESERVE
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 41
 SETGLOB 13
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 28
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 28
 GETGLOB 9
 NEWC
 STSLICECONST x62_
@@ -86,12 +96,7 @@ STZEROES
 ENDC
 PUSHINT 129
 SENDRAWMSG
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
-CALLREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
 
 .macro setCreditProcessorCode
 DROP
@@ -105,19 +110,25 @@ IFREF {
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 44
 LDREF
 ENDS
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
+CALLREF {
+	CALL $setCreditProcessorCode_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro setCreditProcessorCode_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
 GETGLOB 9
 GETGLOB 10
 SDEQ
 THROWIFNOT 1101
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 45
 SETGLOB 14
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
-CALLREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
 
 .macro getCreditProcessorCode
 DROP
@@ -155,17 +166,16 @@ PUSHCONT {
 	STREF
 	ENDC
 	PUSHINT 0
-	SENDRAWMSG
 }
 PUSHCONT {
 	GETGLOB 4
 	DUP
 	INDEX 3
 	OVER
-	INDEX 2
+	THIRD
 	GETGLOB 9
 	ROLL 3
-	INDEX 1
+	SECOND
 	NEWC
 	PUSHINT 2
 	STZEROES
@@ -185,14 +195,13 @@ PUSHCONT {
 	ENDC
 	GETGLOB 4
 	INDEX 4
-	SENDRAWMSG
 }
 IFELSE
+SENDRAWMSG
 IFREF {
-	CALL $c7_to_c4$
+	CALL $upd_only_time_in_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .globl	getCreditProcessorCode_internal
 .type	getCreditProcessorCode_internal, @function
@@ -221,7 +230,18 @@ IFREF {
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 54
 LDU 32
 ENDS
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
+CALLREF {
+	CALL $setEndBlockNumber_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro setEndBlockNumber_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
 GETGLOB 9
 GETGLOB 10
 SDEQ
@@ -244,19 +264,14 @@ GETGLOB 12
 SWAP
 SETINDEX 5
 SETGLOB 12
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
-CALLREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
 
 .globl	buildEventInitData_internal
 .type	buildEventInitData_internal, @function
 CALL $buildEventInitData_internal_macro$
 
 .macro buildEventInitData_internal_macro
-.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 77
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 82
 PUSHINT 0
 DUP
 PUSHREF {
@@ -264,11 +279,12 @@ PUSHREF {
 PUSHINT 0
 DUP
 TUPLE 5
-PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
-PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
+DUP
 PUSHINT 0
 TUPLE 4
-.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 82
 SWAP
 SETINDEX 0
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 84
@@ -276,11 +292,11 @@ MYADDR
 SETINDEX 1
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 85
 GETGLOB 11
-INDEX 1
+SECOND
 SETINDEX 2
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 86
 GETGLOB 12
-INDEX 0
+FIRST
 SETINDEX 3
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
 
@@ -294,25 +310,42 @@ IFREF {
 	CALL $c4_to_c7$
 }
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 91
-LDU 256
-LDU 32
-LDREF
-LDU 32
-LDUQ 256
+OVER
 PUSHCONT {
+	LDU 256
+	LDU 32
+	LDREF
+	LDU 32
 	LDREF
 	ENDS
 	CTOS
-	LDU 256
 }
-IFNOT
+PUSHCONT {
+	LDU 256
+	LDU 32
+	LDREF
+	LDU 32
+}
+IFELSE
+LDU 256
 ROLLREV 5
 TUPLE 5
 SWAP
 ENDS
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 21
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
+CALLREF {
+	CALL $deployEvent_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro deployEvent_internal_macro
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 21
 GETPARAM 7
-INDEX 0
+FIRST
 DEPTH
 ADDCONST -2
 PICK
@@ -326,7 +359,7 @@ DEPTH
 ADDCONST -2
 PICK
 GETGLOB 11
-INDEX 2
+THIRD
 GEQ
 THROWANYIFNOT
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 99
@@ -373,12 +406,11 @@ SENDRAWMSG
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 117
 GETGLOB 13
 GETGLOB 9
-NEWDICT
 PUSHINT 0
 NEWC
 STU 256
 PUSHINT 0
-ROT
+NEWDICT
 PUSHINT 64
 DICTUSETB
 ROLL 3
@@ -430,6 +462,29 @@ STSLICECONST x62_
 STB
 PUSHSLICE x0000000000000000000000000007_
 STSLICER
+OVER
+CALLREF {
+	CTOS
+	LDI 1
+	SWAP
+	PUSHCONT {
+		LDI 5
+		NIP
+	}
+	IF
+	LDI 1
+	SWAP
+	PUSHCONT {
+		LDI 2
+		NIP
+	}
+	IF
+	LDOPTREF
+	LDOPTREF
+	LDDICT
+	ENDS
+	BLKDROP 3
+}
 STREF
 STSLICECONST 1
 ROTREV
@@ -441,12 +496,7 @@ STBREFR
 ENDC
 PUSHINT 128
 SENDRAWMSG
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 0
-CALLREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
 
 .macro deriveEventAddress
 DROP
@@ -463,18 +513,24 @@ GETGLOB 4
 ROT
 SETINDEXQ 5
 SETGLOB 4
-LDU 256
-LDU 32
-LDREF
-LDU 32
-LDUQ 256
+OVER
 PUSHCONT {
+	LDU 256
+	LDU 32
+	LDREF
+	LDU 32
 	LDREF
 	ENDS
 	CTOS
-	LDU 256
 }
-IFNOT
+PUSHCONT {
+	LDU 256
+	LDU 32
+	LDREF
+	LDU 32
+}
+IFELSE
+LDU 256
 ROLLREV 5
 TUPLE 5
 SWAP
@@ -503,17 +559,16 @@ PUSHCONT {
 	STBREFR
 	ENDC
 	PUSHINT 0
-	SENDRAWMSG
 }
 PUSHCONT {
 	GETGLOB 4
 	DUP
 	INDEX 3
 	OVER
-	INDEX 2
+	THIRD
 	GETGLOB 9
 	ROLL 3
-	INDEX 1
+	SECOND
 	NEWC
 	PUSHINT 2
 	STZEROES
@@ -536,14 +591,13 @@ PUSHCONT {
 	ENDC
 	GETGLOB 4
 	INDEX 4
-	SENDRAWMSG
 }
 IFELSE
+SENDRAWMSG
 IFREF {
-	CALL $c7_to_c4$
+	CALL $upd_only_time_in_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .globl	deriveEventAddress_internal
 .type	deriveEventAddress_internal, @function
@@ -555,12 +609,11 @@ CALLREF {
 	CALL $buildEventInitData_internal_macro$
 }
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 143
-NEWDICT
 PUSHINT 0
 NEWC
 STU 256
 PUSHINT 0
-ROT
+NEWDICT
 PUSHINT 64
 DICTUSETB
 SWAP
@@ -676,17 +729,16 @@ PUSHCONT {
 	STBREFR
 	ENDC
 	PUSHINT 0
-	SENDRAWMSG
 }
 PUSHCONT {
 	GETGLOB 4
 	DUP
 	INDEX 3
 	OVER
-	INDEX 2
+	THIRD
 	GETGLOB 9
 	ROLL 3
-	INDEX 1
+	SECOND
 	NEWC
 	PUSHINT 2
 	STZEROES
@@ -728,34 +780,19 @@ PUSHCONT {
 	ENDC
 	GETGLOB 4
 	INDEX 4
-	SENDRAWMSG
 }
 IFELSE
+SENDRAWMSG
 IFREF {
-	CALL $c7_to_c4$
+	CALL $upd_only_time_in_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .globl	getDetails_internal
 .type	getDetails_internal, @function
 CALL $getDetails_internal_macro$
 
 .macro getDetails_internal_macro
-.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 160
-PUSHREF {
-}
-PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
-PUSHINT 0
-PUSHREF {
-}
-TUPLE 4
-PUSHINT 0
-BLKPUSH 2, 0
-PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
-PUSHINT 0
-DUP
-TUPLE 6
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 165
 GETGLOB 4
 PUSHINT 0
@@ -763,7 +800,6 @@ SETINDEXQ 2
 PUSHINT 64
 SETINDEXQ 4
 SETGLOB 4
-DROP2
 GETGLOB 11
 GETGLOB 12
 GETGLOB 13
@@ -800,17 +836,16 @@ PUSHCONT {
 	STU 8
 	ENDC
 	PUSHINT 0
-	SENDRAWMSG
 }
 PUSHCONT {
 	GETGLOB 4
 	DUP
 	INDEX 3
 	OVER
-	INDEX 2
+	THIRD
 	GETGLOB 9
 	ROLL 3
-	INDEX 1
+	SECOND
 	NEWC
 	PUSHINT 2
 	STZEROES
@@ -830,14 +865,13 @@ PUSHCONT {
 	ENDC
 	GETGLOB 4
 	INDEX 4
-	SENDRAWMSG
 }
 IFELSE
+SENDRAWMSG
 IFREF {
-	CALL $c7_to_c4$
+	CALL $upd_only_time_in_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .globl	getType_internal
 .type	getType_internal, @function
@@ -854,7 +888,7 @@ SETGLOB 4
 PUSHINT 0
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
 
-.macro broxusBridgeCallback
+.macro onEventConfirmed
 DROP
 GETGLOB 6
 THROWIFNOT 76
@@ -864,60 +898,62 @@ IFREF {
 	CALL $c4_to_c7$
 }
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 178
-LDU 256
-LDU 32
-LDREF
-LDU 32
-LDUQ 256
+OVER
 PUSHCONT {
+	LDU 256
+	LDU 32
+	LDREF
+	LDU 32
 	LDREF
 	ENDS
 	CTOS
 	LDU 256
+	ROLLREV 5
+	TUPLE 5
+	SWAP
 }
-IFNOT
-ROLLREV 5
-TUPLE 5
-SWAP
-LDMSGADDRQ
 PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
-LDUQ 32
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
+	LDU 256
 	LDU 32
+	LDREF
+	LDU 32
+	LDU 256
+	ROLLREV 5
+	TUPLE 5
+	SWAP
+	LDREF
+	ENDS
+	CTOS
 }
-IFNOT
+IFELSE
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDU 32
 ROLLREV 4
 TUPLE 4
 SWAP
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
+LDREF
 ENDS
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 21
+CTOS
+LDMSGADDR
+ENDS
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
+CALLREF {
+	CALL $onEventConfirmed_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro onEventConfirmed_internal_macro
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 21
 GETPARAM 7
-INDEX 0
+FIRST
 DEPTH
 ADDCONST -2
 PICK
@@ -927,17 +963,16 @@ PUSHINT 2
 RAWRESERVE
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 182
 OVER
-INDEX 1
+SECOND
 MYADDR
 SDEQ
 THROWIFNOT 100
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 184
-NEWDICT
 PUSHINT 0
 NEWC
 STU 256
 PUSHINT 0
-ROT
+NEWDICT
 PUSHINT 64
 DICTUSETB
 PUSH S2
@@ -997,16 +1032,15 @@ CTOS
 LDU 128
 DROP
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 199
-NEWDICT
 PUSHINT 0
 NEWC
 STU 256
 PUSHINT 0
-ROT
+NEWDICT
 PUSHINT 64
 DICTUSETB
 PUSH S3
-INDEX 0
+FIRST
 CALLREF {
 	UNTUPLE 5
 	REVERSE 5, 0
@@ -1052,7 +1086,7 @@ PUSHSLICE x405f5e100000000000000000000000000003_
 STSLICER
 ROTREV
 NEWC
-STSLICECONST x66c6a653
+STSLICECONST x0088b721
 SWAP
 UNTUPLE 4
 REVERSE 5, 0
@@ -1081,15 +1115,14 @@ STBREFR
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 213
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 214
 SWAP
 NEWC
-.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 214
 STU 256
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 215
 OVER
 PARSEMSGADDR
-INDEX 2
+THIRD
 SWAP
 STI 128
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 216
@@ -1109,13 +1142,13 @@ ENDC
 PUSH S4
 INDEX2 0, 3
 PUSH S5
-INDEX 0
+FIRST
 INDEX 4
 TUPLE 5
 PUSH S2
-INDEX 1
+SECOND
 PUSH S3
-INDEX 2
+THIRD
 ROLL 4
 INDEX 3
 TUPLE 4
@@ -1129,7 +1162,7 @@ PUSHSLICE x3989680000000000000000000000000003_
 STSLICER
 ROTREV
 NEWC
-STSLICECONST x66c6a653
+STSLICECONST x0088b721
 SWAP
 UNTUPLE 4
 REVERSE 5, 0
@@ -1158,24 +1191,19 @@ STBREFR
 ENDC
 PUSHINT 128
 SENDRAWMSG
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 0
-CALLREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
 
 .globl	setOwnership_internal
 .type	setOwnership_internal, @function
 CALL $setOwnership_internal_macro$
 
 .macro setOwnership_internal_macro
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 24
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 24
 GETGLOB 10
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 26
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 26
 OVER
 SETGLOB 10
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 28
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 28
 PUSHSLICE xc0000000000000000000000001
 NEWC
 STSLICE
@@ -1191,7 +1219,7 @@ STBREFR
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
 
 .macro transferOwnership
 DROP
@@ -1202,36 +1230,44 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 34
-LDMSGADDRQ
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 34
+OVER
 PUSHCONT {
 	LDREF
 	ENDS
 	CTOS
-	LDMSGADDR
 }
-IFNOT
+IF
+LDMSGADDR
 ENDS
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
+CALLREF {
+	CALL $transferOwnership_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro transferOwnership_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
 GETGLOB 9
 GETGLOB 10
 SDEQ
 THROWIFNOT 1101
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 37
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 37
 DUP
-PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
 SDEQ
 THROWIF 1102
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 39
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 39
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
-CALLREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
 
 .macro renounceOwnership
 DROP
@@ -1242,32 +1278,40 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 45
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 45
 ENDS
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
+CALLREF {
+	CALL $renounceOwnership_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro renounceOwnership_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
 GETGLOB 9
 GETGLOB 10
 SDEQ
 THROWIFNOT 1101
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 46
-PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 48
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 46
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 48
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
-CALLREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
 
 .globl	transferAll_internal
 .type	transferAll_internal, @function
 CALL $transferAll_internal_macro$
 
 .macro transferAll_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 17
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 17
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -1276,47 +1320,7 @@ STZEROES
 ENDC
 PUSHINT 129
 SENDRAWMSG
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 0
-
-.macro c7_to_c4
-GETGLOB 14
-GETGLOB 13
-GETGLOB 12
-GETGLOB 11
-GETGLOB 10
-GETGLOB 3
-GETGLOB 2
-NEWC
-STU 256
-STU 64
-STONE
-STSLICE
-SWAP
-UNTUPLE 4
-REVERSE 5, 0
-STREF
-ROLLREV 6
-NEWC
-STSLICE
-STU 64
-STREF
-SWAP
-UNTUPLE 6
-REVERSE 7, 0
-STU 32
-STU 160
-STU 16
-ROLLREV 5
-NEWC
-STSLICE
-STU 32
-STU 32
-STREF
-STREF
-STBREFR
-STBREFR
-ENDC
-POPROOT
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 0
 
 .macro c4_to_c7
 PUSHROOT
@@ -1364,44 +1368,44 @@ PUSHROOT
 CTOS
 SBITS
 GTINT 1
-PUSHREFCONT {
-	CALL $c4_to_c7$
-}
 PUSHCONT {
 	PUSHINT 0
 	PUSHROOT
 	CTOS
 	PLDDICT ; D
-	PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
-	SETGLOB 10
+	PUSHREFSLICE {
+		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+	}
 	PUSHINT 1
-	OVER
+	PUSH S2
 	PUSHINT 64
 	DICTUGET
-	PUSHREFCONT {
+IFREFELSEREF
+{
 		LDREF
 		LDMSGADDR
 		LDU 64
 		LDREF
 		ENDS
 		TUPLE 4
-	}
-	PUSHREFCONT {
+}
+{
 		PUSHREF {
 		}
-		PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+		PUSHREFSLICE {
+			.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+		}
 		PUSHINT 0
 		PUSHREF {
 		}
 		TUPLE 4
-	}
-	IFELSE
-	SETGLOB 11
+}
 	PUSHINT 2
-	OVER
+	PUSH S3
 	PUSHINT 64
 	DICTUGET
-	PUSHREFCONT {
+IFREFELSEREF
+{
 		LDU 32
 		LDU 160
 		LDU 16
@@ -1410,23 +1414,25 @@ PUSHCONT {
 		LDU 32
 		ENDS
 		TUPLE 6
-	}
-	PUSHREFCONT {
+}
+{
 		PUSHINT 0
 		BLKPUSH 2, 0
-		PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+		PUSHREFSLICE {
+			.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+		}
 		PUSHINT 0
 		DUP
 		TUPLE 6
-	}
-	IFELSE
-	SETGLOB 12
+}
 	PUSHREF {
 	}
-	SETGLOB 13
-	PUSHREF {
-	}
+	DUP
 	SETGLOB 14
+	SETGLOB 13
+	SETGLOB 12
+	SETGLOB 11
+	SETGLOB 10
 	PUSHINT 64
 	DICTUGET
 	THROWIFNOT 61
@@ -1435,7 +1441,64 @@ PUSHCONT {
 	PUSHINT 0 ; timestamp
 	SETGLOB 3
 }
-IFELSE
+IFREFELSE {
+	CALL $c4_to_c7$
+}
+
+.macro c7_to_c4
+GETGLOB 14
+GETGLOB 13
+GETGLOB 12
+GETGLOB 11
+GETGLOB 10
+GETGLOB 3
+GETGLOB 2
+NEWC
+STU 256
+STU 64
+STONE
+STSLICE
+SWAP
+UNTUPLE 4
+REVERSE 5, 0
+STREF
+ROLLREV 6
+NEWC
+STSLICE
+STU 64
+STREF
+SWAP
+UNTUPLE 6
+REVERSE 7, 0
+STU 32
+STU 160
+STU 16
+ROLLREV 5
+NEWC
+STSLICE
+STU 32
+STU 32
+STREF
+STREF
+STBREFR
+STBREFR
+ENDC
+POPROOT
+
+.macro upd_only_time_in_c4
+PUSHROOT
+CTOS
+LDU 256
+LDU 64
+NIP
+GETGLOB 3
+ROT
+NEWC
+STU 256
+STU 64
+STSLICE
+ENDC
+POPROOT
 
 .internal-alias :main_internal, 0
 .internal :main_internal
@@ -1470,7 +1533,7 @@ IFJMPREF {
 }
 OVER
 LDUQ 32  ; [funcId] body' ok
-THROWIFNOT 60 ; funcId body'
+THROWIFNOT 60
 OVER
 IFNOTJMPREF {
 	GETGLOB 6
@@ -1480,9 +1543,7 @@ SWAP
 CALLREF {
 	CALL $public_function_selector$
 }
-GETGLOB 7
-ISNULL
-THROWIF 60
+THROW 60
 
 .internal-alias :main_external, -1
 .internal :main_external
@@ -1491,7 +1552,9 @@ CTOS
 SBITS
 NEQINT 1
 SETGLOB 6
-PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
 SETGLOB 9
 OVER
 CALLREF {
@@ -1509,7 +1572,7 @@ PUSHCONT {
 	DUP
 	SETGLOB 5
 	CHKSIGNU ; msgSlice isSigned
-	THROWIFNOT 40 ; msgSlice
+	THROWIFNOT 40
 }
 IF
 LDU 64 ; timestamp msgSlice
@@ -1525,9 +1588,7 @@ SWAP
 CALLREF {
 	CALL $public_function_selector$
 }
-GETGLOB 7
-ISNULL
-THROWIF 60
+THROW 60
 
 .macro owner
 DROP
@@ -1547,8 +1608,7 @@ PUSHCONT {
 	SENDRAWMSG
 }
 IF
-TRUE
-SETGLOB 7
+THROW 0
 
 .macro basicConfiguration
 DROP
@@ -1574,8 +1634,7 @@ PUSHCONT {
 	SENDRAWMSG
 }
 IF
-TRUE
-SETGLOB 7
+THROW 0
 
 .macro networkConfiguration
 DROP
@@ -1603,8 +1662,7 @@ PUSHCONT {
 	SENDRAWMSG
 }
 IF
-TRUE
-SETGLOB 7
+THROW 0
 
 .macro meta
 DROP
@@ -1624,14 +1682,19 @@ PUSHCONT {
 	SENDRAWMSG
 }
 IF
-TRUE
-SETGLOB 7
+THROW 0
 
 .macro public_function_selector
 DUP
-PUSHINT 666029341
+PUSHINT 235197086
 LEQ
 IFJMPREF {
+	DUP
+	PUSHINT 8959777
+	EQUAL
+	IFJMPREF {
+		CALL $onEventConfirmed$
+	}
 	DUP
 	PUSHINT 68781148
 	EQUAL
@@ -1650,17 +1713,17 @@ IFJMPREF {
 	IFJMPREF {
 		CALL $transferOwnership$
 	}
+}
+DUP
+PUSHINT 960689737
+LEQ
+IFJMPREF {
 	DUP
 	PUSHINT 666029341
 	EQUAL
 	IFJMPREF {
 		CALL $constructor$
 	}
-}
-DUP
-PUSHINT 1156088510
-LEQ
-IFJMPREF {
 	DUP
 	PUSHINT 712616652
 	EQUAL
@@ -1679,17 +1742,17 @@ IFJMPREF {
 	IFJMPREF {
 		CALL $setMeta$
 	}
+}
+DUP
+PUSHINT 1594609630
+LEQ
+IFJMPREF {
 	DUP
 	PUSHINT 1156088510
 	EQUAL
 	IFJMPREF {
 		CALL $deployEvent$
 	}
-}
-DUP
-PUSHINT 1674875503
-LEQ
-IFJMPREF {
 	DUP
 	PUSHINT 1166376661
 	EQUAL
@@ -1708,22 +1771,16 @@ IFJMPREF {
 	IFJMPREF {
 		CALL $owner$
 	}
-	DUP
-	PUSHINT 1674875503
-	EQUAL
-	IFJMPREF {
-		CALL $setEndBlockNumber$
-	}
 }
 DUP
 PUSHINT 2000088837
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 1724294739
+	PUSHINT 1674875503
 	EQUAL
 	IFJMPREF {
-		CALL $broxusBridgeCallback$
+		CALL $setEndBlockNumber$
 	}
 	DUP
 	PUSHINT 1729444094

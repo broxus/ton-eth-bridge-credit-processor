@@ -1,13 +1,13 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 
 pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "../interfaces/tokens/ITokensReceivedCallback.sol";
-import "../interfaces/tokens/ITONTokenWallet.sol";
-import "../interfaces/tokens/IRootTokenContract.sol";
-import "../interfaces/tokens/IBurnableByOwnerTokenWallet.sol";
+import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensTransferCallback.sol";
+import "ton-eth-bridge-token-contracts/contracts/interfaces/ITokenWallet.sol";
+import "ton-eth-bridge-token-contracts/contracts/interfaces/ITokenRoot.sol";
+import "ton-eth-bridge-token-contracts/contracts/interfaces/IBurnableTokenWallet.sol";
 
 import "../interfaces/IReceiveTONsFromBridgeCallback.sol";
 
@@ -16,7 +16,7 @@ import "../libraries/MessageFlags.sol";
 import "../libraries/EventDataDecoder.sol";
 import "../libraries/HiddenBridgeStrategyErrorCodes.sol";
 
-contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, ITokensReceivedCallback {
+contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, IAcceptTokensTransferCallback {
 
     event BurnTokens(
         uint32 id,
@@ -44,23 +44,13 @@ contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, ITokensReceived
             _reserve();
             deployer = deployer_;
 
-            IRootTokenContract(tokenRoot).deployEmptyWallet {
+            ITokenRoot(tokenRoot).deployWallet {
                 value: StrategyGas.DEPLOY_EMPTY_WALLET_VALUE,
-                flag: MessageFlags.SENDER_PAYS_FEES
-            }(
-                StrategyGas.DEPLOY_EMPTY_WALLET_GRAMS,  // deploy_grams
-                0,                                      // wallet_public_key
-                address(this),                          // owner_address
-                deployer                                // gas_back_address
-            );
-
-            IRootTokenContract(tokenRoot).getWalletAddress{
-                value: 0,
-                flag: MessageFlags.ALL_NOT_RESERVED,
+                flag: MessageFlags.SENDER_PAYS_FEES,
                 callback: HiddenBridgeStrategy.onTokenWallet
             }(
-                0,                                      // wallet_public_key_
-                address(this)                           // owner_address_
+                address(this),
+                StrategyGas.DEPLOY_EMPTY_WALLET_GRAMS
             );
        } else {
             factory.transfer({value: 0, flag: MessageFlags.ALL_NOT_RESERVED + MessageFlags.DESTROY_IF_ZERO, bounce: false});
@@ -82,25 +72,17 @@ contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, ITokensReceived
 
         tokenWallet = wallet;
 
-        ITONTokenWallet(tokenWallet).setReceiveCallback{
-            value: StrategyGas.SET_RECEIVE_CALLBACK_VALUE,
-            flag: MessageFlags.SENDER_PAYS_FEES
-        }(address(this), false);
-
         address deployer_ = deployer;
         deployer = address(0);
         deployer_.transfer({value: 0, flag: MessageFlags.ALL_NOT_RESERVED + MessageFlags.IGNORE_ERRORS, bounce: false});
     }
 
-    function tokensReceivedCallback(
-        address tokenWallet_,
-        address tokenRoot_,
+    function onAcceptTokensTransfer(
+        address _tokenRoot,
         uint128 amount,
-        uint256 senderPublicKey,
         address senderAddress,
         address senderWallet,
         address originalGasTo,
-        uint128 /* updatedBalance */,
         TvmCell payload
     ) override external {
         require(msg.sender.value != 0 && msg.sender == tokenWallet, HiddenBridgeStrategyErrorCodes.NOT_PERMITTED);
@@ -108,8 +90,6 @@ contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, ITokensReceived
         TvmCell empty;
 
         if (
-            tokenWallet_ == tokenWallet &&
-            tokenRoot_ == tokenRoot &&
             EventDataDecoder.isValid(payload) &&
             msg.value >= StrategyGas.MIN_CALLBACK_VALUE
         )
@@ -136,44 +116,34 @@ contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, ITokensReceived
 
                 emit BurnTokens(id, eventData.user, senderAddress, amount, evmAddress, chainId);
 
-                IBurnableByOwnerTokenWallet(msg.sender).burnByOwner{
+                IBurnableTokenWallet(msg.sender).burn{
                     value: 0,
                     flag: MessageFlags.ALL_NOT_RESERVED
                 }(
                     amount,
-                    0,
                     eventData.user,
                     proxy,
                     burnPayload.toCell()
                 );
             } else {
-                ITONTokenWallet(msg.sender).transferToRecipient{
-                    value: StrategyGas.TRANSFER_TO_RECIPIENT_VALUE,
-                    flag: MessageFlags.SENDER_PAYS_FEES
+                ITokenWallet(msg.sender).transfer{
+                    value: 0,
+                    flag: MessageFlags.ALL_NOT_RESERVED
                 }(
-                    0,                                      // recipient_public_key
-                    eventData.user,                         // recipient_address
                     amount,                                 // amount
-                    StrategyGas.DEPLOY_EMPTY_WALLET_GRAMS,  // deploy_grams
-                    0,                                      // transfer_grams
-                    eventData.user,                         // gas_back_address
-                    true,                                   // notify_receiver
+                    eventData.user,                         // recipient
+                    StrategyGas.DEPLOY_EMPTY_WALLET_GRAMS,  // deployWalletValue
+                    eventData.user,                         // remainingGasTo
+                    true,                                   // notify
                     empty                                   // payload
                 );
-
-                eventData.user.transfer({
-                    value: 0,
-                    flag: MessageFlags.ALL_NOT_RESERVED + MessageFlags.IGNORE_ERRORS,
-                    bounce: false
-                });
             }
         } else {
-            ITONTokenWallet(msg.sender).transfer{value: 0, flag: MessageFlags.ALL_NOT_RESERVED}(
-                senderWallet,
+            ITokenWallet(msg.sender).transferToWallet{value: 0, flag: MessageFlags.ALL_NOT_RESERVED}(
                 amount,
-                0,
+                senderWallet,
                 originalGasTo,
-                false,
+                originalGasTo == senderAddress,
                 empty
             );
         }
@@ -205,9 +175,7 @@ contract HiddenBridgeStrategy is IReceiveTONsFromBridgeCallback, ITokensReceived
 
         uint32 functionId = body.decode(uint32);
 
-        if (functionId == tvm.functionId(IRootTokenContract.getWalletAddress) ||
-            functionId == tvm.functionId(ITONTokenWallet.setReceiveCallback))
-        {
+        if (functionId == tvm.functionId(ITokenRoot.deployWallet) && tokenWallet.value == 0) {
             factory.transfer({value: 0, flag: MessageFlags.ALL_NOT_RESERVED + MessageFlags.DESTROY_IF_ZERO, bounce: false});
         }
     }
