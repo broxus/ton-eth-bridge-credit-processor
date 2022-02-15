@@ -8,8 +8,6 @@ const {
 
 const prompts = require('prompts');
 const fs = require('fs');
-const ethers = require('ethers');
-const ora = require('ora');
 const BigNumber = require('bignumber.js');
 
 // FIXME:
@@ -96,8 +94,7 @@ const main = async () => {
         {
             type: 'text',
             name: 'eventEmitter',
-            message: 'Contract address, which emits event (Ethereum)',
-            validate: value => ethers.utils.isAddress(value) ? true : 'Invalid Ethereum address'
+            message: 'Contract address, which emits event (Ethereum)'
         },
         {
             type: 'number',
@@ -127,7 +124,7 @@ const main = async () => {
     const EthereumEventConfiguration = await locklift.factory.getContract('CreditEthereumEventConfiguration');
     const EthereumEvent = await locklift.factory.getContract(response.eventContract);
 
-    const spinner = ora('Deploying Ethereum event configuration').start();
+    console.log('Deploying Ethereum event configuration');
 
     const Account = await locklift.factory.getAccount('Wallet', DEX_CONTRACTS_PATH);
 
@@ -190,8 +187,6 @@ const main = async () => {
         value: locklift.utils.convertCrystal(0.2, 'nano'),
         keyPair
     });
-
-    spinner.stop();
 
     await logContract(ethereumEventConfiguration);
 };
