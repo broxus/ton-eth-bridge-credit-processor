@@ -8,7 +8,7 @@ const https = require('https');
 
 let tokens = [];
 
-https.get('https://raw.githubusercontent.com/broxus/ton-assets/master/manifest.json', (res) => {
+https.get('https://raw.githubusercontent.com/broxus/ton-assets/migration-1/manifest.json', (res) => {
     let body = "";
 
     res.on("data", (chunk) => {
@@ -61,7 +61,7 @@ async function main() {
             _randomNonce: Math.random() * 6400 | 0,
         },
         keyPair,
-    }, locklift.utils.convertCrystal('40', 'nano'));
+    }, locklift.utils.convertCrystal('100', 'nano'));
     console.log(`Account: ${account.address}`);
 
     const HiddenBridgeStrategyFactory = await locklift.factory.getContract('HiddenBridgeStrategyFactory');
