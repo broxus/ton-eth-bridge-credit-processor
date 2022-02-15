@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 
 library MessageFlags {
     uint8 constant SENDER_PAYS_FEES     = 1;

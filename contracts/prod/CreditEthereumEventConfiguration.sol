@@ -1,19 +1,19 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 pragma AbiHeader expire;
 
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/event-configuration-contracts/IEthereumEventConfiguration.sol';
-import '../../node_modules/bridge/free-ton/contracts/bridge/interfaces/IProxy.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-contracts/IEthereumEvent.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/event-configuration-contracts/IEthereumEventConfiguration.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/bridge/interfaces/IProxy.sol';
 
 import '../CreditProcessor.sol';
 import './CreditTokenTransferEthereumEvent.sol';
 
-import '../../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol';
-import '../../node_modules/bridge/free-ton/contracts/utils/ErrorCodes.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol';
+import 'ton-eth-bridge-contracts/everscale/contracts/utils/ErrorCodes.sol';
 
-import '../../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol';
-import '../../node_modules/bridge/node_modules/@broxus/contracts/contracts/utils/CheckPubKey.sol';
-import '../../node_modules/bridge/node_modules/@broxus/contracts/contracts/libraries/MsgFlag.sol';
+import '@broxus/contracts/contracts/access/InternalOwner.sol';
+import '@broxus/contracts/contracts/utils/CheckPubKey.sol';
+import '@broxus/contracts/contracts/libraries/MsgFlag.sol';
 
 
 contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy, TransferUtils, InternalOwner, CheckPubKey {
@@ -24,12 +24,12 @@ contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy
     TvmCell creditProcessorCode;
 
     /// @param _owner Event configuration owner
-    constructor(address _owner, TvmCell _meta) public checkPubKey {
+    constructor(address _owner, TvmCell _meta, TvmCell _creditProcessorCode) public checkPubKey {
         tvm.accept();
 
         setOwnership(_owner);
-
         meta = _meta;
+        creditProcessorCode = _creditProcessorCode;
     }
 
     /**
@@ -46,7 +46,7 @@ contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy
     }
 
     function getCreditProcessorCode() public view responsible returns(TvmCell) {
-        return {value: 0, flag: MsgFlag.REMAINING_GAS} creditProcessorCode;
+        return {value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false} creditProcessorCode;
     }
 
     /// @dev Set end block number. Can be set only in case current value is 0.
@@ -149,7 +149,7 @@ contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy
             code: basicConfiguration.eventCode
         });
 
-        return {value: 0, flag: MsgFlag.REMAINING_GAS} address(tvm.hash(stateInit));
+        return {value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false} address(tvm.hash(stateInit));
     }
 
     /**
@@ -162,7 +162,7 @@ contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy
         EthereumEventConfiguration _networkConfiguration,
         TvmCell _meta
     ) {
-        return {value: 0, flag: MsgFlag.REMAINING_GAS}(
+        return {value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false}(
             basicConfiguration,
             networkConfiguration,
             meta
@@ -172,10 +172,10 @@ contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy
     /// @dev Get event configuration type
     /// @return _type Configuration type - Ethereum or TON
     function getType() override public pure responsible returns(EventType _type) {
-        return {value: 0, flag: MsgFlag.REMAINING_GAS} EventType.Ethereum;
+        return {value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false} EventType.Ethereum;
     }
 
-    function broxusBridgeCallback(
+    function onEventConfirmed(
         IEthereumEvent.EthereumEventInitData eventInitData,
         address gasBackAddress
     ) override external reserveBalance {
@@ -208,7 +208,7 @@ contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy
 
         address processor = address(tvm.hash(processorStateInit));
 
-        IProxy(processor).broxusBridgeCallback{ flag: 0, value: 0.1 ton }(eventInitData, gasBackAddress);
+        IProxy(processor).onEventConfirmed{ flag: 0, value: 0.1 ton }(eventInitData, gasBackAddress);
 
         TvmBuilder builder;
         builder.store(uint256(amount_));
@@ -228,7 +228,7 @@ contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy
             eventInitData.chainId
         );
 
-        IProxy(networkConfiguration.proxy).broxusBridgeCallback{
+        IProxy(networkConfiguration.proxy).onEventConfirmed{
             flag: MsgFlag.ALL_NOT_RESERVED
         }(eventInitData_, gasBackAddress);
     }

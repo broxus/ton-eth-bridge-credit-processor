@@ -1,6 +1,6 @@
 {
 	"ABI version": 2,
-	"version": "2.1",
+	"version": "2.2",
 	"header": ["pubkey", "time", "expire"],
 	"functions": [
 		{
@@ -67,15 +67,6 @@
 			]
 		},
 		{
-			"name": "onReadyToProcess",
-			"inputs": [
-				{"components":[{"name":"eventTransaction","type":"uint256"},{"name":"eventIndex","type":"uint32"},{"name":"eventData","type":"cell"},{"name":"eventBlockNumber","type":"uint32"},{"name":"eventBlock","type":"uint256"}],"name":"eventVoteData","type":"tuple"},
-				{"name":"configuration","type":"address"}
-			],
-			"outputs": [
-			]
-		},
-		{
 			"name": "getCreditProcessorAddress",
 			"inputs": [
 				{"name":"answerId","type":"uint32"},
@@ -87,16 +78,16 @@
 			]
 		},
 		{
-			"name": "proxyTransferToRecipient",
+			"name": "proxyTokensTransfer",
 			"inputs": [
-				{"name":"tokenWallet_","type":"address"},
-				{"name":"gasValue","type":"uint128"},
-				{"name":"amount_","type":"uint128"},
-				{"name":"recipient","type":"address"},
-				{"name":"deployGrams","type":"uint128"},
-				{"name":"gasBackAddress","type":"address"},
-				{"name":"notifyReceiver","type":"bool"},
-				{"name":"payload","type":"cell"}
+				{"name":"_tokenWallet","type":"address"},
+				{"name":"_gasValue","type":"uint128"},
+				{"name":"_amount","type":"uint128"},
+				{"name":"_recipient","type":"address"},
+				{"name":"_deployWalletValue","type":"uint128"},
+				{"name":"_remainingGasTo","type":"address"},
+				{"name":"_notify","type":"bool"},
+				{"name":"_payload","type":"cell"}
 			],
 			"outputs": [
 			]

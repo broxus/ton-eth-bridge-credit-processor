@@ -1,5 +1,5 @@
 const {Migration, DEX_CONTRACTS_PATH, stringToBytesArray, BRIDGE_CONTRACTS_PATH, EMPTY_TVM_CELL,
-    getRandomNonce, ZERO_ADDRESS, TOKEN_CONTRACTS_PATH, Constants} = require(process.cwd()+'/scripts/utils');
+    getRandomNonce, TOKEN_CONTRACTS_PATH, Constants} = require(process.cwd()+'/scripts/utils');
 const BigNumber = require('bignumber.js');
 const { Command } = require('commander');
 const program = new Command();
@@ -24,7 +24,7 @@ async function main() {
     const [keyPair] = await locklift.keys.getKeyPairs();
 
     const tokenRoot = migration.load(
-        await locklift.factory.getContract('RootTokenContract', TOKEN_CONTRACTS_PATH), token.symbol + 'Root'
+        await locklift.factory.getContract('TokenRootUpgradeable', TOKEN_CONTRACTS_PATH), token.symbol + 'Root'
     );
 
     const ethereumEventAbi = {
@@ -73,7 +73,7 @@ async function main() {
         basicConfiguration: {
             eventABI: stringToBytesArray(JSON.stringify(ethereumEventAbi)),
             eventInitialBalance: locklift.utils.convertCrystal('2', 'nano'),
-            staking: ZERO_ADDRESS,
+            staking: locklift.utils.zeroAddress,
             eventCode: TestEthereumEvent.code,
         },
         networkConfiguration: {
@@ -112,7 +112,7 @@ async function main() {
         method: 'setConfiguration',
         params: {
           _config: {
-            tonConfiguration: ZERO_ADDRESS,
+            tonConfiguration: locklift.utils.zeroAddress,
             ethereumConfigurations: [
                 testEthereumEventConfiguration.address
             ],
@@ -127,16 +127,17 @@ async function main() {
     });
     logTx(tx);
 
-    if (token === 'wton') {
+    if (token === 'wever') {
         // TODO: добавление прокси в tunnel
     } else {
-        console.log(`RootTokenContract.transferOwner`);
+        console.log(`TokenRoot.transferOwnership`);
         tx = await account.runTarget({
             contract: tokenRoot,
-            method: 'transferOwner',
+            method: 'transferOwnership',
             params: {
-                root_public_key_: 0,
-                root_owner_address_: proxyTokenTransfer.address
+                newOwner: proxyTokenTransfer.address,
+                remainingGasTo: account.address,
+                callbacks: {}
             },
             value: locklift.utils.convertCrystal(0.5, 'nano'),
             keyPair

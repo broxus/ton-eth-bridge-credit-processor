@@ -1,7 +1,7 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 
 abstract contract Addresses {
-    address constant DEX_ROOT = address.makeAddrStd(0, 69828756922561629996347959075373777544907523131561128746054462495854018033910);
-    address constant WTON_VAULT = address.makeAddrStd(0, 111222085826145144092282728324734686998839295272540508622575597626027373005908);
-    address constant WTON_ROOT = address.makeAddrStd(0, 43009273557231055418471687018692527683178145957310518406279553388146765536991);
+    address constant DEX_ROOT = address.makeAddrStd(0, 0x6592ec966f10c598c7895962b081b945500842954ca7606f14e34100922c7670);
+    address constant WEVER_VAULT = address.makeAddrStd(0, 0x4e8df9bd803f3277ebdb8fe9cad8823b21f68173cb63d5dc6b80eec0d282871d);
+    address constant WEVER_ROOT = address.makeAddrStd(0, 0x0ffe8932f3ca70762e3a42f4cf4fbe7077acb36abaa07718b1b9c2afcecd2584);
 }

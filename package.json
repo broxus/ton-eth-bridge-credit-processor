@@ -4,29 +4,24 @@
   "description": "TONBridge ETH-TON Credit",
   "main": "index.js",
   "scripts": {
-    "postinstall": "mkdir node_modules/bridge/node_modules && cp -R node_modules/@broxus node_modules/bridge/node_modules",
     "build": "locklift build --config locklift.config.js"
   },
   "author": "aleksandr-hramcov <aleksandr.hramcov@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "@broxus/contracts": "^1.0.3",
+    "@broxus/contracts": "^1.0.4",
     "bignumber.js": "^9.0.1",
-    "bridge": "git://github.com/broxus/ton-eth-bridge-contracts",
     "chai": "^4.2.0",
     "deep-object-diff": "^1.1.0",
-    "dex": "git://github.com/broxus/ton-dex#8c553b592de02c476f038277537fa7321b3dd39d",
-    "folder-hash": "^4.0.1",
-    "locklift": "^1.4.5",
+    "locklift": "^1.5.1",
     "mocha": "^8.2.1",
     "mocha-logger": "^1.0.7",
-    "tokens": "git://github.com/broxus/ton-eth-bridge-token-contracts",
     "ton-client-js": "^0.28.1",
-    "wton": "git://github.com/broxus/ton-wton",
-    "ora": "^3.4.0",
+    "ton-eth-bridge-token-contracts": "git://github.com/broxus/ton-eth-bridge-token-contracts#d3c1cd920c0320ffaab03b54c878dd0e06fed3c7",
+    "ton-dex": "git://github.com/broxus/ton-dex#a922983050152d2ee6da7e10c8e1d1c537395017",
+    "ton-wton": "git://github.com/broxus/ton-wton#42a5aaf95b51b8a365d40ef3e95c1a6931f0a90c",
+    "ton-eth-bridge-contracts": "git://github.com/broxus/ton-eth-bridge-contracts#c326d3928674a7eae6986e33a5b83511f814ad68",
     "prompts": "^2.4.1"
   },
-  "devDependencies": {
-    "ethers": "^5.4.1"
-  }
+  "devDependencies": {}
 }

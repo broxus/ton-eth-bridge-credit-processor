@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.57.0;
 
 library StrategyGas {
 
@@ -9,6 +9,6 @@ library StrategyGas {
     // TOKENS
     uint128 constant DEPLOY_EMPTY_WALLET_VALUE      = 0.5 ton;
     uint128 constant DEPLOY_EMPTY_WALLET_GRAMS      = 0.1 ton;
-    uint128 constant TRANSFER_TO_RECIPIENT_VALUE    = 0.5 ton;
+    uint128 constant TRANSFER_TOKENS_VALUE          = 0.5 ton;
     uint128 constant SET_RECEIVE_CALLBACK_VALUE     = 0.01 ton;
 }

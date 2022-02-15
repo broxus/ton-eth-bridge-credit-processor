@@ -1,6 +1,6 @@
 {
 	"ABI version": 2,
-	"version": "2.1",
+	"version": "2.2",
 	"header": ["pubkey", "time", "expire"],
 	"functions": [
 		{
@@ -50,6 +50,7 @@
 		{
 			"name": "confirm",
 			"inputs": [
+				{"name":"voteReceiver","type":"address"}
 			],
 			"outputs": [
 			]
@@ -57,6 +58,7 @@
 		{
 			"name": "reject",
 			"inputs": [
+				{"name":"voteReceiver","type":"address"}
 			],
 			"outputs": [
 			]
@@ -96,6 +98,15 @@
 			],
 			"outputs": [
 				{"name":"vote","type":"optional(uint8)"}
+			]
+		},
+		{
+			"name": "getApiVersion",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"uint32"}
 			]
 		},
 		{

@@ -1,11 +1,10 @@
 const fs = require('fs');
 const logger = require('mocha-logger');
 
-const TOKEN_CONTRACTS_PATH = 'node_modules/tokens/free-ton/build'
-const DEX_CONTRACTS_PATH = 'node_modules/dex/build'
-const WTON_CONTRACTS_PATH = 'node_modules/wton/freeton/build'
-const BRIDGE_CONTRACTS_PATH = 'node_modules/bridge/free-ton/build'
-const ZERO_ADDRESS = '0:0000000000000000000000000000000000000000000000000000000000000000'
+const TOKEN_CONTRACTS_PATH = 'node_modules/ton-eth-bridge-token-contracts/build'
+const DEX_CONTRACTS_PATH = 'node_modules/ton-dex/build'
+const WEVER_CONTRACTS_PATH = 'node_modules/ton-wton/everscale/build'
+const BRIDGE_CONTRACTS_PATH = 'node_modules/ton-eth-bridge-contracts/everscale/build'
 
 const EMPTY_TVM_CELL = 'te6ccgEBAQEAAgAAAA==';
 const BigNumber = require('bignumber.js');
@@ -42,7 +41,7 @@ async function sleep(ms) {
 }
 
 const afterRun = async (tx) => {
-  await new Promise(resolve => setTimeout(resolve, 10000));
+  await new Promise(resolve => setTimeout(resolve, 1000));
 };
 
 const Constants = {
@@ -50,12 +49,14 @@ const Constants = {
     tst: {
       name: 'Test',
       symbol: 'Tst',
-      decimals: 6
+      decimals: 6,
+      upgradeable: true
     },
-    wton: {
-      name: 'Wrapped TON',
-      symbol: 'WTON',
-      decimals: 9
+    wever: {
+      name: 'Wrapped EVER',
+      symbol: 'WEVER',
+      decimals: 9,
+      upgradeable: true
     }
   },
   LP_DECIMALS: 9,
@@ -150,7 +151,6 @@ module.exports = {
   EMPTY_TVM_CELL,
   TOKEN_CONTRACTS_PATH,
   DEX_CONTRACTS_PATH,
-  WTON_CONTRACTS_PATH,
-  BRIDGE_CONTRACTS_PATH,
-  ZERO_ADDRESS
+  WEVER_CONTRACTS_PATH,
+  BRIDGE_CONTRACTS_PATH
 }

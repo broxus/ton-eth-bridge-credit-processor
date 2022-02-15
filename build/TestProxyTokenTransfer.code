@@ -1,4 +1,4 @@
-.version sol 0.49.0
+.version sol 0.57.1
 
 .macro constructor
 DROP
@@ -9,16 +9,16 @@ IFREF {
 }
 GETGLOB 6
 THROWIF 51
-LDMSGADDRQ
+OVER
 PUSHCONT {
 	LDREF
 	ENDS
 	CTOS
-	LDMSGADDR
 }
-IFNOT
+IF
+LDMSGADDR
 ENDS
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/utils/CheckPubKey.sol, 9
+.loc ../node_modules/@broxus/contracts/contracts/utils/CheckPubKey.sol, 9
 GETGLOB 5
 DUP
 ISNULL
@@ -30,9 +30,9 @@ IF
 GETGLOB 2
 EQUAL
 THROWIFNOT 1103
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 55
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 53
 ACCEPT
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 57
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 55
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
@@ -40,10 +40,9 @@ CALLREF {
 CALLREF {
 	CALL $c7_to_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
-.macro broxusBridgeCallback
+.macro onEventConfirmed
 DROP
 GETGLOB 6
 THROWIFNOT 76
@@ -52,118 +51,66 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 60
-LDUQ 256
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 256
-}
-IFNOT
-LDUQ 32
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 32
-}
-IFNOT
-DUP
-SBITREFS
-EQINT 1
-SWAP
-EQINT 0
-AND
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 58
+OVER
 PUSHCONT {
 	LDREF
 	ENDS
 	CTOS
 }
 IF
+LDU 256
+LDU 32
 LDREF
-LDUQ 32
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 32
-}
-IFNOT
-LDUQ 256
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 256
-}
-IFNOT
+LDU 32
+LDU 256
 ROLLREV 5
 TUPLE 5
 SWAP
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
-LDUQ 32
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 32
-}
-IFNOT
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDU 32
 ROLLREV 4
 TUPLE 4
 SWAP
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
+LDREF
 ENDS
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+CTOS
+LDMSGADDR
+ENDS
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 CALLREF {
-	CALL $broxusBridgeCallback_internal_macro$
+	CALL $onEventConfirmed_internal_macro$
 }
+DROP
 CALLREF {
 	CALL $c7_to_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
-.globl	broxusBridgeCallback_internal
-.type	broxusBridgeCallback_internal, @function
-CALL $broxusBridgeCallback_internal_macro$
+.globl	onEventConfirmed_internal
+.type	onEventConfirmed_internal, @function
+CALL $onEventConfirmed_internal_macro$
 
-.macro broxusBridgeCallback_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 50
+.macro onEventConfirmed_internal_macro
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 48
 PUSHINT 2701
 GETGLOB 12
-INDEX 1
+SECOND
 GETGLOB 9
 CALLREF {
 	CALL $isArrayContainsAddress_internal_macro$
 }
 THROWANYIFNOT
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 21
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 21
 GETPARAM 7
-INDEX 0
+FIRST
 DEPTH
 ADDCONST -2
 PICK
@@ -171,12 +118,12 @@ SUB
 UFITS 128
 PUSHINT 2
 RAWRESERVE
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 64
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 62
 PUSHINT 2702
 GETGLOB 14
 NOT
 THROWANYIFNOT
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 65
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 63
 PUSHINT 2703
 GETGLOB 12
 INDEX 3
@@ -185,13 +132,13 @@ INDEX 3
 PLDU 256
 NEQINT 0
 THROWANYIFNOT
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 67
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 65
 SWAP
 INDEX2 0, 2
 CALLREF {
 	CALL $decodeEthereumEventData_internal_macro$
 }
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 73
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 71
 SWAP
 NEWC
 STSLICECONST x9_
@@ -199,12 +146,12 @@ STI 8
 STU 256
 ENDC
 CTOS
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 75
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 73
 PUSHINT 2704
 PUSH S2
 GTINT 0
 THROWANYIFNOT
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 76
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 74
 PUSHINT 2705
 OVER
 PARSEMSGADDR
@@ -212,12 +159,16 @@ INDEX 3
 PLDU 256
 NEQINT 0
 THROWANYIFNOT
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 78
-XCHG S1, S2
-PUSHINT 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 76
+PUSHREF {
+}
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 78
+TRUE
+ROLL 4
 GETGLOB 12
 INDEX 4
-ROLL 4
+BLKSWAP 2, 4
+SWAP
 GETGLOB 12
 INDEX 3
 NEWC
@@ -225,27 +176,133 @@ STSLICECONST x62_
 STSLICE
 PUSHINT 1
 STUR 111
-ROLLREV 5
+ROLLREV 6
 NEWC
-STSLICECONST x66211c6f
+STSLICECONST x20bfb3b8
 STU 128
+STSLICE
 STU 128
-STU 256
-ROTREV
+ROLLREV 3
 NEWC
 STSLICE
-SWAP
-NEWC
-STSLICE
-STBREFR
+STI 1
+STREF
 STBREFR
 STBREFR
 ENDC
 PUSHINT 128
 SENDRAWMSG
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 
-.macro burnCallback
+.macro fallback_macro
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 90
+GETPARAM 7
+FIRST
+DEPTH
+ADDCONST -2
+PICK
+SUB
+UFITS 128
+PUSHINT 2
+RAWRESERVE
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 91
+DEPTH
+ADDCONST -4
+PICK
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 92
+DUP
+LDU 32
+POP S2
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 93
+PUSHINT 2706
+SWAP
+PUSHINT 1019809854
+EQUAL
+THROWANYIFNOT
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 94
+DUP
+LDU 128
+LDU 256
+LDMSGADDR
+LDMSGADDR
+POP S5
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 96
+DROP
+PUSH S3
+LDREF
+POP S5
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 97
+PUSH S4
+LDREFRTOS
+NIP
+POP S5
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 98
+ROLL 4
+LDMSGADDR
+DROP
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 100
+GETGLOB 12
+THIRD
+GETGLOB 9
+CALLREF {
+	CALL $isArrayContainsAddress_internal_macro$
+}
+PUSHCONT {
+	.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 103
+	OVER
+	TRUE
+	PUSH S2
+	GETGLOB 12
+	INDEX 4
+	PUSH2 S6, S8
+	GETGLOB 12
+	INDEX 3
+	NEWC
+	STSLICECONST x62_
+	STSLICE
+	PUSHINT 1
+	STUR 111
+	ROLLREV 6
+	NEWC
+	STSLICECONST x20bfb3b8
+	STU 128
+	STSLICE
+	STU 128
+	ROLLREV 3
+	NEWC
+	STSLICE
+	STI 1
+	STREF
+	STBREFR
+	STBREFR
+}
+PUSHCONT {
+	.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 112
+	DUP
+	NEWC
+	STSLICECONST x62_
+	STSLICE
+	PUSHINT 111
+	STZEROES
+}
+IFELSE
+ENDC
+PUSHINT 128
+SENDRAWMSG
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
+BLKDROP 5
+CALLREF {
+	CALL $c7_to_c4$
+}
+
+.macro onAcceptTokensBurn
 DROP
 GETGLOB 6
 THROWIFNOT 76
@@ -254,79 +311,44 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 87
-LDUQ 128
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 128
-}
-IFNOT
-DUP
-SBITREFS
-EQINT 1
-SWAP
-EQINT 0
-AND
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 116
+OVER
 PUSHCONT {
 	LDREF
 	ENDS
 	CTOS
 }
 IF
+LDU 128
+LDMSGADDR
 LDREF
-LDUQ 256
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 256
-}
-IFNOT
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
 ENDS
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 CALLREF {
-	CALL $burnCallback_internal_macro$
+	CALL $onAcceptTokensBurn_internal_macro$
 }
+DROP
 CALLREF {
 	CALL $c7_to_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
-.globl	burnCallback_internal
-.type	burnCallback_internal, @function
-CALL $burnCallback_internal_macro$
+.globl	onAcceptTokensBurn_internal
+.type	onAcceptTokensBurn_internal, @function
+CALL $onAcceptTokensBurn_internal_macro$
 
-.macro burnCallback_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 21
+.macro onAcceptTokensBurn_internal_macro
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 21
 GETPARAM 7
-INDEX 0
+FIRST
 DEPTH
 ADDCONST -2
 PICK
@@ -334,45 +356,45 @@ SUB
 UFITS 128
 PUSHINT 2
 RAWRESERVE
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 95
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 123
 GETGLOB 12
 INDEX 3
 GETGLOB 9
 SDEQ
 PUSHCONT {
-	.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 96
+	.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 124
 	GETGLOB 13
-	PUSH S6
+	PUSH S5
 	ADD
 	UFITS 128
 	SETGLOB 13
-	.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 97
-	PUSH S4
+	.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 126
+	DUP
 	CTOS
 	LDU 160
 	LDU 32
 	DROP
-	.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 110
-	PUSH S4
+	.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 139
+	PUSH S3
 	PARSEMSGADDR
-	INDEX 2
-	PUSH S5
+	THIRD
+	PUSH S4
 	PARSEMSGADDR
 	INDEX 3
 	PLDU 256
-	PUSH S9
+	PUSH S8
 	BLKSWAP 2, 3
 	CALLREF {
 		CALL $encodeTonEventData_internal_macro$
 	}
-	.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 117
+	.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 147
 	LTIME
 	NOW
 	ROT
 	TRIPLE
-	.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 118
+	.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 149
 	GETGLOB 12
-	INDEX 0
+	FIRST
 	NEWC
 	STSLICECONST x62_
 	STSLICE
@@ -387,22 +409,25 @@ PUSHCONT {
 	ENDC
 	PUSHINT 128
 	SENDRAWMSG
-	.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
 }
 PUSHCONT {
-	.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 123
+	.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 154
 	GETGLOB 12
-	INDEX 2
+	THIRD
 	GETGLOB 9
 	CALLREF {
 		CALL $isArrayContainsAddress_internal_macro$
 	}
 	PUSHCONT {
-		.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 124
-		PUSH3 S0, S2, S3
+		.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 155
+		PUSHREF {
+		}
+		.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 157
+		TRUE
+		PUSH S3
 		GETGLOB 12
 		INDEX 4
-		PUSH S9
+		PUSH2 S7, S8
 		GETGLOB 12
 		INDEX 3
 		NEWC
@@ -410,46 +435,38 @@ PUSHCONT {
 		STSLICE
 		PUSHINT 1
 		STUR 111
-		ROLLREV 5
+		ROLLREV 6
 		NEWC
-		STSLICECONST x66211c6f
+		STSLICECONST x20bfb3b8
 		STU 128
+		STSLICE
 		STU 128
-		STU 256
-		ROTREV
+		ROLLREV 3
 		NEWC
 		STSLICE
-		SWAP
-		NEWC
-		STSLICE
+		STI 1
+		STREF
 		STBREFR
 		STBREFR
-		STBREFR
-		ENDC
-		PUSHINT 128
-		SENDRAWMSG
-		.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
 	}
 	PUSHCONT {
-		.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 132
-		DUP
+		.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 166
+		OVER
 		NEWC
 		STSLICECONST x62_
 		STSLICE
 		PUSHINT 111
 		STZEROES
-		ENDC
-		PUSHINT 128
-		SENDRAWMSG
-		.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
 	}
 	IFELSE
-	.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+	ENDC
+	PUSHINT 128
+	SENDRAWMSG
+	.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 }
 IFELSE
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 0
-BLKDROP 6
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
+BLKDROP 5
 
 .macro getDetails
 DROP
@@ -460,14 +477,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 137
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 171
 LDU 32
 GETGLOB 4
 ROT
 SETINDEXQ 5
 SETGLOB 4
 ENDS
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 CALLREF {
 	CALL $getDetails_internal_macro$
 }
@@ -515,17 +532,16 @@ PUSHCONT {
 	STBREFR
 	ENDC
 	PUSHINT 0
-	SENDRAWMSG
 }
 PUSHCONT {
 	GETGLOB 4
 	DUP
 	INDEX 3
 	OVER
-	INDEX 2
+	THIRD
 	GETGLOB 9
 	ROLL 3
-	INDEX 1
+	SECOND
 	NEWC
 	PUSHINT 2
 	STZEROES
@@ -572,21 +588,20 @@ PUSHCONT {
 	ENDC
 	GETGLOB 4
 	INDEX 4
-	SENDRAWMSG
 }
 IFELSE
+SENDRAWMSG
 IFREF {
-	CALL $c7_to_c4$
+	CALL $upd_only_time_in_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .globl	getDetails_internal
 .type	getDetails_internal, @function
 CALL $getDetails_internal_macro$
 
 .macro getDetails_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 138
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 177
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -599,7 +614,7 @@ GETGLOB 12
 GETGLOB 11
 GETGLOB 13
 GETGLOB 14
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 
 .macro getTokenRoot
 DROP
@@ -610,14 +625,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 141
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 180
 LDU 32
 GETGLOB 4
 ROT
 SETINDEXQ 5
 SETGLOB 4
 ENDS
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 CALLREF {
 	CALL $getTokenRoot_internal_macro$
 }
@@ -641,17 +656,16 @@ PUSHCONT {
 	STBREFR
 	ENDC
 	PUSHINT 0
-	SENDRAWMSG
 }
 PUSHCONT {
 	GETGLOB 4
 	DUP
 	INDEX 3
 	OVER
-	INDEX 2
+	THIRD
 	GETGLOB 9
 	ROLL 3
-	INDEX 1
+	SECOND
 	NEWC
 	PUSHINT 2
 	STZEROES
@@ -674,21 +688,20 @@ PUSHCONT {
 	ENDC
 	GETGLOB 4
 	INDEX 4
-	SENDRAWMSG
 }
 IFELSE
+SENDRAWMSG
 IFREF {
-	CALL $c7_to_c4$
+	CALL $upd_only_time_in_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .globl	getTokenRoot_internal
 .type	getTokenRoot_internal, @function
 CALL $getTokenRoot_internal_macro$
 
 .macro getTokenRoot_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 142
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 186
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -699,7 +712,7 @@ SETINDEXQ 4
 SETGLOB 4
 GETGLOB 12
 INDEX 3
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 
 .macro getConfiguration
 DROP
@@ -710,14 +723,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 145
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 189
 LDU 32
 GETGLOB 4
 ROT
 SETINDEXQ 5
 SETGLOB 4
 ENDS
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 CALLREF {
 	CALL $getConfiguration_internal_macro$
 }
@@ -759,17 +772,16 @@ PUSHCONT {
 	STBREFR
 	ENDC
 	PUSHINT 0
-	SENDRAWMSG
 }
 PUSHCONT {
 	GETGLOB 4
 	DUP
 	INDEX 3
 	OVER
-	INDEX 2
+	THIRD
 	GETGLOB 9
 	ROLL 3
-	INDEX 1
+	SECOND
 	NEWC
 	PUSHINT 2
 	STZEROES
@@ -810,21 +822,20 @@ PUSHCONT {
 	ENDC
 	GETGLOB 4
 	INDEX 4
-	SENDRAWMSG
 }
 IFELSE
+SENDRAWMSG
 IFREF {
-	CALL $c7_to_c4$
+	CALL $upd_only_time_in_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .globl	getConfiguration_internal
 .type	getConfiguration_internal, @function
 CALL $getConfiguration_internal_macro$
 
 .macro getConfiguration_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 146
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 196
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -834,7 +845,7 @@ PUSHINT 64
 SETINDEXQ 4
 SETGLOB 4
 GETGLOB 12
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 
 .macro setConfiguration
 DROP
@@ -845,92 +856,63 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 149
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
-DUP
-SDEMPTY
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 199
+OVER
 PUSHCONT {
 	LDREF
 	ENDS
 	CTOS
 }
 IF
+LDMSGADDR
 LDU 32
 LDDICT
 ROTREV
 PAIR
 SWAP
-DUP
-SDEMPTY
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-}
-IF
 LDU 32
 LDDICT
 ROTREV
 PAIR
 SWAP
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
-LDUQ 128
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 128
-}
-IFNOT
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDU 128
 ROLLREV 5
 TUPLE 5
 SWAP
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
+LDREF
 ENDS
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+CTOS
+LDMSGADDR
+ENDS
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 CALLREF {
 	CALL $setConfiguration_internal_macro$
 }
+DROP
 CALLREF {
 	CALL $c7_to_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .globl	setConfiguration_internal
 .type	setConfiguration_internal, @function
 CALL $setConfiguration_internal_macro$
 
 .macro setConfiguration_internal_macro
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
 GETGLOB 9
 GETGLOB 11
 SDEQ
 THROWIFNOT 1101
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 32
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 16
+DUP
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 32
 GETPARAM 7
-INDEX 0
+FIRST
 DEPTH
 ADDCONST -2
 PICK
@@ -938,10 +920,12 @@ SUB
 UFITS 128
 PUSHINT 2
 RAWRESERVE
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 153
-SWAP
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 33
+ROTREV
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 203
+DROP
 SETGLOB 12
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 34
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 34
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -950,81 +934,7 @@ STZEROES
 ENDC
 PUSHINT 129
 SENDRAWMSG
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
-
-.macro withdrawExtraGasFromTokenRoot
-DROP
-GETGLOB 6
-THROWIFNOT 76
-GETGLOB 2
-ISNULL
-IFREF {
-	CALL $c4_to_c7$
-}
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 156
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
-ENDS
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
-CALLREF {
-	CALL $withdrawExtraGasFromTokenRoot_internal_macro$
-}
-IFREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
-
-.globl	withdrawExtraGasFromTokenRoot_internal
-.type	withdrawExtraGasFromTokenRoot_internal, @function
-CALL $withdrawExtraGasFromTokenRoot_internal_macro$
-
-.macro withdrawExtraGasFromTokenRoot_internal_macro
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
-GETGLOB 9
-GETGLOB 11
-SDEQ
-THROWIFNOT 1101
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 21
-GETPARAM 7
-INDEX 0
-DEPTH
-ADDCONST -2
-PICK
-SUB
-UFITS 128
-PUSHINT 2
-RAWRESERVE
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 160
-SWAP
-NEWC
-STSLICECONST x62_
-STSLICE
-PUSHINT 1
-STUR 111
-SWAP
-NEWC
-STSLICECONST x20ebc76d
-STSLICE
-STBREFR
-ENDC
-PUSHINT 128
-SENDRAWMSG
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 
 .macro transferTokenOwnership
 DROP
@@ -1035,40 +945,38 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 163
-LDMSGADDRQ
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 206
+OVER
 PUSHCONT {
 	LDREF
 	ENDS
 	CTOS
-	LDMSGADDR
 }
-IFNOT
-LDUQ 256
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 256
-}
-IFNOT
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
+IF
+LDMSGADDR
+LDREF
 ENDS
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+CTOS
+LDMSGADDR
+ENDS
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
+CALLREF {
+	CALL $transferTokenOwnership_internal_macro$
+}
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.macro transferTokenOwnership_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
 GETGLOB 9
 GETGLOB 11
 SDEQ
 THROWIFNOT 1101
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 21
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 21
 GETPARAM 7
-INDEX 0
+FIRST
 DEPTH
 ADDCONST -2
 PICK
@@ -1076,8 +984,83 @@ SUB
 UFITS 128
 PUSHINT 2
 RAWRESERVE
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 168
-XCHG S2
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 210
+NEWDICT
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 212
+GETGLOB 9
+SWAP2
+SWAP
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHINT 1
+STUR 111
+ROLLREV 3
+NEWC
+STSLICECONST x1df385c6
+STSLICE
+ROTREV
+NEWC
+STSLICE
+STDICT
+STBREFR
+STBREFR
+ENDC
+PUSHINT 128
+SENDRAWMSG
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
+
+.macro legacyTransferTokenOwnership
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 218
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+ENDS
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
+CALLREF {
+	CALL $legacyTransferTokenOwnership_internal_macro$
+}
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.macro legacyTransferTokenOwnership_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+GETGLOB 9
+GETGLOB 11
+SDEQ
+THROWIFNOT 1101
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 21
+GETPARAM 7
+FIRST
+DEPTH
+ADDCONST -2
+PICK
+SUB
+UFITS 128
+PUSHINT 2
+RAWRESERVE
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 222
+PUSHINT 0
+ROT
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -1092,205 +1075,61 @@ STBREFR
 ENDC
 PUSHINT 128
 SENDRAWMSG
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
-IFREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
-
-.macro setPaused
-DROP
-GETGLOB 6
-THROWIFNOT 76
-GETGLOB 2
-ISNULL
-IFREF {
-	CALL $c4_to_c7$
-}
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 174
-LDI 1
-ENDS
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
-CALLREF {
-	CALL $setPaused_internal_macro$
-}
-CALLREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
-
-.globl	setPaused_internal
-.type	setPaused_internal, @function
-CALL $setPaused_internal_macro$
-
-.macro setPaused_internal_macro
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
-GETGLOB 9
-GETGLOB 11
-SDEQ
-THROWIFNOT 1101
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 21
-GETPARAM 7
-INDEX 0
-DEPTH
-ADDCONST -2
-PICK
-SUB
-UFITS 128
-PUSHINT 2
-RAWRESERVE
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 175
-DUP
-SETGLOB 14
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 176
-GETGLOB 12
-INDEX 3
-NEWC
-STSLICECONST x62_
-STSLICE
-PUSHSLICE x00000000000000000000000000001ab5f8e5_
-STSLICER
-STI 1
-ENDC
-PUSHINT 128
-SENDRAWMSG
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
-
-.macro sendPausedCallbackTo
-DROP
-GETGLOB 6
-THROWIFNOT 76
-GETGLOB 2
-ISNULL
-IFREF {
-	CALL $c4_to_c7$
-}
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 179
-LDU 64
-LDMSGADDRQ
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDMSGADDR
-}
-IFNOT
-ENDS
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
-CALLREF {
-	CALL $sendPausedCallbackTo_internal_macro$
-}
-CALLREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
-
-.globl	sendPausedCallbackTo_internal
-.type	sendPausedCallbackTo_internal, @function
-CALL $sendPausedCallbackTo_internal_macro$
-
-.macro sendPausedCallbackTo_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 21
-GETPARAM 7
-INDEX 0
-DEPTH
-ADDCONST -2
-PICK
-SUB
-UFITS 128
-PUSHINT 2
-RAWRESERVE
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 180
-GETGLOB 14
-ROTREV
-NEWC
-STSLICECONST x62_
-STSLICE
-PUSHSLICE x0000000000000000000000000000e70de1d1_
-STSLICER
-STU 64
-STI 1
-ENDC
-PUSHINT 128
-SENDRAWMSG
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 
 .globl	isArrayContainsAddress_internal
 .type	isArrayContainsAddress_internal, @function
 CALL $isArrayContainsAddress_internal_macro$
 
 .macro isArrayContainsAddress_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 183
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 232
+SWAP
+SECOND
 PUSHINT 0
+NULL
+FALSE ; decl return flag
 PUSHCONT {
-	.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 184
-	PUSH S2
-	INDEX 1
-	PUSHINT 0
-	NULL
-	FALSE ; decl return flag
-	PUSHCONT {
-		DUP
-		LESSINT 2
-		DUP
-		PUSHCONT {
-			DROP
-			PUSH2 S2, S3
-			PUSHINT 32
-			DICTUGET
-			NULLSWAPIFNOT
-			DROP
-			DUP
-			POP S3
-			ISNULL
-			NOT
-		}
-		IF
-	}
-	PUSHCONT {
-		PUSHCONT {
-			.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 185
-			PUSH2 S5, S1
-			SDEQ
-			PUSHCONT {
-				.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 186
-				BLKDROP 5
-				TRUE
-				PUSHINT 4
-				.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
-			}
-			IFJMP
-			.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
-		}
-		CALLX
-		DUP
-		GTINT 1
-		IFRET
-		PUSH S2
-		INC
-		POP S3
-	}
-	WHILE
-	EQINT 4
-	IFRET
-	BLKDROP 4
-	.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 189
-	FALSE
-	.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 183
+	PUSH2 S2, S3
+	PUSHINT 32
+	DICTUGET
+	NULLSWAPIFNOT
+	DROP
+	DUP
+	POP S3
+	ISNULL
+	NOT
 }
-CALLX
-.loc ../node_modules/bridge/free-ton/contracts/bridge/ProxyTokenTransfer.sol, 0
-BLKDROP2 2, 1
+PUSHCONT {
+	.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 233
+	PUSH2 S4, S1
+	SDEQ
+	PUSHCONT {
+		.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 234
+		BLKDROP 5
+		TRUE
+		PUSHINT 4
+		RETALT
+		.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
+	}
+	IFJMP
+	.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
+	PUSH S2
+	INC
+	POP S3
+}
+WHILEBRK
+IFRET
+BLKDROP 4
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 237
+FALSE
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/bridge/proxy/ProxyTokenTransfer.sol, 0
 
 .globl	transferAll_internal
 .type	transferAll_internal, @function
 CALL $transferAll_internal_macro$
 
 .macro transferAll_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 17
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 17
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -1299,19 +1138,19 @@ STZEROES
 ENDC
 PUSHINT 129
 SENDRAWMSG
-.loc ../node_modules/bridge/free-ton/contracts/utils/TransferUtils.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 0
 
 .globl	setOwnership_internal
 .type	setOwnership_internal, @function
 CALL $setOwnership_internal_macro$
 
 .macro setOwnership_internal_macro
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 24
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 24
 GETGLOB 11
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 26
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 26
 OVER
 SETGLOB 11
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 28
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 28
 PUSHSLICE xc0000000000000000000000001
 NEWC
 STSLICE
@@ -1327,7 +1166,7 @@ STBREFR
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
 
 .macro transferOwnership
 DROP
@@ -1338,36 +1177,44 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 34
-LDMSGADDRQ
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 34
+OVER
 PUSHCONT {
 	LDREF
 	ENDS
 	CTOS
-	LDMSGADDR
 }
-IFNOT
+IF
+LDMSGADDR
 ENDS
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
+CALLREF {
+	CALL $transferOwnership_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro transferOwnership_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
 GETGLOB 9
 GETGLOB 11
 SDEQ
 THROWIFNOT 1101
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 37
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 37
 DUP
-PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
 SDEQ
 THROWIF 1102
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 39
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 39
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
-CALLREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
 
 .macro renounceOwnership
 DROP
@@ -1378,57 +1225,51 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 45
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 45
 ENDS
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
+CALLREF {
+	CALL $renounceOwnership_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro renounceOwnership_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
 GETGLOB 9
 GETGLOB 11
 SDEQ
 THROWIFNOT 1101
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 46
-PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 48
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 46
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 48
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
-.loc ../node_modules/bridge/node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
-CALLREF {
-	CALL $c7_to_c4$
-}
-TRUE
-SETGLOB 7
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
 
 .macro encodeEthereumEventData
 DROP
 GETGLOB 6
 THROWIFNOT 76
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 9
-LDUQ 256
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 9
+OVER
 PUSHCONT {
 	LDREF
 	ENDS
 	CTOS
-	LDU 256
 }
-IFNOT
-LDIQ 128
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDI 128
-}
-IFNOT
-LDUQ 256
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 256
-}
-IFNOT
+IF
+LDU 256
+LDI 128
+LDU 256
 ENDS
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 0
 CALLREF {
 	CALL $encodeEthereumEventData_internal_macro$
 }
@@ -1455,42 +1296,33 @@ PUSHCONT {
 }
 IFELSE
 IFREF {
-	CALL $c7_to_c4$
+	CALL $upd_only_time_in_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .globl	encodeEthereumEventData_internal
 .type	encodeEthereumEventData_internal, @function
 CALL $encodeEthereumEventData_internal_macro$
 
 .macro encodeEthereumEventData_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 9
-PUSHREF {
-}
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 16
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 18
+XCHG S2
 NEWC
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 18
-ROT
-ROLL 3
-ROLL 4
-ROLL 3
 STU 256
 STI 128
 STU 256
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 20
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 20
 ENDC
-NIP
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 0
 
 .macro decodeEthereumEventData
 DROP
 GETGLOB 6
 THROWIFNOT 76
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 23
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 23
 LDREF
 ENDS
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 0
 CALLREF {
 	CALL $decodeEthereumEventData_internal_macro$
 }
@@ -1523,70 +1355,51 @@ PUSHCONT {
 }
 IFELSE
 IFREF {
-	CALL $c7_to_c4$
+	CALL $upd_only_time_in_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .globl	decodeEthereumEventData_internal
 .type	decodeEthereumEventData_internal, @function
 CALL $decodeEthereumEventData_internal_macro$
 
 .macro decodeEthereumEventData_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 30
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 30
 CTOS
 LDU 256
 LDI 128
 LDU 256
 DROP
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 35
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 35
 ROT
 UFITS 128
 ROT
 FITS 8
 ROT
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 0
 
 .macro encodeTonEventData
 DROP
 GETGLOB 6
 THROWIFNOT 76
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 38
-LDI 8
-LDUQ 256
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 38
+OVER
 PUSHCONT {
+	LDI 8
 	LDREF
 	ENDS
 	CTOS
-	LDU 256
 }
-IFNOT
-LDUQ 128
 PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 128
+	LDI 8
 }
-IFNOT
-LDUQ 160
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 160
-}
-IFNOT
-LDUQ 32
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-	LDU 32
-}
-IFNOT
+IFELSE
+LDU 256
+LDU 128
+LDU 160
+LDU 32
 ENDS
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 0
 CALLREF {
 	CALL $encodeTonEventData_internal_macro$
 }
@@ -1613,46 +1426,35 @@ PUSHCONT {
 }
 IFELSE
 IFREF {
-	CALL $c7_to_c4$
+	CALL $upd_only_time_in_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .globl	encodeTonEventData_internal
 .type	encodeTonEventData_internal, @function
 CALL $encodeTonEventData_internal_macro$
 
 .macro encodeTonEventData_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 38
-PUSHREF {
-}
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 47
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 49
+REVERSE 5, 0
 NEWC
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 49
-ROT
-ROLL 3
-ROLL 4
-ROLL 5
-ROLL 6
-ROLL 5
 STI 8
 STU 256
 STU 128
 STU 160
 STU 32
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 51
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 51
 ENDC
-NIP
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 0
 
 .macro decodeTonEventData
 DROP
 GETGLOB 6
 THROWIFNOT 76
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 54
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 54
 LDREF
 ENDS
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 0
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 0
 CALLREF {
 	CALL $decodeTonEventData_internal_macro$
 }
@@ -1687,20 +1489,19 @@ PUSHCONT {
 }
 IFELSE
 IFREF {
-	CALL $c7_to_c4$
+	CALL $upd_only_time_in_c4$
 }
-TRUE
-SETGLOB 7
+THROW 0
 
 .globl	decodeTonEventData_internal
 .type	decodeTonEventData_internal, @function
 CALL $decodeTonEventData_internal_macro$
 
 .macro decodeTonEventData_internal_macro
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 54
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 54
 PUSHINT 0
 BLKPUSH 3, 0
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 63
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 63
 ROLL 4
 CTOS
 LDI 8
@@ -1714,51 +1515,7 @@ POP S8
 POP S6
 POP S4
 POP S2
-.loc ../node_modules/bridge/free-ton/contracts/utils/cell-encoder/CellEncoder.sol, 0
-
-.macro c7_to_c4
-GETGLOB 14
-GETGLOB 13
-GETGLOB 12
-GETGLOB 11
-GETGLOB 10
-GETGLOB 3
-GETGLOB 2
-NEWC
-STU 256
-STU 64
-STONE
-STU 256
-ROLLREV 4
-NEWC
-STSLICE
-SWAP
-UNTUPLE 5
-REVERSE 6, 0
-ROLLREV 7
-NEWC
-STSLICE
-SWAP
-UNPAIR
-XCHG S2
-STU 32
-STDICT
-SWAP
-UNPAIR
-XCHG S2
-STU 32
-STDICT
-ROLLREV 4
-NEWC
-STSLICE
-STU 128
-STU 128
-STI 1
-STBREFR
-STBREFR
-STBREFR
-ENDC
-POPROOT
+.loc ../node_modules/ton-eth-bridge-contracts/everscale/contracts/utils/cell-encoder/CellEncoder.sol, 0
 
 .macro c4_to_c7
 PUSHROOT
@@ -1810,9 +1567,6 @@ PUSHROOT
 CTOS
 SBITS
 GTINT 1
-PUSHREFCONT {
-	CALL $c4_to_c7$
-}
 PUSHCONT {
 	PUSHINT 0
 	PUSHROOT
@@ -1829,24 +1583,26 @@ PUSHCONT {
 		PUSHINT 0
 	}
 	IFELSE
-	SETGLOB 10
-	PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
-	SETGLOB 11
-	PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+	PUSHREFSLICE {
+		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+	}
+	DUP
 	PUSHINT 0
 	NEWDICT
 	PAIR
-	PUSHINT 0
-	NEWDICT
-	PAIR
-	PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+	DUP
+	PUSHREFSLICE {
+		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+	}
 	PUSHINT 0
 	TUPLE 5
-	SETGLOB 12
 	PUSHINT 0
-	SETGLOB 13
-	PUSHINT 0
+	DUP
 	SETGLOB 14
+	SETGLOB 13
+	SETGLOB 12
+	SETGLOB 11
+	SETGLOB 10
 	PUSHINT 64
 	DICTUGET
 	THROWIFNOT 61
@@ -1857,7 +1613,68 @@ PUSHCONT {
 	FALSE
 	SETGLOB 14
 }
-IFELSE
+IFREFELSE {
+	CALL $c4_to_c7$
+}
+
+.macro c7_to_c4
+GETGLOB 14
+GETGLOB 13
+GETGLOB 12
+GETGLOB 11
+GETGLOB 10
+GETGLOB 3
+GETGLOB 2
+NEWC
+STU 256
+STU 64
+STONE
+STU 256
+ROLLREV 4
+NEWC
+STSLICE
+SWAP
+UNTUPLE 5
+REVERSE 6, 0
+ROLLREV 7
+NEWC
+STSLICE
+SWAP
+UNPAIR
+XCHG S2
+STU 32
+STDICT
+SWAP
+UNPAIR
+XCHG S2
+STU 32
+STDICT
+ROLLREV 4
+NEWC
+STSLICE
+STU 128
+STU 128
+STI 1
+STBREFR
+STBREFR
+STBREFR
+ENDC
+POPROOT
+
+.macro upd_only_time_in_c4
+PUSHROOT
+CTOS
+LDU 256
+LDU 64
+NIP
+GETGLOB 3
+ROT
+NEWC
+STU 256
+STU 64
+STSLICE
+ENDC
+POPROOT
 
 .internal-alias :main_internal, 0
 .internal :main_internal
@@ -1892,7 +1709,14 @@ IFJMPREF {
 }
 OVER
 LDUQ 32  ; [funcId] body' ok
-THROWIFNOT 60 ; funcId body'
+PUSHCONT {
+	DROP
+	CALLREF {
+		CALL $fallback_macro$
+	}
+	THROW 0
+}
+IFNOT
 OVER
 IFNOTJMPREF {
 	GETGLOB 6
@@ -1902,9 +1726,10 @@ SWAP
 CALLREF {
 	CALL $public_function_selector$
 }
-GETGLOB 7
-ISNULL
-THROWIF 60
+DROP2
+CALLREF {
+	CALL $fallback_macro$
+}
 
 .internal-alias :main_external, -1
 .internal :main_external
@@ -1913,7 +1738,9 @@ CTOS
 SBITS
 NEQINT 1
 SETGLOB 6
-PUSHSLICE x8000000000000000000000000000000000000000000000000000000000000000001_
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
 SETGLOB 9
 OVER
 CALLREF {
@@ -1942,12 +1769,12 @@ PUSHCONT {
 	DUP
 	SETGLOB 5
 	CHKSIGNU ; msgSlice isSigned
-	THROWIFNOT 40 ; msgSlice
+	THROWIFNOT 40
 }
 PUSHCONT {
 	LDU 1 ; havePubkey msgSlice
 	SWAP
-	THROWIF 58 ; msgSlice
+	THROWIF 58
 }
 IFELSE
 LDU 64 ; timestamp msgSlice
@@ -1963,9 +1790,10 @@ SWAP
 CALLREF {
 	CALL $public_function_selector$
 }
-GETGLOB 7
-ISNULL
-THROWIF 60
+DROP2
+CALLREF {
+	CALL $fallback_macro$
+}
 
 .macro _randomNonce
 DROP
@@ -1985,8 +1813,7 @@ PUSHCONT {
 	SENDRAWMSG
 }
 IF
-TRUE
-SETGLOB 7
+THROW 0
 
 .macro owner
 DROP
@@ -2006,29 +1833,22 @@ PUSHCONT {
 	SENDRAWMSG
 }
 IF
-TRUE
-SETGLOB 7
+THROW 0
 
 .macro public_function_selector
 DUP
-PUSHINT 1724294739
+PUSHINT 1911324437
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 487964377
+	PUSHINT 792499388
 	LEQ
 	IFJMPREF {
 		DUP
-		PUSHINT 32840294
+		PUSHINT 8959777
 		EQUAL
 		IFJMPREF {
-			CALL $sendPausedCallbackTo$
-		}
-		DUP
-		PUSHINT 224066674
-		EQUAL
-		IFJMPREF {
-			CALL $setPaused$
+			CALL $onEventConfirmed$
 		}
 		DUP
 		PUSHINT 235197086
@@ -2036,17 +1856,6 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $transferOwnership$
 		}
-		DUP
-		PUSHINT 487964377
-		EQUAL
-		IFJMPREF {
-			CALL $withdrawExtraGasFromTokenRoot$
-		}
-	}
-	DUP
-	PUSHINT 995308319
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 558202060
 		EQUAL
@@ -2059,6 +1868,11 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $decodeTonEventData$
 		}
+	}
+	DUP
+	PUSHINT 1196840156
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 965168899
 		EQUAL
@@ -2070,17 +1884,6 @@ IFJMPREF {
 		EQUAL
 		IFJMPREF {
 			CALL $_randomNonce$
-		}
-	}
-	DUP
-	PUSHINT 1331697499
-	LEQ
-	IFJMPREF {
-		DUP
-		PUSHINT 1019809854
-		EQUAL
-		IFJMPREF {
-			CALL $burnCallback$
 		}
 		DUP
 		PUSHINT 1156272329
@@ -2094,22 +1897,16 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $constructor$
 		}
+	}
+	DUP
+	PUSHINT 1594609630
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1331697499
 		EQUAL
 		IFJMPREF {
 			CALL $encodeEthereumEventData$
-		}
-	}
-	DUP
-	PUSHINT 1724294739
-	LEQ
-	IFJMPREF {
-		DUP
-		PUSHINT 1375672900
-		EQUAL
-		IFJMPREF {
-			CALL $transferTokenOwnership$
 		}
 		DUP
 		PUSHINT 1379441159
@@ -2118,40 +1915,52 @@ IFJMPREF {
 			CALL $decodeEthereumEventData$
 		}
 		DUP
+		PUSHINT 1529867823
+		EQUAL
+		IFJMPREF {
+			CALL $legacyTransferTokenOwnership$
+		}
+		DUP
 		PUSHINT 1594609630
 		EQUAL
 		IFJMPREF {
 			CALL $owner$
 		}
+	}
+	DUP
+	PUSHINT 1911324437
+	LEQ
+	IFJMPREF {
 		DUP
-		PUSHINT 1724294739
+		PUSHINT 1729444094
 		EQUAL
 		IFJMPREF {
-			CALL $broxusBridgeCallback$
+			CALL $renounceOwnership$
+		}
+		DUP
+		PUSHINT 1745391003
+		EQUAL
+		IFJMPREF {
+			CALL $onAcceptTokensBurn$
+		}
+		DUP
+		PUSHINT 1816154505
+		EQUAL
+		IFJMPREF {
+			CALL $transferTokenOwnership$
+		}
+		DUP
+		PUSHINT 1911324437
+		EQUAL
+		IFJMPREF {
+			CALL $setConfiguration$
 		}
 	}
 }
 DUP
 PUSHINT 1981601104
-LEQ
+EQUAL
 IFJMPREF {
-	DUP
-	PUSHINT 1729444094
-	EQUAL
-	IFJMPREF {
-		CALL $renounceOwnership$
-	}
-	DUP
-	PUSHINT 1911324437
-	EQUAL
-	IFJMPREF {
-		CALL $setConfiguration$
-	}
-	DUP
-	PUSHINT 1981601104
-	EQUAL
-	IFJMPREF {
-		CALL $encodeTonEventData$
-	}
+	CALL $encodeTonEventData$
 }
 
