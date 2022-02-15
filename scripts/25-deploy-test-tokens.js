@@ -36,8 +36,8 @@ async function main() {
             initialSupply: '0',
             deployWalletValue: '0',
             mintDisabled: false,
-            burnByRootDisabled: true,
-            burnPaused: true,
+            burnByRootDisabled: false,
+            burnPaused: false,
             remainingGasTo: locklift.utils.zeroAddress
         },
         initParams: {
