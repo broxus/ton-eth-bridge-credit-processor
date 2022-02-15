@@ -24,12 +24,12 @@ contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy
     TvmCell creditProcessorCode;
 
     /// @param _owner Event configuration owner
-    constructor(address _owner, TvmCell _meta) public checkPubKey {
+    constructor(address _owner, TvmCell _meta, TvmCell _creditProcessorCode) public checkPubKey {
         tvm.accept();
 
         setOwnership(_owner);
-
         meta = _meta;
+        creditProcessorCode = _creditProcessorCode;
     }
 
     /**
@@ -46,7 +46,7 @@ contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy
     }
 
     function getCreditProcessorCode() public view responsible returns(TvmCell) {
-        return {value: 0, flag: MsgFlag.REMAINING_GAS} creditProcessorCode;
+        return {value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false} creditProcessorCode;
     }
 
     /// @dev Set end block number. Can be set only in case current value is 0.
@@ -149,7 +149,7 @@ contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy
             code: basicConfiguration.eventCode
         });
 
-        return {value: 0, flag: MsgFlag.REMAINING_GAS} address(tvm.hash(stateInit));
+        return {value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false} address(tvm.hash(stateInit));
     }
 
     /**
@@ -162,7 +162,7 @@ contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy
         EthereumEventConfiguration _networkConfiguration,
         TvmCell _meta
     ) {
-        return {value: 0, flag: MsgFlag.REMAINING_GAS}(
+        return {value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false}(
             basicConfiguration,
             networkConfiguration,
             meta
@@ -172,7 +172,7 @@ contract CreditEthereumEventConfiguration is IEthereumEventConfiguration, IProxy
     /// @dev Get event configuration type
     /// @return _type Configuration type - Ethereum or TON
     function getType() override public pure responsible returns(EventType _type) {
-        return {value: 0, flag: MsgFlag.REMAINING_GAS} EventType.Ethereum;
+        return {value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false} EventType.Ethereum;
     }
 
     function onEventConfirmed(

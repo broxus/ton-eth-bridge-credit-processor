@@ -97,7 +97,7 @@ contract CreditTokenTransferEthereumEvent is ICreditEventDataStructure, Ethereum
         @returns ICreditEventDataStructure.CreditEventData
     */
     function getDecodedData() public responsible returns(CreditEventData) {
-        return {value: 0, flag: MsgFlag.REMAINING_GAS} EventDataDecoder.decode(eventInitData.voteData.eventData);
+        return {value: 0, bounce: false, flag: MsgFlag.REMAINING_GAS} EventDataDecoder.decode(eventInitData.voteData.eventData);
     }
 
     /// @dev Notify owner and initializer that event contract status has been changed

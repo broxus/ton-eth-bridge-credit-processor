@@ -18,6 +18,7 @@ PUSHCONT {
 IF
 LDMSGADDR
 LDREF
+LDREF
 ENDS
 .loc ../node_modules/@broxus/contracts/contracts/utils/CheckPubKey.sol, 9
 GETGLOB 5
@@ -34,12 +35,15 @@ THROWIFNOT 1103
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 28
 ACCEPT
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 30
-SWAP
+ROT
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
-.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 32
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 31
+SWAP
 SETGLOB 13
+.loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 32
+SETGLOB 14
 .loc ../node_modules/@broxus/contracts/contracts/utils/CheckPubKey.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
@@ -214,6 +218,8 @@ PUSHINT 0
 SETINDEXQ 2
 PUSHINT 64
 SETINDEXQ 4
+FALSE
+SETINDEXQ 1
 SETGLOB 4
 GETGLOB 14
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
@@ -661,6 +667,8 @@ PUSHINT 0
 SETINDEXQ 2
 PUSHINT 64
 SETINDEXQ 4
+FALSE
+SETINDEXQ 1
 SETGLOB 4
 HASHCU
 NEWC
@@ -799,6 +807,8 @@ PUSHINT 0
 SETINDEXQ 2
 PUSHINT 64
 SETINDEXQ 4
+FALSE
+SETINDEXQ 1
 SETGLOB 4
 GETGLOB 11
 GETGLOB 12
@@ -884,6 +894,8 @@ PUSHINT 0
 SETINDEXQ 2
 PUSHINT 64
 SETINDEXQ 4
+FALSE
+SETINDEXQ 1
 SETGLOB 4
 PUSHINT 0
 .loc ../contracts/prod/CreditEthereumEventConfiguration.sol, 0
@@ -1719,7 +1731,7 @@ PUSHINT 960689737
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 666029341
+	PUSHINT 527876250
 	EQUAL
 	IFJMPREF {
 		CALL $constructor$

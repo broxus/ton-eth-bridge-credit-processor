@@ -3,6 +3,7 @@ const {
     isValidTonAddress,
     stringToBytesArray,
     DEX_CONTRACTS_PATH,
+    EMPTY_TVM_CELL
 } = require('./../utils');
 
 const prompts = require('prompts');
@@ -145,6 +146,7 @@ const main = async () => {
         constructorParams: {
             _owner: account.address,
             _meta: response.meta,
+            _creditProcessorCode: EMPTY_TVM_CELL
         },
         initParams: {
             basicConfiguration: {
