@@ -4,16 +4,15 @@ const { Command } = require('commander');
 const program = new Command();
 const migration = new Migration();
 
-// FIXME:
+// FIXME: msg address
 const admin = ''
-const additionalOwner = ''
+// FIXME: backend and managers public keys
+const managers = []
 
 async function main() {
     console.log(`deploy-credit-factory.js`);
-    const Account1 = migration.load(await locklift.factory.getAccount('Wallet', DEX_CONTRACTS_PATH), 'Account1');
     const keyPairs = await locklift.keys.getKeyPairs();
 
-    const CreditProcessor = await locklift.factory.getContract('CreditProcessor');
     const CreditFactory = await locklift.factory.getContract('CreditFactory');
 
     console.log(`Deploying CreditFactory`);
@@ -21,7 +20,7 @@ async function main() {
         contract: CreditFactory,
         constructorParams: {
             admin_: admin,
-            owners_: [new BigNumber(additionalOwner, 16).toString(10)],
+            owners_: managers.map(v => new BigNumber(v, 16).toString(10)),
             fee: locklift.utils.convertCrystal('0.1', 'nano')
         },
         initParams: {
